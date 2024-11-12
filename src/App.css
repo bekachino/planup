@@ -1,0 +1,21 @@
+:root {
+  --success: #19C052;
+  --error: #D62828;
+  --planned: #5270D5;
+  --on-way: #A61FFF;
+  --finished: #19C052;
+  --started: #FFB82E;
+  --stopped: #D62828;
+  --text-1: #1C1B1B;
+  --text-2: #2A2A2A;
+  --text-3: #565656;
+  --main-1: #474A69;
+  --main-2: #0D81E1;
+  --main-3: #2E9DF8;
+  --main-4: #0D81E1B2;
+  --white: #FFFFFF;
+  --white-grey: #FCFCFC;
+  --purple-1: #5D5FEC;
+  --purple-2: #3E57A9;
+  --input-outline: #858BFF;
+}
