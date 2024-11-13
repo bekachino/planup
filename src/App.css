@@ -23,6 +23,11 @@
   --input-border-empty: #E6E6E6;
   --input-border-focus: #858BFF;
   --input-border-filled: #55A6E9;
+  --select-option-hover: #F1F1F2;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
 }
 
 body {

@@ -2,30 +2,32 @@ import React from 'react';
 import './input.css';
 
 const Input = ({
-  type = 'text',
-  name,
-  value,
   label,
   placeholder,
   onChange,
-  required,
+  isSelectInput,
   style,
+  ...rest
 }) => {
   return (
     <div
-      className='input-wrapper'
+      className='input-container'
       style={style}
     >
-      <span className='input-label'>{label}</span>
-      <input
-        className='input'
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder || label}
-        required={required}
-      />
+      <label
+        className='input-label'
+        htmlFor={`${label}-input`}
+      >{label}</label>
+      <div className='input-wrapper'>
+        <input
+          id={`${label}-input`}
+          className='input'
+          onChange={onChange}
+          placeholder={placeholder || label}
+          {...rest}
+        />
+      </div>
+      {isSelectInput && <span className='select-input-arrow' />}
     </div>
   );
 };
