@@ -43,6 +43,16 @@ const Select = ({
     });
   }, [showOptions]);
 
+  useEffect(() => {
+    const highlightedItem = document.querySelector('.select-option-hovered');
+    if (highlightedItem && showOptions && focusedOption >= 0) {
+      highlightedItem.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, [focusedOption, showOptions]);
+
   const filteredList = useMemo(
     () =>
       (multiple
@@ -67,6 +77,7 @@ const Select = ({
   };
 
   const handleKeyDown = (e) => {
+    console.log(e);
     if (showOptions) {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
@@ -101,6 +112,11 @@ const Select = ({
             value: withoutLastItem,
           },
         });
+      }
+      if (e.altKey && e.key === 'ArrowDown') {
+        setFocusedOption(filteredList.length - 1);
+      } else if (e.altKey && e.key === 'ArrowUp') {
+        setFocusedOption(0);
       }
     }
   };
