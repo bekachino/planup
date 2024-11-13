@@ -1,5 +1,6 @@
 import './App.css';
 import Select from './Components/Select/Select';
+import { useState } from 'react';
 
 const siList = Array.from({ length: 100 }, (_, i) => (
   {
@@ -9,12 +10,15 @@ const siList = Array.from({ length: 100 }, (_, i) => (
 ));
 
 function App() {
+  const [state, setState] = useState(null);
+  
   return (
     <div className='App'>
       <Select
         name='si'
+        value={state?.name}
         options={siList}
-        onChange={e => {}}
+        onChange={e => setState(e.target.value)}
       />
     </div>
   );

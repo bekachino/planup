@@ -8,10 +8,14 @@ const Select = ({
   options = [],
   onChange,
 }) => {
-  const [searchWord, setSearchWord] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const selectOptionsRef = useRef(null);
   const [selectOptionsHeight, setSelectOptionsHeight] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
+  
+  useEffect(() => {
+    setInputValue(value || '');
+  }, [value]);
   
   useEffect(() => {
     if (selectOptionsRef.current) {
@@ -22,7 +26,7 @@ const Select = ({
   useEffect(() => {
     document.addEventListener('click', (event) => {
       const classNames = Array.from(event.target.classList);
-      if (![
+      if (showOptions && ![
         'select-options',
         'select-option',
         'input',
@@ -30,16 +34,16 @@ const Select = ({
         setShowOptions(false);
       }
     });
-  }, []);
+  }, [showOptions]);
   
   return (
     <div className='select-wrapper'>
       <Input
-        value={searchWord}
+        value={inputValue}
         label='Монтажник'
         placeholder='Выберите монтажника'
         onChange={e => {
-          setSearchWord(e.target.value);
+          setInputValue(e.target.value);
           onChange({
             target: {
               name,
@@ -49,11 +53,6 @@ const Select = ({
         }}
         onFocus={() => {
           setShowOptions(true);
-        }}
-        onBlur={() => {
-          if (!value) {
-            setTimeout(() => setSearchWord(''), 100)
-          }
         }}
         isSelectInput
       />
@@ -68,11 +67,11 @@ const Select = ({
           options || []
         ).filter(option => (
           option.name || option.value
-        ).includes(searchWord)).length ? (
+        ).includes(inputValue)).length ? (
           options || []
         ).filter(option => (
           option.name || option.value
-        ).includes(searchWord)).map(option => (
+        ).includes(inputValue)).map(option => (
           <div
             className='select-option'
             key={option.id}
