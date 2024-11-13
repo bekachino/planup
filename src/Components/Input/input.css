@@ -27,7 +27,8 @@
   background-color: unset;
 }
 
-.input-wrapper:has(.input:not(:placeholder-shown)) {
+.input-wrapper:has(.input:not(:placeholder-shown)),
+.select-wrapper-multiple-valid .input-wrapper {
   border-color: var(--input-border-filled);
   background-color: unset;
 }

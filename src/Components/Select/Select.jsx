@@ -47,7 +47,6 @@ const Select = ({
     const highlightedItem = document.querySelector('.select-option-hovered');
     if (highlightedItem && showOptions && focusedOption >= 0) {
       highlightedItem.scrollIntoView({
-        behavior: 'smooth',
         block: 'center',
       });
     }
@@ -77,53 +76,54 @@ const Select = ({
   };
 
   const handleKeyDown = (e) => {
-    console.log(e);
-    if (showOptions) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (focusedOption < 0) setFocusedOption(0);
-        else {
-          if (focusedOption < filteredList.length - 1) {
-            setFocusedOption(focusedOption + 1);
-          } else setFocusedOption(0);
-        }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (!focusedOption) setFocusedOption(filteredList.length - 1);
-        else {
-          if (focusedOption > 0) setFocusedOption(focusedOption - 1);
-          else setFocusedOption(filteredList.length - 1);
-        }
-      } else if (e.key === 'Enter' && focusedOption >= 0) {
-        e.preventDefault();
-        const selectedItem = filteredList[focusedOption];
-        onChange({
-          target: {
-            name,
-            value: !multiple ? selectedItem : [...value, selectedItem],
-          },
-        });
-        !multiple && setShowOptions(false);
-      } else if (e.key === 'Backspace' && multiple) {
-        const withoutLastItem = value.slice(0, value.length - 1);
-        onChange({
-          target: {
-            name,
-            value: withoutLastItem,
-          },
-        });
+    if (e.key === 'ArrowDown') {
+      setShowOptions(true);
+      if (focusedOption < 0) setFocusedOption(0);
+      else {
+        if (focusedOption < filteredList.length - 1) {
+          setFocusedOption(focusedOption + 1);
+        } else setFocusedOption(0);
       }
-      if (e.altKey && e.key === 'ArrowDown') {
-        setFocusedOption(filteredList.length - 1);
-      } else if (e.altKey && e.key === 'ArrowUp') {
-        setFocusedOption(0);
+    } else if (e.key === 'ArrowUp') {
+      setShowOptions(true);
+      if (!focusedOption) setFocusedOption(filteredList.length - 1);
+      else {
+        if (focusedOption > 0) setFocusedOption(focusedOption - 1);
+        else setFocusedOption(filteredList.length - 1);
       }
+    } else if (e.key === 'Enter' && focusedOption >= 0) {
+      const selectedItem = filteredList[focusedOption];
+      onChange({
+        target: {
+          name,
+          value: !multiple ? selectedItem : [...value, selectedItem],
+        },
+      });
+      !multiple && setShowOptions(false);
+      multiple && setInputValue('');
+    } else if (e.key === 'Backspace' && multiple) {
+      if (multiple && !!inputValue) return;
+      const withoutLastItem = value.slice(0, value.length - 1);
+      onChange({
+        target: {
+          name,
+          value: withoutLastItem,
+        },
+      });
+    } else if (e.key === 'Escape' && multiple) setShowOptions(false);
+
+    if (e.altKey && e.key === 'ArrowDown') {
+      setShowOptions(true);
+      setFocusedOption(filteredList.length - 1);
+    } else if (e.altKey && e.key === 'ArrowUp') {
+      setShowOptions(true);
+      setFocusedOption(0);
     }
   };
 
   return (
     <div
-      className={`select-wrapper ${multiple && 'select-wrapper-multiple'}`}
+      className={`select-wrapper ${multiple && 'select-wrapper-multiple'} ${!!value.length && 'select-wrapper-multiple-valid'}`}
       style={style}
     >
       <Input
@@ -141,11 +141,14 @@ const Select = ({
                 value: null,
               },
             });
+            setFocusedOption(0);
+            setShowOptions(true);
           }
         }}
         onFocus={() => {
           setShowOptions(true);
         }}
+        onClick={() => setShowOptions(true)}
         isSelectInput
         onValueRemove={onSelectedOptionRemove}
         onKeyDown={handleKeyDown}
