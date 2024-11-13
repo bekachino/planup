@@ -10,24 +10,20 @@ const Input = ({
   ...rest
 }) => {
   return (
-    <div
-      className='input-container'
-      style={style}
-    >
-      <label
-        className='input-label'
-        htmlFor={`${label}-input`}
-      >{label}</label>
-      <div className='input-wrapper'>
+    <div className="input-container" style={style}>
+      <label className="input-label" htmlFor={`${label}-input`}>
+        {label}
+      </label>
+      <div className="input-wrapper">
         <input
           id={`${label}-input`}
-          className='input'
+          className="input"
           onChange={onChange}
           placeholder={placeholder || label}
           {...rest}
         />
       </div>
-      {isSelectInput && <span className='select-input-arrow' />}
+      {isSelectInput && <span className="select-input-arrow" />}
     </div>
   );
 };
