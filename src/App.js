@@ -1,22 +1,24 @@
-import './App.css';
 import Select from './Components/Select/Select';
 import { useState } from 'react';
+import './App.css';
 
 const siList = Array.from({ length: 100 }, (_, i) => ({
-  name: `Монтажник ${i + 1}`,
+  label: `Монтажник ${i + 1}`,
   id: i + 1,
 }));
 
 function App() {
-  const [state, setState] = useState(null);
+  const [state, setState] = useState();
 
   return (
     <div className="App">
       <Select
+        multiple
         name="si"
-        value={state?.name}
+        value={state || []}
         options={siList}
         onChange={(e) => setState(e.target.value)}
+        //style={{ width: '400px' }}
       />
     </div>
   );

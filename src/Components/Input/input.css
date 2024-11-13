@@ -1,30 +1,25 @@
 .input-container {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 9px;
-}
-
-.input-label {
-  color: var(--text-4);
-  font-size: 14px;
-}
-
-.input {
-  padding: 10px;
-  outline: none;
-  font-size: 15px;
-  color: var(--input-text-color);
-  background-color: var(--white-grey);
-  border: 0;
-  border-radius: 8px;
-  width: 100%;
+  gap: 6px;
 }
 
 .input-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   border: 2px solid var(--input-border-empty);
   border-radius: 8px;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+.input-wrapper-inner {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-grow: 1;
 }
 
 .input-wrapper:has(.input:focus) {
@@ -37,24 +32,39 @@
   background-color: unset;
 }
 
+.input-label {
+  color: var(--text-4);
+  font-size: 14px;
+}
+
+.input {
+  padding: 10px;
+  outline: none;
+  font-size: 15px;
+  color: var(--input-text-color);
+  border: 0;
+  border-radius: 8px;
+  flex-grow: 1;
+}
+
 .input::placeholder {
   color: var(--input-placeholder-color);
 }
 
-.input-container .select-input-arrow {
+.select-wrapper .input-wrapper-inner::before {
+  content: '';
   position: absolute;
   inset: 0;
-  margin: auto 16px 14px auto;
+  margin: auto 15px 14px auto;
   width: 12px;
   height: 12px;
-  background-image: url('../../assets/arrow-down.svg');
+  background-image: url("../../assets/arrow-down.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  pointer-events: none;
   transition: 0.2s;
 }
 
-.input-container:has(.input:focus) .select-input-arrow {
+.select-wrapper:has(.input:focus) .input-wrapper-inner::before {
   rotate: 180deg;
 }

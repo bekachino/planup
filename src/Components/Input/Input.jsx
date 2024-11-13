@@ -3,9 +3,10 @@ import './input.css';
 
 const Input = ({
   label,
+  values,
   placeholder,
-  onChange,
   isSelectInput,
+  onValueRemove,
   style,
   ...rest
 }) => {
@@ -15,15 +16,24 @@ const Input = ({
         {label}
       </label>
       <div className="input-wrapper">
-        <input
-          id={`${label}-input`}
-          className="input"
-          onChange={onChange}
-          placeholder={placeholder || label}
-          {...rest}
-        />
+        {values?.map((value) => (
+          <div
+            className="multiple-values-element"
+            onClick={(_) => onValueRemove(value?.id)}
+            key={value?.id}
+          >
+            {value?.name || value?.value || value?.label}
+          </div>
+        ))}
+        <div className='input-wrapper-inner'>
+          <input
+            id={`${label}-input`}
+            className="input"
+            placeholder={placeholder || label}
+            {...rest}
+          />
+        </div>
       </div>
-      {isSelectInput && <span className="select-input-arrow" />}
     </div>
   );
 };

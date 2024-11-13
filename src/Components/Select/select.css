@@ -18,12 +18,35 @@
 }
 
 .select-option {
+  border: 0;
+  border-radius: 4px;
+  background-color: unset;
   padding: 14px 9px;
   font-size: 14px;
+  text-align: left;
+  cursor: pointer;
 }
 
+.select-option-hovered,
 .select-option:hover {
   background-color: var(--select-option-hover);
+}
+
+.select-option-hovered {
+  outline: inherit;
+}
+
+.multiple-values-element {
+  padding: 6px 30px 6px 10px;
+  border-radius: 8px;
+  background-color: var(--select-option-hover);
+  background-image: url('../../assets/remove.svg');
+  background-repeat: no-repeat;
+  background-size: 8px;
+  background-position: calc(100% - 12px) 50%;
+  font-size: 12px;
+  margin: 5px 0 5px 6px;
+  width: fit-content;
   cursor: pointer;
-  border-radius: 4px;
+  user-select: none;
 }
