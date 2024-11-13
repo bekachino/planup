@@ -18,7 +18,6 @@ function App() {
         value={state || []}
         options={siList}
         onChange={(e) => setState(e.target.value)}
-        //style={{ width: '400px' }}
       />
     </div>
   );

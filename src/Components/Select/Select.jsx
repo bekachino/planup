@@ -93,6 +93,14 @@ const Select = ({
           },
         });
         !multiple && setShowOptions(false);
+      } else if (e.key === 'Backspace' && multiple) {
+        const withoutLastItem = value.slice(0, value.length - 1);
+        onChange({
+          target: {
+            name,
+            value: withoutLastItem,
+          },
+        });
       }
     }
   };
