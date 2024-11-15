@@ -13,9 +13,8 @@ function App() {
   return (
     <div className="App">
       <Select
-        multiple
         name="si"
-        value={state || []}
+        value={state?.label}
         options={siList}
         onChange={(e) => setState(e.target.value)}
       />

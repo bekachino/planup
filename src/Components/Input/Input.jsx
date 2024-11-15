@@ -7,6 +7,7 @@ const Input = ({
   placeholder,
   isSelectInput,
   onValueRemove,
+  textarea,
   style,
   ...rest
 }) => {
@@ -25,13 +26,22 @@ const Input = ({
             {value?.name || value?.value || value?.label}
           </div>
         ))}
-        <div className='input-wrapper-inner'>
-          <input
-            id={`${label}-input`}
-            className="input"
-            placeholder={placeholder || label}
-            {...rest}
-          />
+        <div className="input-wrapper-inner">
+          {textarea ? (
+            <textarea
+              id={`${label || 'custom'}-textarea`}
+              className="input"
+              placeholder={placeholder || label}
+              {...rest}
+            />
+          ) : (
+            <input
+              id={`${label || 'custom'}-input`}
+              className="input"
+              placeholder={placeholder || label}
+              {...rest}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -123,7 +123,9 @@ const Select = ({
 
   return (
     <div
-      className={`select-wrapper ${multiple && 'select-wrapper-multiple'} ${!!value.length && 'select-wrapper-multiple-valid'}`}
+      className={`select-wrapper ${multiple && 'select-wrapper-multiple'} ${
+        !!(value || '').length && 'select-wrapper-multiple-valid'
+      }`}
       style={style}
     >
       <Input
@@ -166,7 +168,7 @@ const Select = ({
               <button
                 className={`select-option ${
                   focusedOption === i && 'select-option-hovered'
-                }`}
+                } ${!!option?.icon && 'has-icon'}`}
                 key={option.id}
                 onClick={(_) => {
                   onChange({
@@ -178,6 +180,11 @@ const Select = ({
                   setShowOptions(false);
                   setFocusedOption(-1);
                   multiple && setInputValue('');
+                }}
+                style={{
+                  backgroundImage: !!option?.icon
+                    ? `url("${option?.icon}")`
+                    : 'unset',
                 }}
               >
                 {option?.name || option?.value || option?.label}
