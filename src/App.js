@@ -1,4 +1,4 @@
-import Select from './Components/Select/Select';
+import Autocomplete from './Components/Autocomplete/Autocomplete';
 import { useState } from 'react';
 import './App.css';
 
@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <Select
+      <Autocomplete
         name="si"
         value={state?.label}
         options={siList}

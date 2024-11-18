@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Input from '../Input/Input';
-import './select.css';
+import './autocomplete.css';
 
-const Select = ({
+const Autocomplete = ({
   name,
   value,
   options = [],
@@ -19,7 +19,7 @@ const Select = ({
   useEffect(() => {
     !multiple && setInputValue(value || '');
   }, [value]);
-
+  
   useEffect(() => {
     if (selectOptionsRef.current) {
       setSelectOptionsHeight(
@@ -29,7 +29,7 @@ const Select = ({
       );
     }
   }, [showOptions]);
-
+  
   useEffect(() => {
     document.addEventListener('click', (event) => {
       const classNames = Array.from(event.target.classList);
@@ -199,4 +199,4 @@ const Select = ({
   );
 };
 
-export default Select;
+export default Autocomplete;
