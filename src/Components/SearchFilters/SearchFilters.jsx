@@ -9,7 +9,6 @@ const SearchFilters = ({ ...rest }) => {
   ] = useState(6);
   const [showCategoriesOptions, setShowCategoriesOptions] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
-  const [mouseInCategory, setMouseInCategory] = useState(false);
 
   useEffect(() => {
     document.addEventListener('mouseup', () => setShowCategories(false));
