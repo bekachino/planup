@@ -9,7 +9,7 @@ const siList = Array.from({ length: 100 }, (_, i) => ({
 
 function App() {
   const [state, setState] = useState();
-  
+
   return (
     <div className="App">
       <SearchFilters placeholder="Поиск" />

@@ -24,6 +24,8 @@
   --input-border-focus: #858bff;
   --input-border-filled: #55a6e9;
   --select-option-hover: #f1f1f2;
+  --checkbox-border: #bdbcdb;
+  --checkbox-checked: #605dec;
 }
 
 *,

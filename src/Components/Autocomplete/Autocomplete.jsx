@@ -19,7 +19,7 @@ const Autocomplete = ({
   useEffect(() => {
     !multiple && setInputValue(value || '');
   }, [value]);
-  
+
   useEffect(() => {
     if (selectOptionsRef.current) {
       setSelectOptionsHeight(
@@ -29,7 +29,7 @@ const Autocomplete = ({
       );
     }
   }, [showOptions]);
-  
+
   useEffect(() => {
     document.addEventListener('click', (event) => {
       const classNames = Array.from(event.target.classList);
