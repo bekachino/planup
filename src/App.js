@@ -1,6 +1,6 @@
-import Autocomplete from './Components/Autocomplete/Autocomplete';
 import { useState } from 'react';
 import './App.css';
+import SearchFilters from './Components/SearchFilters/SearchFilters';
 
 const siList = Array.from({ length: 100 }, (_, i) => ({
   label: `Монтажник ${i + 1}`,
@@ -12,12 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <Autocomplete
-        name="si"
-        value={state?.label}
-        options={siList}
-        onChange={(e) => setState(e.target.value)}
-      />
+      <SearchFilters placeholder='Поиск' />
     </div>
   );
 }

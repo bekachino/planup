@@ -1,0 +1,34 @@
+.search-filters {
+  max-width: 300px;
+}
+
+.search-filters:has(input:focus) input,
+.search-filters:has(input:focus) .filters-block {
+  box-shadow: 0 4px 20px 0 #2C344E33;
+}
+
+.search-filters input {
+  background-color: var(--white-grey);
+  padding: 10px 37px 10px 10px;
+  border-radius: 7px;
+  border: 0;
+  outline: none;
+  width: 100%;
+  background-image: url("../../assets/search-icon.svg");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center;
+  background-size: 20px;
+}
+
+.search-filters input,
+.filters-block {
+  transition: 0.1s;
+}
+
+.search-filters input::placeholder {
+  color: var(--text-4);
+}
+
+.search-filters input:focus {
+  background-color: var(--white);
+}
