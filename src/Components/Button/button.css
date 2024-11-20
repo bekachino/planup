@@ -1,0 +1,59 @@
+.button {
+  padding: 8px 14px;
+  transition: 0.2s;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.button-contained {
+  border: 2px solid transparent;
+  background-color: var(--main-2);
+  color: var(--white);
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.button-contained:hover {
+  background-color: var(--main-3);
+}
+
+.button-outlined {
+  border: 2px solid var(--main-2);
+  background-color: var(--white);
+  color: var(--main-2);
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.button-outlined:hover {
+  background-color: var(--main-2-hover);
+}
+
+.button-loading,
+.button:disabled {
+  position: relative;
+  background-color: var(--disabled-btn-bg) !important;
+}
+
+.button-loading {
+  color: transparent;
+}
+
+.button-loading::before {
+  position: absolute;
+  content: '';
+  inset: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--disabled-btn-color);
+  border-radius: 50%;
+  border-right: 3px solid transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg
+  }
+}
