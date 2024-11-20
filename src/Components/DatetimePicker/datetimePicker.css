@@ -1,0 +1,77 @@
+.date-time-picker {
+  position: relative;
+}
+
+.date-time-picker-input {
+  font-family: Inter, sans-serif;
+  padding-right: 15px;
+}
+
+.date-time-picker-icon {
+  position: absolute;
+  content: '';
+  inset: 0;
+  margin: 24px 2px auto auto;
+  height: 39px;
+  width: 32px;
+  background-color: var(--white);
+  background-image: url("../../assets/calendar.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.date-time-calendar {
+  position: absolute;
+  top: calc(100% + 6px);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 532px;
+  overflow: hidden;
+  user-select: none;
+}
+
+.date-time-calendar-header {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--main-2);
+  color: var(--white);
+}
+
+.date-time-calendar-header span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 21px;
+  z-index: 1;
+  width: 50%;
+  transition: 0.2s;
+}
+
+.date-time-calendar-header span svg path {
+  stroke: var(--white);
+  transition: 0.2s;
+}
+
+.date-time-calendar-switcher {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(50% - 12px);
+  height: calc(100% - 12px);
+  border-radius: 6px;
+  background-color: var(--white);
+  transition: 0.2s;
+}
+
+.date-time-calendar-tab-active {
+  color: var(--text-3)
+}
+
+.date-time-calendar-tab-active svg path {
+  stroke: var(--text-3) !important;
+}

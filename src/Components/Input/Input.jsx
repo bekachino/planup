@@ -2,6 +2,7 @@ import React from 'react';
 import './input.css';
 
 const Input = ({
+  className,
   label,
   values,
   placeholder,
@@ -30,14 +31,14 @@ const Input = ({
           {textarea ? (
             <textarea
               id={`${label || 'custom'}-textarea`}
-              className="input"
+              className={`input ${className}`}
               placeholder={placeholder || label}
               {...rest}
             />
           ) : (
             <input
               id={`${label || 'custom'}-input`}
-              className="input"
+              className={`input ${className}`}
               placeholder={placeholder || label}
               {...rest}
             />
