@@ -10,7 +10,6 @@
   background-color: var(--main-2);
   color: var(--white);
   border-radius: 8px;
-  margin-top: 10px;
 }
 
 .button-contained:hover {
@@ -22,7 +21,6 @@
   background-color: var(--white);
   color: var(--main-2);
   border-radius: 8px;
-  margin-top: 10px;
 }
 
 .button-outlined:hover {

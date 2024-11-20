@@ -6,6 +6,7 @@ import {
 } from '../../features/statuses/filtersDataThunk';
 import { filterCategories } from '../../constants';
 import './searchFilters.css';
+import Button from '../Button/Button';
 
 const SearchFilters = ({ ...rest }) => {
   const searchFiltersCategoriesRef = useRef(null);
@@ -132,120 +133,128 @@ const SearchFilters = ({ ...rest }) => {
         }}
         {...rest}
       />
-      <div
-        className="search-filters-values"
-        style={{
-          display: showCategories && !!filtersValues().length ? 'flex' : 'none',
-        }}
-      >
-        <div className="search-filters-values-inner">
-          {filtersValues().map((option, i) => (
-            <div
-              className="search-filters-value"
-              key={i}
-              onClick={() =>
-                onChange({
-                  target: {
-                    name: option.category,
-                    value: option,
-                    category: option.category,
-                  },
-                })
-              }
-            >
-              {option.name}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div
-        className={`search-filters-block ${showCategories ? 'search-filters-block-shown' : ''}`}
-        onMouseLeave={() => setShowCategoriesOptions(false)}
-      >
-        <div className="search-filters-block-inner">
-          <span className="search-filters-block-title">Фильтрация</span>
-          <div
-            className="search-filters-categories"
-            ref={searchFiltersCategoriesRef}
-          >
-            {filterCategories.map((category, i) => (
-              <button
-                onMouseEnter={(_) => {
-                  setCurrentCategory(category.name);
-                  setSearchFiltersCategoriesOptionPosition(
-                    () => i * (100 / 7) - 4
-                  );
-                  setShowCategoriesOptions(true);
-                }}
-                onFocus={() => {
-                  setSearchFiltersCategoriesOptionPosition(
-                    () => i * (100 / 7) - 4
-                  );
-                  setCurrentCategory(category.name);
-                }}
+      <div className="search-filters-tooltip">
+        <div
+          className="search-filters-values"
+          style={{
+            display:
+              showCategories && !!filtersValues().length ? 'flex' : 'none',
+          }}
+        >
+          <div className="search-filters-values-inner">
+            {filtersValues().map((option, i) => (
+              <div
+                className="search-filters-value"
                 key={i}
+                onClick={() =>
+                  onChange({
+                    target: {
+                      name: option.category,
+                      value: option,
+                      category: option.category,
+                    },
+                  })
+                }
               >
-                {category.value}
-              </button>
+                {option.name}
+              </div>
             ))}
+          </div>
+        </div>
+        <div
+          className={`search-filters-block ${showCategories ? 'search-filters-block-shown' : ''}`}
+          onMouseLeave={() => setShowCategoriesOptions(false)}
+        >
+          <div className="search-filters-block-inner">
+            <span className="search-filters-block-title">Фильтрация</span>
             <div
-              className="search-filters-categories-options"
-              style={{
-                display: showCategoriesOptions ? 'flex' : 'none',
-                top: `${searchFiltersCategoriesOptionPosition}%`,
-              }}
-              onMouseEnter={() => setShowCategoriesOptions(true)}
+              className="search-filters-categories"
+              ref={searchFiltersCategoriesRef}
             >
-              <div className="search-filters-categories-options-inner">
-                <div
-                  className={`search-filters-category-options-inner-options ${
-                    (currentCategory === 'executerTypes' &&
-                      executerTypesLoading) ||
-                    (currentCategory === 'resolutionTypes' &&
-                      resolutionTypesLoading) ||
-                    (currentCategory === 'templateTypes' &&
-                      templateTypesLoading) ||
-                    (currentCategory === 'statusTypes' && statusTypesLoading) ||
-                    (currentCategory === 'squareTypes' && squareTypesLoading)
-                      ? 'search-filters-category-options-inner-options-loading'
-                      : ''
-                  }`}
+              {filterCategories.map((category, i) => (
+                <button
+                  onMouseEnter={(_) => {
+                    setCurrentCategory(category.name);
+                    setSearchFiltersCategoriesOptionPosition(
+                      () => i * (100 / 7) - 4
+                    );
+                    setShowCategoriesOptions(true);
+                  }}
+                  onFocus={() => {
+                    setSearchFiltersCategoriesOptionPosition(
+                      () => i * (100 / 7) - 4
+                    );
+                    setCurrentCategory(category.name);
+                  }}
+                  key={i}
                 >
-                  {filtersData[currentCategory]?.length ? (
-                    (filtersData[currentCategory] || []).map((type) => (
-                      <label
-                        key={type.id}
-                        className={`${!!searchCategory && searchCategory.name === type.name ? 'filters-category-is-found' : ''}`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={
-                            !!state[currentCategory]?.find(
-                              (item) => item.id === type.id
-                            )
-                          }
-                          onChange={() =>
-                            onChange({
-                              target: {
-                                name: type.category,
-                                value: {
-                                  ...type,
-                                  category: type.category,
+                  {category.value}
+                </button>
+              ))}
+              <div
+                className="search-filters-categories-options"
+                style={{
+                  display: showCategoriesOptions ? 'flex' : 'none',
+                  top: `${searchFiltersCategoriesOptionPosition}%`,
+                }}
+                onMouseEnter={() => setShowCategoriesOptions(true)}
+              >
+                <div className="search-filters-categories-options-inner">
+                  <div
+                    className={`search-filters-category-options-inner-options ${
+                      (currentCategory === 'executerTypes' &&
+                        executerTypesLoading) ||
+                      (currentCategory === 'resolutionTypes' &&
+                        resolutionTypesLoading) ||
+                      (currentCategory === 'templateTypes' &&
+                        templateTypesLoading) ||
+                      (currentCategory === 'statusTypes' &&
+                        statusTypesLoading) ||
+                      (currentCategory === 'squareTypes' && squareTypesLoading)
+                        ? 'search-filters-category-options-inner-options-loading'
+                        : ''
+                    }`}
+                  >
+                    {filtersData[currentCategory]?.length ? (
+                      (filtersData[currentCategory] || []).map((type) => (
+                        <label
+                          key={type.id}
+                          className={`${!!searchCategory && searchCategory.name === type.name ? 'filters-category-is-found' : ''}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={
+                              !!state[currentCategory]?.find(
+                                (item) => item.id === type.id
+                              )
+                            }
+                            onChange={() =>
+                              onChange({
+                                target: {
+                                  name: type.category,
+                                  value: {
+                                    ...type,
+                                    category: type.category,
+                                  },
                                 },
-                              },
-                            })
-                          }
-                        />
-                        <span>{type.name}</span>
+                              })
+                            }
+                          />
+                          <span>{type.name}</span>
+                        </label>
+                      ))
+                    ) : (
+                      <label>
+                        <span>Нет данных</span>
                       </label>
-                    ))
-                  ) : (
-                    <label>
-                      <span>Нет данных</span>
-                    </label>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
+            </div>
+            <div className="search-filter-actions">
+              <Button>Фильтровать</Button>
+              <Button variant="outlined">Сбросить</Button>
             </div>
           </div>
         </div>
