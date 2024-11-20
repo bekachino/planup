@@ -24,7 +24,11 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getExecuterTypes.fulfilled, (state, { payload: res }) => {
       state.executerTypesLoading = false;
-      state.executerTypes = res;
+      state.executerTypes = (res || []).map((option) => ({
+        ...option,
+        category: 'executerTypes',
+        index: 1,
+      }));
     });
     builder.addCase(getExecuterTypes.rejected, (state) => {
       state.executerTypesLoading = false;
@@ -35,7 +39,11 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getStatusTypes.fulfilled, (state, { payload: res }) => {
       state.statusTypesLoading = false;
-      state.statusTypes = res;
+      state.statusTypes = (res || []).map((option) => ({
+        ...option,
+        category: 'statusTypes',
+        index: 4,
+      }));
     });
     builder.addCase(getStatusTypes.rejected, (state) => {
       state.statusTypesLoading = false;

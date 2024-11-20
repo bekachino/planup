@@ -41,6 +41,8 @@ const SearchFilters = ({ ...rest }) => {
       ...(state['squareTypes'] || []),
     ];
   }, [state]);
+  const [searchWord, setSearchWord] = useState('');
+  const [searchCategory, setSearchCategory] = useState(null);
 
   useEffect(() => {
     dispatch(getExecuterTypes());
@@ -50,6 +52,41 @@ const SearchFilters = ({ ...rest }) => {
   useEffect(() => {
     document.addEventListener('mouseup', () => setShowCategories(false));
   }, []);
+
+  useEffect(() => {
+    if (searchWord) {
+      const foundCategoryOption = [
+        ...(filtersData['executerTypes'] || []),
+        ...(filtersData['resolutionTypes'] || []),
+        ...(filtersData['templateTypes'] || []),
+        ...(filtersData['statusTypes'] || []),
+        ...(filtersData['squareTypes'] || []),
+      ].find((option) =>
+        (option?.name || '').toLowerCase().includes(searchWord?.toLowerCase())
+      );
+
+      if (!!foundCategoryOption) {
+        setSearchFiltersCategoriesOptionPosition(
+          () => foundCategoryOption.index * (100 / 7) - 4
+        );
+        setCurrentCategory(foundCategoryOption.category);
+        setShowCategoriesOptions(true);
+        setSearchCategory(foundCategoryOption);
+        document
+          .querySelector('label.filters-category-is-found')
+          ?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+      } else {
+        setShowCategoriesOptions(false);
+        setSearchCategory(null);
+      }
+    } else {
+      setShowCategoriesOptions(false);
+      setSearchCategory(null);
+    }
+  }, [searchWord]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -81,8 +118,19 @@ const SearchFilters = ({ ...rest }) => {
       <input
         className="search-filters-input"
         type="text"
-        {...rest}
+        value={searchWord}
+        onChange={(e) => setSearchWord(e.target.value)}
         onFocus={() => setShowCategories(true)}
+        onKeyDown={(e) => {
+          if (showCategoriesOptions && !!searchCategory && e.key === 'Enter')
+            onChange({
+              target: {
+                name: searchCategory.category,
+                value: searchCategory,
+              },
+            });
+        }}
+        {...rest}
       />
       <div
         className="search-filters-values"
@@ -135,6 +183,7 @@ const SearchFilters = ({ ...rest }) => {
                   );
                   setCurrentCategory(category.name);
                 }}
+                key={i}
               >
                 {category.value}
               </button>
@@ -163,28 +212,31 @@ const SearchFilters = ({ ...rest }) => {
                   }`}
                 >
                   {filtersData[currentCategory]?.length ? (
-                    (filtersData[currentCategory] || []).map((executerType) => (
-                      <label key={executerType.id}>
+                    (filtersData[currentCategory] || []).map((type) => (
+                      <label
+                        key={type.id}
+                        className={`${!!searchCategory && searchCategory.name === type.name ? 'filters-category-is-found' : ''}`}
+                      >
                         <input
                           type="checkbox"
                           checked={
                             !!state[currentCategory]?.find(
-                              (item) => item.id === executerType.id
+                              (item) => item.id === type.id
                             )
                           }
                           onChange={() =>
                             onChange({
                               target: {
-                                name: currentCategory,
+                                name: type.category,
                                 value: {
-                                  ...executerType,
-                                  category: currentCategory,
+                                  ...type,
+                                  category: type.category,
                                 },
                               },
                             })
                           }
                         />
-                        <span>{executerType.name}</span>
+                        <span>{type.name}</span>
                       </label>
                     ))
                   ) : (

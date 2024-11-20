@@ -6,7 +6,7 @@ export const getExecuterTypes = createAsyncThunk(
   async (noAlert, { rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/resolution/');
-      return await req.data;
+      return await req.data || [];
     } catch {
       rejectWithValue('Ошибка при получении исполнителей');
     }
@@ -18,7 +18,7 @@ export const getStatusTypes = createAsyncThunk(
   async (noAlert, { rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/status/');
-      return await req.data;
+      return await req.data || [];
     } catch {
       rejectWithValue('Ошибка при получении статусов');
     }

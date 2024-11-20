@@ -104,7 +104,8 @@
 }
 
 .search-filters-categories button:hover,
-.search-filters-category-options-inner-options label:hover {
+.search-filters-category-options-inner-options label:hover,
+.filters-category-is-found {
   background-color: var(--select-option-hover);
 }
 
