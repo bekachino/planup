@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import SearchFilters from './Components/SearchFilters/SearchFilters';
-import './App.css';
 import DatetimePicker from './Components/DatetimePicker/DatetimePicker';
 import moment from 'moment';
+import 'moment/locale/ru';
+import './App.css';
+
+moment.locale('ru');
 
 function App() {
-  const [state, setState] = useState(moment());
+  const [state, setState] = useState('');
 
   const onChange = (e) => {
-    setState(moment(e.target.value, 'YYYY-MM-DDThh:mm'));
+    setState(e.target.value);
   };
 
   return (
@@ -19,7 +22,7 @@ function App() {
         type="datetime-local"
         placeholder="Желаемая дата приезда"
         label="Желаемая дата приезда"
-        value={!!state ? state.format('YYYY-MM-DDTHH:mm') : ''}
+        value={!!state ? state : ''}
         onChange={onChange}
       />
     </div>

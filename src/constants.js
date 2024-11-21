@@ -39,3 +39,5 @@ export const filterCategories = [
     value: 'Дата завершения',
   },
 ];
+
+export const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
