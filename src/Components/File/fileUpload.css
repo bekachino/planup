@@ -1,0 +1,58 @@
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 20px;
+}
+
+.file-upload-label {
+  font-size: 14px;
+  color: var(--text-4);
+}
+
+.file-uploader-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 2px solid var(--input-border-empty);
+  border-radius: 8px;
+  padding: 5px 10px 5px 5px;
+  background-color: var(--white-grey);
+}
+
+.file-uploader-wrapper .button {
+  gap: 5px;
+  font-weight: 600;
+  font-size: 11px;
+  padding: 5px 8px;
+  text-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.file-uploader-wrapper .button svg {
+  max-height: 16px;
+}
+
+.file-upload-value {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-4);
+  font-size: 14px;
+  flex-grow: 1;
+}
+
+.file-upload-range-wrapper {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background-color: var(--main-2-hover);
+}
+
+.file-upload-loading-range {
+  position: absolute;
+  inset: 0;
+  margin: auto auto auto 0;
+  height: 100%;
+  background-color: var(--main-2);
+}

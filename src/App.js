@@ -4,14 +4,20 @@ import DatetimePicker from './Components/DatetimePicker/DatetimePicker';
 import moment from 'moment';
 import 'moment/locale/ru';
 import './App.css';
+import FileUpload from './Components/File/FileUpload';
 
 moment.locale('ru');
 
 function App() {
   const [state, setState] = useState('');
+  const [file, setFile] = useState(null);
 
   const onChange = (e) => {
     setState(e.target.value);
+  };
+
+  const onFileChange = (e) => {
+    setFile(e.target.value);
   };
 
   return (
@@ -25,6 +31,7 @@ function App() {
         value={!!state ? state : ''}
         onChange={onChange}
       />
+      <FileUpload value={file} onChange={onFileChange} />
     </div>
   );
 }

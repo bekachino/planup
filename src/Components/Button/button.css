@@ -1,4 +1,7 @@
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 14px;
   transition: 0.2s;
   cursor: pointer;
@@ -35,6 +38,10 @@
 
 .button-loading {
   color: transparent;
+}
+
+.button-loading * {
+  opacity: 0;
 }
 
 .button-loading::before {
