@@ -80,7 +80,7 @@
   color: var(--white);
   font-size: 12px;
   border-radius: 8px;
-  background-image: url("../../assets/remove-icon-white.svg");
+  background-image: url('../../assets/remove-icon-white.svg');
   background-repeat: no-repeat;
   background-size: 8px;
   background-position: calc(100% - 9px) center;
@@ -256,6 +256,6 @@
 
 @keyframes spin {
   to {
-    rotate: 360deg
+    rotate: 360deg;
   }
 }

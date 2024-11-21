@@ -52,6 +52,6 @@
 
 @keyframes spin {
   to {
-    rotate: 360deg
+    rotate: 360deg;
   }
 }
