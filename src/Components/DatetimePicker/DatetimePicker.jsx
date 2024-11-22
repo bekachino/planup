@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from '../Input/Input';
 import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
 import { ReactComponent as ClockIcon } from '../../assets/clock.svg';

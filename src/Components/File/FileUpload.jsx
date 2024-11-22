@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '../Button/Button';
 import { ReactComponent as SheetList } from '../../assets/sheetList.svg';
-import axios from 'axios';
 import './fileUpload.css';
 
 const FileUpload = ({ name, value, onChange, label, ...rest }) => {
