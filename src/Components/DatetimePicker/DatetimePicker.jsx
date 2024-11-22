@@ -9,7 +9,7 @@ import { weekDays } from '../../constants';
 import Button from '../Button/Button';
 import './datetimePicker.css';
 
-const DatetimePicker = ({ value, onChange, ...rest }) => {
+const DatetimePicker = ({ name, value, onChange, ...rest }) => {
   const [datepickerType, setDatepickerType] = useState('date');
   const [currentDate, setCurrentDate] = useState(moment());
   const [showCalendar, setShowCalendar] = useState(false);
@@ -40,14 +40,15 @@ const DatetimePicker = ({ value, onChange, ...rest }) => {
     const numberValidation = hour.replace(/[^0-9]/g, '');
     const newValue = !!value
       ? moment(
-          moment(value, 'YYYY-MM-DDTHH:mm').clone().hour(numberValidation)
-        ).format('YYYY-MM-DDTHH:mm')
+          moment(value, 'DD.MM.YYYY HH:mm').clone().hour(numberValidation)
+        ).format('DD.MM.YYYY HH:mm')
       : moment(moment().clone().hour(numberValidation)).format(
-          'YYYY-MM-DDTHH:mm'
+          'DD.MM.YYYY HH:mm'
         );
 
     onChange({
       target: {
+        name,
         value: newValue,
       },
     });
@@ -61,14 +62,15 @@ const DatetimePicker = ({ value, onChange, ...rest }) => {
     const numberValidation = minute.replace(/[^0-9]/g, '');
     const newValue = !!value
       ? moment(
-          moment(value, 'YYYY-MM-DDTHH:mm').clone().minute(numberValidation)
-        ).format('YYYY-MM-DDTHH:mm')
+          moment(value, 'DD.MM.YYYY HH:mm').clone().minute(numberValidation)
+        ).format('DD.MM.YYYY HH:mm')
       : moment(moment().clone().minute(numberValidation)).format(
-          'YYYY-MM-DDTHH:mm'
+          'DD.MM.YYYY HH:mm'
         );
 
     onChange({
       target: {
+        name,
         value: newValue,
       },
     });
@@ -112,13 +114,18 @@ const DatetimePicker = ({ value, onChange, ...rest }) => {
               ? 'date-time-calendar-day-not-current-month'
               : ''
           } ${day.isSame(moment(), 'day') ? 'date-time-calendar-day-today' : ''} ${
-            day.isSame(moment(value, 'YYYY-MM-DDTHH:mm'), 'day')
+            day.isSame(moment(value, 'DD.MM.YYYY HH:mm'), 'day')
               ? 'date-time-calendar-day-picked'
               : ''
           }`}
           key={i}
           onClick={() =>
-            onChange({ target: { value: day.format('YYYY-MM-DDTHH:mm') } })
+            onChange({
+              target: {
+                name,
+                value: day.format('DD.MM.YYYY HH:mm'),
+              },
+            })
           }
         >
           {day.format('D')}
@@ -132,7 +139,7 @@ const DatetimePicker = ({ value, onChange, ...rest }) => {
       <Input
         className="date-time-clock-hour"
         type="number"
-        value={!!value ? moment(value, 'YYYY-MM-DDTHH:mm').format('HH') : 12}
+        value={!!value ? moment(value, 'DD.MM.YYYY HH:mm').format('HH') : 12}
         onChange={onHourChange}
         autoComplete="off"
       />
@@ -140,7 +147,7 @@ const DatetimePicker = ({ value, onChange, ...rest }) => {
       <Input
         className="date-time-clock-minute"
         type="number"
-        value={!!value ? moment(value, 'YYYY-MM-DDTHH:mm').format('mm') : '00'}
+        value={!!value ? moment(value, 'DD.MM.YYYY HH:mm').format('mm') : '00'}
         onChange={onMinuteChange}
         autoComplete="off"
       />
@@ -152,9 +159,9 @@ const DatetimePicker = ({ value, onChange, ...rest }) => {
       <Input
         className="date-time-picker-input"
         value={value}
-        {...rest}
         onFocus={() => setShowCalendar(true)}
-        onChange={onChange}
+        readOnly
+        {...rest}
       />
       <div className="date-time-picker-icon" />
       <div

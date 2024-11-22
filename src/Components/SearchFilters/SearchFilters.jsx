@@ -7,6 +7,7 @@ import {
 import { filterCategories } from '../../constants';
 import './searchFilters.css';
 import Button from '../Button/Button';
+import DatetimePicker from '../DatetimePicker/DatetimePicker';
 
 const SearchFilters = ({ ...rest }) => {
   const searchFiltersCategoriesRef = useRef(null);
@@ -100,7 +101,7 @@ const SearchFilters = ({ ...rest }) => {
       return;
     }
 
-    if (!!state[name].find((item) => item.id === value.id)) {
+    if (!!state[name] && !!state[name].find((item) => item.id === value.id)) {
       setState((prevState) => ({
         ...prevState,
         [name]: prevState[name].filter((item) => item.id !== value.id),
@@ -113,6 +114,74 @@ const SearchFilters = ({ ...rest }) => {
       [name]: [...prevState[name], value],
     }));
   };
+
+  const startDateOption = () => (
+    <DatetimePicker
+      name="start_date"
+      placeholder="От"
+      disableLabel
+      value={!!state ? state?.start_date : null}
+      onChange={onChange}
+    />
+  );
+
+  const endDateOption = () => (
+    <DatetimePicker
+      name="end_date"
+      placeholder="До"
+      disableLabel
+      value={!!state ? state?.end_date : null}
+      onChange={onChange}
+    />
+  );
+
+  const searchFiltersCategoryOptions = () => (
+    <div className="search-filters-categories-options-inner">
+      <div
+        className={`search-filters-category-options-inner-options ${
+          (currentCategory === 'executerTypes' && executerTypesLoading) ||
+          (currentCategory === 'resolutionTypes' && resolutionTypesLoading) ||
+          (currentCategory === 'templateTypes' && templateTypesLoading) ||
+          (currentCategory === 'statusTypes' && statusTypesLoading) ||
+          (currentCategory === 'squareTypes' && squareTypesLoading)
+            ? 'search-filters-category-options-inner-options-loading'
+            : ''
+        }`}
+      >
+        {filtersData[currentCategory]?.length ? (
+          (filtersData[currentCategory] || []).map((type) => (
+            <label
+              key={type.id}
+              className={`${!!searchCategory && searchCategory.name === type.name ? 'filters-category-is-found' : ''}`}
+            >
+              <input
+                type="checkbox"
+                checked={
+                  !!state[currentCategory]?.find((item) => item.id === type.id)
+                }
+                onChange={() =>
+                  onChange({
+                    target: {
+                      name: type.category,
+                      value: {
+                        ...type,
+                        category: type.category,
+                      },
+                    },
+                  })
+                }
+              />
+              <span>{type.name}</span>
+            </label>
+          ))
+        ) : (
+          <label>
+            <span>Нет данных</span>
+          </label>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="search-filters" onMouseUp={(e) => e.stopPropagation()}>
@@ -173,6 +242,7 @@ const SearchFilters = ({ ...rest }) => {
             >
               {filterCategories.map((category, i) => (
                 <button
+                  className="search-filters-category"
                   onMouseEnter={(_) => {
                     setCurrentCategory(category.name);
                     setSearchFiltersCategoriesOptionPosition(
@@ -199,57 +269,11 @@ const SearchFilters = ({ ...rest }) => {
                 }}
                 onMouseEnter={() => setShowCategoriesOptions(true)}
               >
-                <div className="search-filters-categories-options-inner">
-                  <div
-                    className={`search-filters-category-options-inner-options ${
-                      (currentCategory === 'executerTypes' &&
-                        executerTypesLoading) ||
-                      (currentCategory === 'resolutionTypes' &&
-                        resolutionTypesLoading) ||
-                      (currentCategory === 'templateTypes' &&
-                        templateTypesLoading) ||
-                      (currentCategory === 'statusTypes' &&
-                        statusTypesLoading) ||
-                      (currentCategory === 'squareTypes' && squareTypesLoading)
-                        ? 'search-filters-category-options-inner-options-loading'
-                        : ''
-                    }`}
-                  >
-                    {filtersData[currentCategory]?.length ? (
-                      (filtersData[currentCategory] || []).map((type) => (
-                        <label
-                          key={type.id}
-                          className={`${!!searchCategory && searchCategory.name === type.name ? 'filters-category-is-found' : ''}`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={
-                              !!state[currentCategory]?.find(
-                                (item) => item.id === type.id
-                              )
-                            }
-                            onChange={() =>
-                              onChange({
-                                target: {
-                                  name: type.category,
-                                  value: {
-                                    ...type,
-                                    category: type.category,
-                                  },
-                                },
-                              })
-                            }
-                          />
-                          <span>{type.name}</span>
-                        </label>
-                      ))
-                    ) : (
-                      <label>
-                        <span>Нет данных</span>
-                      </label>
-                    )}
-                  </div>
-                </div>
+                {currentCategory === 'start_date'
+                  ? startDateOption()
+                  : currentCategory === 'end_date'
+                    ? endDateOption()
+                    : searchFiltersCategoryOptions()}
               </div>
             </div>
             <div className="search-filter-actions">

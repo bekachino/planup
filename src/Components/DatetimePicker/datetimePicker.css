@@ -1,5 +1,5 @@
 .date-time-picker {
-  position: relative;
+  position: relative !important;
 }
 
 .date-time-picker-input {
@@ -11,9 +11,9 @@
   position: absolute;
   content: '';
   inset: 0;
-  margin: 24px 2px auto auto;
-  height: 39px;
-  width: 32px;
+  margin: 25px 2px auto auto;
+  height: 61px;
+  width: 50px;
   background-color: var(--white);
   background-image: url('../../assets/calendar.svg');
   background-repeat: no-repeat;
@@ -23,12 +23,15 @@
   border-bottom-right-radius: 50%;
 }
 
+.date-time-picker:not(:has(.input-label)) .date-time-picker-icon {
+  margin: 2px 2px auto auto;
+}
+
 .date-time-calendar {
   position: absolute;
   top: calc(100% + 6px);
   border-radius: 8px;
-  width: 100%;
-  max-width: 340px;
+  min-width: 340px;
   overflow: hidden;
   user-select: none;
 }

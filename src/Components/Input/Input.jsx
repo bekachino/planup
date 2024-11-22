@@ -14,9 +14,11 @@ const Input = ({
 }) => {
   return (
     <div className="input-container" style={style}>
-      <label className="input-label" htmlFor={`${label}-input`}>
-        {label}
-      </label>
+      {!!label && (
+        <label className="input-label" htmlFor={`${label}-input`}>
+          {label}
+        </label>
+      )}
       <div className="input-wrapper">
         {values?.map((value) => (
           <div
