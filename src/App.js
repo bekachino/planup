@@ -1,39 +1,19 @@
-import { useState } from 'react';
-import SearchFilters from './Components/SearchFilters/SearchFilters';
-import DatetimePicker from './Components/DatetimePicker/DatetimePicker';
 import moment from 'moment';
 import 'moment/locale/ru';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import FileUpload from './Components/File/FileUpload';
+import Home from './Containers/Home/Home';
+import Header from './Components/Header/Header';
 
 moment.locale('ru');
 
-function App() {
-  const [state, setState] = useState('');
-  const [file, setFile] = useState(null);
-
-  const onChange = (e) => {
-    setState(e.target.value);
-  };
-
-  const onFileChange = (e) => {
-    setFile(e.target.value);
-  };
-
-  return (
-    <div className="App">
-      <SearchFilters placeholder="Поиск" />
-      <br />
-      <DatetimePicker
-        type="datetime-local"
-        placeholder="Желаемая дата приезда"
-        label="Желаемая дата приезда"
-        value={!!state ? state : ''}
-        onChange={onChange}
-      />
-      <FileUpload value={file} onChange={onFileChange} />
-    </div>
-  );
-}
+const App = () => (
+  <div className="App">
+    <Header />
+    <Routes>
+      <Route path="home" element={<Home />} />
+    </Routes>
+  </div>
+);
 
 export default App;

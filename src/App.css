@@ -29,6 +29,9 @@
   --checkbox-checked: #605dec;
   --disabled-btn-bg: #e3e3e3;
   --disabled-btn-color: #989898;
+  --nav-text: #182D75;
+  --nav-text-2: #41445B;
+  --nav-hover: rgba(24, 45, 117, 0.05);
 }
 
 *,
@@ -41,5 +44,9 @@ body {
   font-family: Inter, sans-serif;
   font-weight: 400;
   margin: 0;
-  padding: 20px;
+}
+
+.App {
+  min-height: 100vh;
+  background-color: var(--white-grey);
 }

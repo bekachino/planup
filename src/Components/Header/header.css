@@ -1,0 +1,101 @@
+.header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px 32px;
+  padding: 27px 55px;
+}
+
+.home-link {
+  color: var(--nav-text-2);
+  text-decoration: none;
+}
+
+.header h1 {
+  width: 100%;
+  margin: 0;
+  font-weight: 500;
+  line-height: 42px;
+}
+
+nav {
+  display: flex;
+  align-items: stretch;
+  flex-grow: 1;
+  background-color: var(--white);
+  border-radius: 12px;
+  margin-left: auto;
+}
+
+nav a {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-grow: 1;
+  gap: 8px;
+  color: var(--nav-text);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-decoration: none;
+  padding: 20px 18px;
+  text-wrap: nowrap;
+  border-radius: 12px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+  background-color: var(--nav-hover);
+}
+
+.nav-burger-btn-wrapper {
+  position: relative;
+}
+
+.nav-burger-btn,
+.nav-burger-tooltip-btn {
+  border: 0;
+  background-color: transparent;
+  padding: 15px 17px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.nav-burger-btn:hover,
+.nav-burger-tooltip-btn:hover {
+  background-color: var(--nav-hover);
+}
+
+.nav-burger-btn svg {
+  pointer-events: none;
+}
+
+.nav-burger-tooltip-shown {
+  background-color: var(--main-1) !important;
+}
+
+.nav-burger-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  text-wrap: nowrap;
+  padding: 17px 5px;
+  border-radius: 4px;
+  background-color: var(--white);
+  box-shadow: 0 4px 25px 0 #5763FF33;
+}
+
+.nav-burger-tooltip-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 35px;
+  font-size: 18px;
+  text-align: left;
+}
+
+.nav-burger-tooltip-btn:last-child {
+  margin-top: 40px;
+}
