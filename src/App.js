@@ -7,13 +7,15 @@ import './App.css';
 
 moment.locale('ru');
 
-const App = () => (
-  <div className="App">
-    <Header />
-    <Routes>
-      <Route path="home" element={<Home />} />
-    </Routes>
-  </div>
-);
+const App = () => {
+  return (
+    <div className="App">
+      <Header />
+      <Routes>
+        <Route path="home" element={<Home />} />
+      </Routes>
+    </div>
+  );
+};
 
 export default App;

@@ -32,11 +32,11 @@ export const filterCategories = [
   },
   {
     name: 'start_date',
-    value: 'Дата создания',
+    value: 'Завершенные',
   },
   {
     name: 'end_date',
-    value: 'Дата завершения',
+    value: 'По дате',
   },
 ];
 

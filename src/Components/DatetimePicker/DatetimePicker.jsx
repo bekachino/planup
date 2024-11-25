@@ -9,7 +9,15 @@ import { weekDays } from '../../constants';
 import Button from '../Button/Button';
 import './datetimePicker.css';
 
-const DatetimePicker = ({ name, value, onChange, ...rest }) => {
+const DatetimePicker = ({
+  id,
+  name,
+  value,
+  placeholder,
+  onChange,
+  noTime,
+  ...rest
+}) => {
   const [datepickerType, setDatepickerType] = useState('date');
   const [currentDate, setCurrentDate] = useState(moment());
   const [showCalendar, setShowCalendar] = useState(false);
@@ -40,10 +48,12 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
     const numberValidation = hour.replace(/[^0-9]/g, '');
     const newValue = !!value
       ? moment(
-          moment(value, 'DD.MM.YYYY HH:mm').clone().hour(numberValidation)
-        ).format('DD.MM.YYYY HH:mm')
+          moment(value, `DD.MM.YYYY${noTime ? '' : ' HH:mm'}`)
+            .clone()
+            .hour(numberValidation)
+        ).format(`DD.MM.YYYY${noTime ? '' : ' HH:mm'}`)
       : moment(moment().clone().hour(numberValidation)).format(
-          'DD.MM.YYYY HH:mm'
+          `DD.MM.YYYY${noTime ? '' : ' HH:mm'}`
         );
 
     onChange({
@@ -52,6 +62,7 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
         value: newValue,
       },
     });
+    setShowCalendar(false);
     setTimeout(() =>
       document.querySelector('.date-time-clock .date-time-clock-hour').focus()
     );
@@ -62,10 +73,12 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
     const numberValidation = minute.replace(/[^0-9]/g, '');
     const newValue = !!value
       ? moment(
-          moment(value, 'DD.MM.YYYY HH:mm').clone().minute(numberValidation)
-        ).format('DD.MM.YYYY HH:mm')
+          moment(value, `DD.MM.YYYY${noTime ? '' : ' HH:mm'}`)
+            .clone()
+            .minute(numberValidation)
+        ).format(`DD.MM.YYYY${noTime ? '' : ' HH:mm'}`)
       : moment(moment().clone().minute(numberValidation)).format(
-          'DD.MM.YYYY HH:mm'
+          `DD.MM.YYYY${noTime ? '' : ' HH:mm'}`
         );
 
     onChange({
@@ -74,12 +87,31 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
         value: newValue,
       },
     });
+    setShowCalendar(false);
     setTimeout(() =>
       document.querySelector('.date-time-clock .date-time-clock-minute').focus()
     );
   };
+
   useEffect(() => {
-    document.addEventListener('mouseup', () => setShowCalendar(false));
+    const handleMouseDown = (e) => {
+      const mouseOnSearchFilters = () => {
+        const classList = document
+          .elementsFromPoint(e.clientX, e.clientY)
+          .map((element) => Array.from(element.classList))
+          .flat();
+        if (
+          !classList.includes('date-time-calendar') &&
+          !classList.includes(id)
+        )
+          return true;
+      };
+      if (mouseOnSearchFilters()) setShowCalendar(false);
+    };
+    document.body.addEventListener('mousedown', handleMouseDown);
+    return () => {
+      document.body.removeEventListener('mousedown', handleMouseDown);
+    };
   }, []);
 
   const Datepicker = () => (
@@ -114,19 +146,23 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
               ? 'date-time-calendar-day-not-current-month'
               : ''
           } ${day.isSame(moment(), 'day') ? 'date-time-calendar-day-today' : ''} ${
-            day.isSame(moment(value, 'DD.MM.YYYY HH:mm'), 'day')
+            day.isSame(
+              moment(value, `DD.MM.YYYY${noTime ? '' : ' HH:mm'}`),
+              'day'
+            )
               ? 'date-time-calendar-day-picked'
               : ''
           }`}
           key={i}
-          onClick={() =>
+          onClick={() => {
             onChange({
               target: {
                 name,
-                value: day.format('DD.MM.YYYY HH:mm'),
+                value: day.format(`DD.MM.YYYY${noTime ? '' : ' HH:mm'}`),
               },
-            })
-          }
+            });
+            setShowCalendar(false);
+          }}
         >
           {day.format('D')}
         </div>
@@ -139,7 +175,11 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
       <Input
         className="date-time-clock-hour"
         type="number"
-        value={!!value ? moment(value, 'DD.MM.YYYY HH:mm').format('HH') : 12}
+        value={
+          !!value
+            ? moment(value, `DD.MM.YYYY${noTime ? '' : ' HH:mm'}`).format('HH')
+            : 12
+        }
         onChange={onHourChange}
         autoComplete="off"
       />
@@ -147,7 +187,11 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
       <Input
         className="date-time-clock-minute"
         type="number"
-        value={!!value ? moment(value, 'DD.MM.YYYY HH:mm').format('mm') : '00'}
+        value={
+          !!value
+            ? moment(value, `DD.MM.YYYY${noTime ? '' : ' HH:mm'}`).format('mm')
+            : '00'
+        }
         onChange={onMinuteChange}
         autoComplete="off"
       />
@@ -155,17 +199,18 @@ const DatetimePicker = ({ name, value, onChange, ...rest }) => {
   );
 
   return (
-    <div className="date-time-picker" onMouseUp={(e) => e.stopPropagation()}>
+    <div className={`date-time-picker ${id}`}>
       <Input
         className="date-time-picker-input"
         value={value}
+        placeholder={placeholder}
         onFocus={() => setShowCalendar(true)}
         readOnly
         {...rest}
       />
       <div className="date-time-picker-icon" />
       <div
-        className="date-time-calendar"
+        className={`date-time-calendar ${id}`}
         style={{ display: showCalendar ? 'block' : 'none' }}
       >
         <div className="date-time-calendar-header">

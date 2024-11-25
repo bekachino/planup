@@ -182,8 +182,8 @@
 
 .search-filters-categories-options {
   position: absolute;
-  right: calc(-100% + -13px);
-  width: 100%;
+  left: calc(100% + 13px);
+  min-width: 350px;
   max-height: 100%;
   padding: 10px 10px 10px 22px;
   box-sizing: border-box;
@@ -197,9 +197,10 @@
   width: 100%;
 }
 
-.search-filters-categories-options .date-time-picker {
-  box-shadow: 0 4px 20px 0 #2c344e33;
-  border-radius: 8px;
+.search-filters-date-period {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .search-filters-category-options-inner-options {

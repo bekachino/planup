@@ -5,9 +5,10 @@ import {
   getStatusTypes,
 } from '../../features/statuses/filtersDataThunk';
 import { filterCategories } from '../../constants';
-import './searchFilters.css';
 import Button from '../Button/Button';
 import DatetimePicker from '../DatetimePicker/DatetimePicker';
+import { nanoid } from 'nanoid';
+import './searchFilters.css';
 
 const SearchFilters = ({ ...rest }) => {
   const searchFiltersCategoriesRef = useRef(null);
@@ -52,7 +53,26 @@ const SearchFilters = ({ ...rest }) => {
   }, []);
 
   useEffect(() => {
-    document.addEventListener('mouseup', () => setShowCategories(false));
+    const handleMouseDown = (e) => {
+      const mouseOnSearchFilters = () => {
+        const classList = document
+          .elementsFromPoint(e.clientX, e.clientY)
+          .map((element) => Array.from(element.classList))
+          .flat();
+        if (
+          !classList.includes('search-filters-tooltip') &&
+          !classList.includes('search-filters-input') &&
+          !classList.includes('search-filters-categories-options') &&
+          !classList.includes('date-time-calendar')
+        )
+          return true;
+      };
+      if (mouseOnSearchFilters()) setShowCategories(false);
+    };
+    document.body.addEventListener('mousedown', handleMouseDown);
+    return () => {
+      document.body.removeEventListener('mousedown', handleMouseDown);
+    };
   }, []);
 
   useEffect(() => {
@@ -93,7 +113,14 @@ const SearchFilters = ({ ...rest }) => {
   const onChange = (e) => {
     const { name, value } = e.target;
 
-    if (['start_date', 'end_date'].includes(name)) {
+    if (
+      [
+        'finished_start_date',
+        'finished_end_date',
+        'start_date',
+        'end_date',
+      ].includes(name)
+    ) {
       setState((prevState) => ({
         ...prevState,
         [name]: value,
@@ -115,24 +142,52 @@ const SearchFilters = ({ ...rest }) => {
     }));
   };
 
-  const startDateOption = () => (
-    <DatetimePicker
-      name="start_date"
-      placeholder="От"
-      disableLabel
-      value={!!state ? state?.start_date : null}
-      onChange={onChange}
-    />
+  const finishedDatePeriodOption = () => (
+    <div className="search-filters-categories-options-inner search-filters-date-period">
+      <DatetimePicker
+        name="finished_start_date"
+        placeholder="От"
+        disableLabel
+        value={!!state ? state?.finished_start_date : null}
+        onChange={onChange}
+        noTime
+        id={nanoid()}
+      />
+      -
+      <DatetimePicker
+        name="finished_end_date"
+        placeholder="До"
+        disableLabel
+        value={!!state ? state?.finished_end_date : null}
+        onChange={onChange}
+        noTime
+        id={nanoid()}
+      />
+    </div>
   );
 
-  const endDateOption = () => (
-    <DatetimePicker
-      name="end_date"
-      placeholder="До"
-      disableLabel
-      value={!!state ? state?.end_date : null}
-      onChange={onChange}
-    />
+  const datePeriodOption = () => (
+    <div className="search-filters-categories-options-inner search-filters-date-period">
+      <DatetimePicker
+        name="start_date"
+        placeholder="От"
+        disableLabel
+        value={!!state ? state?.start_date : null}
+        onChange={onChange}
+        noTime
+        id={nanoid()}
+      />
+      -
+      <DatetimePicker
+        name="end_date"
+        placeholder="До"
+        disableLabel
+        value={!!state ? state?.end_date : null}
+        onChange={onChange}
+        noTime
+        id={nanoid()}
+      />
+    </div>
   );
 
   const searchFiltersCategoryOptions = () => (
@@ -184,7 +239,7 @@ const SearchFilters = ({ ...rest }) => {
   );
 
   return (
-    <div className="search-filters" onMouseUp={(e) => e.stopPropagation()}>
+    <div className="search-filters">
       <input
         className="search-filters-input"
         type="text"
@@ -232,7 +287,7 @@ const SearchFilters = ({ ...rest }) => {
         </div>
         <div
           className={`search-filters-block ${showCategories ? 'search-filters-block-shown' : ''}`}
-          onMouseLeave={() => setShowCategoriesOptions(false)}
+          //onMouseLeave={() => setShowCategoriesOptions(false)}
         >
           <div className="search-filters-block-inner">
             <span className="search-filters-block-title">Фильтрация</span>
@@ -270,9 +325,9 @@ const SearchFilters = ({ ...rest }) => {
                 onMouseEnter={() => setShowCategoriesOptions(true)}
               >
                 {currentCategory === 'start_date'
-                  ? startDateOption()
+                  ? finishedDatePeriodOption()
                   : currentCategory === 'end_date'
-                    ? endDateOption()
+                    ? datePeriodOption()
                     : searchFiltersCategoryOptions()}
               </div>
             </div>
