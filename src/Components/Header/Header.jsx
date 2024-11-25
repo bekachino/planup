@@ -12,6 +12,7 @@ import { ReactComponent as ExcelIcon } from '../../assets/excel.svg';
 import { ReactComponent as NewsIcon } from '../../assets/news.svg';
 import { ReactComponent as UserIcon } from '../../assets/user.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
+import Alerts from '../Alerts/Alerts';
 import './header.css';
 
 const Header = () => {
@@ -46,7 +47,7 @@ const Header = () => {
           <CheckIcon />
           Статусы
         </NavLink>
-        <NavLink to="/duties">
+        <NavLink to="/works">
           <LucidIcon />
           Создать наряд
         </NavLink>
@@ -82,6 +83,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      <Alerts />
     </header>
   );
 };

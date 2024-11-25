@@ -41,19 +41,33 @@ nav a {
   padding: 20px 18px;
   text-wrap: nowrap;
   border-radius: 12px;
+  transition: .2s;
+}
+
+nav a svg path {
+  transition: .2s;
 }
 
 nav a:hover {
-  text-decoration: underline;
-  background-color: var(--nav-hover);
+  color: var(--nav-text-hover);
+}
+
+nav a:hover svg path {
+  stroke: var(--nav-text-hover);
 }
 
 .nav-burger-btn-wrapper {
   position: relative;
 }
 
+.nav-burger-btn {
+  transition: .1s;
+}
+
 .nav-burger-btn,
 .nav-burger-tooltip-btn {
+  display: flex;
+  align-items: center;
   border: 0;
   background-color: transparent;
   padding: 15px 17px;
@@ -77,7 +91,7 @@ nav a:hover {
 .nav-burger-tooltip {
   position: absolute;
   top: calc(100% + 10px);
-  right: 0;
+  right: -2px;
   display: flex;
   flex-direction: column;
   text-wrap: nowrap;
@@ -85,11 +99,10 @@ nav a:hover {
   border-radius: 4px;
   background-color: var(--white);
   box-shadow: 0 4px 25px 0 #5763FF33;
+  z-index: 10;
 }
 
 .nav-burger-tooltip-btn {
-  display: flex;
-  align-items: center;
   gap: 12px;
   padding-right: 35px;
   font-size: 18px;

@@ -1,2 +1,116 @@
 .home {
+  height: 100%;
+}
+
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0 55px;
+  gap: 12px;
+}
+
+.home-table-add-field-btn {
+  margin-left: auto;
+  font-size: 18px;
+  padding: 12px 16px;
+}
+
+.home-table-wrapper {
+  display: flex;
+  width: 100%;
+  height: auto;
+  overflow: auto;
+}
+
+.home-table-wrapper table {
+  flex-grow: 1;
+  border-collapse: separate;
+  border-spacing: 0 14px;
+}
+
+.home-table-wrapper table thead {
+  position: sticky;
+  top: 1px;
+  z-index: 1;
+}
+
+.home-table-wrapper th:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.home-table-wrapper th:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.home-table-wrapper th {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 26px;
+  background-color: var(--main-1);
+  color: var(--white);
+  padding: 25px 21px;
+}
+
+.home-table-wrapper tbody tr {
+  position: relative;
+  background-color: var(--white);
+  font-family: Montserrat, sans-serif;
+}
+
+.home-table-wrapper tbody tr::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto auto auto 1px;
+  width: 8px;
+  height: calc(100% + 4px);
+  border-top-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  background-color: var(--stopped);
+}
+
+.home-table-wrapper tbody td {
+  position: relative;
+  padding: 30px 14px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.home-table-wrapper tbody td:first-child {
+  padding-left: 20px;
+}
+
+.home-table-wrapper tbody td::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto -1px auto auto;
+  width: 1px;
+  height: calc(100% - 40px);
+  background-color: #ececec;
+}
+
+.home-table-wrapper tbody td:last-child::before {
+  content: none;
+}
+
+.duty-item-cell-value {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-table-wrapper tbody td a {
+  color: var(--planned);
+}
+
+.home-table-wrapper tbody tr.duty-item-status-started::after {
+  background-color: var(--started);
+}
+
+.home-table-wrapper tbody tr.duty-item-status-stopped::after {
+  background-color: var(--stopped);
 }

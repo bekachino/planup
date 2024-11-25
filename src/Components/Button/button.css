@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   padding: 8px 14px;
   transition: 0.2s;
   cursor: pointer;
@@ -13,6 +14,14 @@
   background-color: var(--main-2);
   color: var(--white);
   border-radius: 8px;
+}
+
+.button-contained.button-color-secondary {
+  background-color: var(--main-1);
+}
+
+.button-contained.button-color-secondary:hover {
+  background-color: var(--main-1-hover);
 }
 
 .button-contained:hover {
@@ -30,6 +39,20 @@
   background-color: var(--main-2-hover);
 }
 
+.button-outlined.button-color-secondary {
+  border: 2px solid var(--main-1);
+  background-color: var(--white);
+  color: var(--main-1);
+}
+
+.button-outlined.button-color-secondary svg path {
+  stroke: var(--main-1);
+}
+
+.button-outlined.button-color-secondary:hover {
+  background-color: var(--main-1-outlined-hover);
+}
+
 .button-loading,
 .button:disabled {
   position: relative;
@@ -37,7 +60,7 @@
 }
 
 .button-loading {
-  color: transparent;
+  color: transparent!important;
 }
 
 .button-loading * {
@@ -55,6 +78,11 @@
   border-radius: 50%;
   border-right: 3px solid transparent;
   animation: spin 1s linear infinite;
+}
+
+.button-outlined.button-loading {
+  background-color: transparent !important;
+  border: 2px solid var(--disabled-btn-color) !important;
 }
 
 @keyframes spin {

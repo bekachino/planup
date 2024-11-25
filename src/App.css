@@ -14,6 +14,8 @@
   --main-2: #0d81e1;
   --main-3: #2e9df8;
   --main-4: #0d81e1b2;
+  --main-1-hover: #676b97;
+  --main-1-outlined-hover: rgba(103, 107, 151, 0.15);
   --main-2-hover: rgba(13, 129, 225, 0.15);
   --white: #ffffff;
   --white-grey: #fcfcfc;
@@ -31,6 +33,7 @@
   --disabled-btn-color: #989898;
   --nav-text: #182D75;
   --nav-text-2: #41445B;
+  --nav-text-hover: #003AFF;
   --nav-hover: rgba(24, 45, 117, 0.05);
 }
 
