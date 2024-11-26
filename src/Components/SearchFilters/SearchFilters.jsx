@@ -287,7 +287,7 @@ const SearchFilters = ({ ...rest }) => {
         </div>
         <div
           className={`search-filters-block ${showCategories ? 'search-filters-block-shown' : ''}`}
-          //onMouseLeave={() => setShowCategoriesOptions(false)}
+          onMouseLeave={() => setShowCategoriesOptions(false)}
         >
           <div className="search-filters-block-inner">
             <span className="search-filters-block-title">Фильтрация</span>

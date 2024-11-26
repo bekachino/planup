@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getExecuterTypes, getStatusTypes } from './filtersDataThunk';
+import {
+  getExecuterTypes,
+  getStatusTypes,
+  getTemplateTypes,
+} from './filtersDataThunk';
 
 const initialState = {
   executerTypes: [],
@@ -47,6 +51,21 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getStatusTypes.rejected, (state) => {
       state.statusTypesLoading = false;
+    });
+
+    builder.addCase(getTemplateTypes.pending, (state) => {
+      state.templateTypesLoading = true;
+    });
+    builder.addCase(getTemplateTypes.fulfilled, (state, { payload: res }) => {
+      state.templateTypesLoading = false;
+      state.templateTypes = (res || []).map((option) => ({
+        ...option,
+        category: 'templateTypes',
+        index: 3,
+      }));
+    });
+    builder.addCase(getTemplateTypes.rejected, (state) => {
+      state.templateTypesLoading = false;
     });
   },
 });
