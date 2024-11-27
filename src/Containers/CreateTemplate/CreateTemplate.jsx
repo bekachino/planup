@@ -14,6 +14,14 @@ const CreateTemplate = ({ isEdit }) => {
     fields: [],
   });
 
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   const onFieldChange = (e) => {
     const { id, name, value } = e.target;
 
@@ -56,6 +64,14 @@ const CreateTemplate = ({ isEdit }) => {
           <h2>Создать шаблон</h2>
         </div>
         <form>
+          <div className="template-field-row">
+            <Input
+              label="Название"
+              placeholder="Введите название"
+              name="name"
+              onChange={onChange}
+            />
+          </div>
           {state.fields.map((field) => (
             <div className="template-field-row" key={field.id}>
               <Input
