@@ -1,0 +1,68 @@
+.create-template {
+  padding: 13px 0 0 0;
+}
+
+.create-template-paper {
+  padding: 48px 100px;
+  border-radius: 14px;
+  max-width: 1440px;
+  background-color: var(--white);
+  margin: 0 auto;
+}
+
+.create-template-paper-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.create-template-paper-header h2 {
+  margin: 0;
+  font-size: 38px;
+  font-weight: normal;
+  line-height: 42px;
+}
+
+.create-template form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 48px;
+}
+
+.template-field-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.template-field-row .input-container {
+  flex-grow: 1;
+}
+
+.template-field-row .checkbox,
+.template-field-row button {
+  margin-top: 20px;
+}
+
+.template-field-row .checkbox label {
+  font-size: 24px;
+}
+
+.template-field-row button {
+  font-size: 22px;
+  font-weight: normal;
+  gap: 15px;
+}
+
+.create-template-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.create-template-actions button {
+  flex-grow: 1;
+  font-size: 22px;
+  line-height: 26px;
+  padding: 22px;
+}

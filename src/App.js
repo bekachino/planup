@@ -4,6 +4,7 @@ import Home from './Containers/Home/Home';
 import Header from './Components/Header/Header';
 import 'moment/locale/ru';
 import Templates from './Containers/Templates/Templates';
+import CreateTemplate from './Containers/CreateTemplate/CreateTemplate';
 import './App.css';
 
 moment.locale('ru');
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="home" element={<Home />} />
         <Route path="templates" element={<Templates />} />
+        <Route path="create-template" element={<CreateTemplate />} />
       </Routes>
     </div>
   );

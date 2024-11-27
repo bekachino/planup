@@ -55,3 +55,18 @@ body {
   min-height: 100vh;
   background-color: var(--white-grey);
 }
+
+.page-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  inset: 0;
+  margin: auto auto auto 0;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
