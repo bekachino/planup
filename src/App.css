@@ -1,6 +1,8 @@
 :root {
   --success: #19c052;
   --error: #d62828;
+  --error-hover: #b32222;
+  --error-outlined-hover: rgba(214, 40, 40, 0.15);
   --planned: #5270d5;
   --on-way: #a61fff;
   --finished: #19c052;
@@ -18,7 +20,7 @@
   --main-1-outlined-hover: rgba(103, 107, 151, 0.15);
   --main-2-hover: rgba(13, 129, 225, 0.15);
   --white: #ffffff;
-  --white-grey: #fcfcfc;
+  --white-grey: #f6f6f6;
   --purple-1: #5d5fec;
   --purple-2: #3e57a9;
   --input-text-color: #2c2b2b;

@@ -25,6 +25,7 @@ nav {
   background-color: var(--white);
   border-radius: 12px;
   margin-left: auto;
+  overflow: auto;
 }
 
 nav a {

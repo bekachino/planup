@@ -9,6 +9,10 @@
   font-weight: 600;
 }
 
+.button svg path {
+  transition: 0.2s;
+}
+
 .button-contained {
   border: 2px solid transparent;
   background-color: var(--main-2);
@@ -22,6 +26,14 @@
 
 .button-contained.button-color-secondary:hover {
   background-color: var(--main-1-hover);
+}
+
+.button-contained.button-color-error {
+  background-color: var(--error);
+}
+
+.button-contained.button-color-error:hover {
+  background-color: var(--error-hover);
 }
 
 .button-contained:hover {
@@ -51,6 +63,24 @@
 
 .button-outlined.button-color-secondary:hover {
   background-color: var(--main-1-outlined-hover);
+}
+
+.button-outlined.button-color-error {
+  border: 2px solid var(--error);
+  background-color: var(--white);
+  color: var(--error);
+}
+
+.button-outlined.button-color-error svg path {
+  stroke: var(--error);
+}
+
+.button-outlined.button-color-error:hover {
+  background-color: var(--error-outlined-hover);
+}
+
+.button-outlined.button-color-error:hover svg path {
+  fill: var(--error-outlined-hover);
 }
 
 .button-loading,

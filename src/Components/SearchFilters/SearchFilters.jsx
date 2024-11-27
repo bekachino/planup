@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   getExecuterTypes,
-  getStatusTypes,
+  getStatusTypes, getTemplateTypes,
 } from '../../features/statuses/filtersDataThunk';
 import { filterCategories } from '../../constants';
 import Button from '../Button/Button';
@@ -48,6 +48,7 @@ const SearchFilters = ({ ...rest }) => {
   const [searchCategory, setSearchCategory] = useState(null);
 
   useEffect(() => {
+    dispatch(getTemplateTypes());
     dispatch(getExecuterTypes());
     dispatch(getStatusTypes());
   }, []);

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
 import Header from './Components/Header/Header';
 import 'moment/locale/ru';
+import Templates from './Containers/Templates/Templates';
 import './App.css';
 
 moment.locale('ru');
@@ -13,6 +14,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="home" element={<Home />} />
+        <Route path="templates" element={<Templates />} />
       </Routes>
     </div>
   );
