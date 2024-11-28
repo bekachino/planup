@@ -36,12 +36,18 @@
   gap: 22px;
 }
 
+.template-field-row-is-dragging {
+  opacity: .01;
+}
+
+.template-field-row .select-wrapper,
 .template-field-row .input-container {
   flex-grow: 1;
 }
 
 .template-field-row .checkbox,
-.template-field-row button {
+.template-field-row button,
+.drag-icon {
   margin-top: 20px;
 }
 
@@ -65,4 +71,13 @@
   font-size: 22px;
   line-height: 26px;
   padding: 22px;
+}
+
+.drag-icon {
+  cursor: grab;
+}
+
+.drag-icon svg {
+  width: 45px;
+  height: auto;
 }

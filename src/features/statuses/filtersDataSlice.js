@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   getExecuterTypes,
   getStatusTypes,
+  getTemplateFields,
   getTemplateTypes,
 } from './filtersDataThunk';
 
@@ -10,11 +11,13 @@ const initialState = {
   statusTypes: [],
   resolutionTypes: [],
   templateTypes: [],
+  templateFields: [],
   squareTypes: [],
   executerTypesLoading: false,
   statusTypesLoading: false,
   resolutionTypesLoading: false,
   templateTypesLoading: false,
+  templateFieldsLoading: false,
   squareTypesLoading: false,
 };
 
@@ -66,6 +69,17 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getTemplateTypes.rejected, (state) => {
       state.templateTypesLoading = false;
+    });
+
+    builder.addCase(getTemplateFields.pending, (state) => {
+      state.templateFieldsLoading = true;
+    });
+    builder.addCase(getTemplateFields.fulfilled, (state, { payload: res }) => {
+      state.templateFieldsLoading = false;
+      state.templateFields = res.map((field) => field?.field);
+    });
+    builder.addCase(getTemplateFields.rejected, (state) => {
+      state.templateFieldsLoading = false;
     });
   },
 });

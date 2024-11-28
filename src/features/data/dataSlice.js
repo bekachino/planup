@@ -1,7 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getTemplateFields } from '../statuses/filtersDataThunk';
+import { createTemplate } from './dataThunk';
 
 const initialState = {
   alerts: [],
+  createTemplateLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -23,7 +26,17 @@ const DataSlice = createSlice({
       state.alerts.find((alert) => alert.id === payload).show = false;
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder.addCase(createTemplate.pending, (state) => {
+      state.createTemplateLoading = true;
+    });
+    builder.addCase(createTemplate.fulfilled, (state, { payload: res }) => {
+      state.createTemplateLoading = false;
+    });
+    builder.addCase(createTemplate.rejected, (state) => {
+      state.createTemplateLoading = false;
+    });
+  },
 });
 
 export const dataReducer = DataSlice.reducer;

@@ -11,7 +11,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 addInterceptors(store);
 
 root.render(
-  <React.StrictMode>
     <PersistGate persistor={persistor}>
       <Provider store={store}>
         <BrowserRouter>
@@ -19,5 +18,4 @@ root.render(
         </BrowserRouter>
       </Provider>
     </PersistGate>
-  </React.StrictMode>
 );

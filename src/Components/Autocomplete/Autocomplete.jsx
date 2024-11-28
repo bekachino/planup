@@ -3,7 +3,7 @@ import Input from '../Input/Input';
 import './autocomplete.css';
 
 const Autocomplete = ({
-  name,
+  name = '',
   value,
   options = [],
   onChange,
@@ -31,12 +31,8 @@ const Autocomplete = ({
   }, [showOptions]);
 
   useEffect(() => {
-    document.addEventListener('click', (event) => {
-      const classNames = Array.from(event.target.classList);
-      if (
-        showOptions &&
-        !['select-options', 'select-option', 'input'].includes(classNames[0])
-      ) {
+    document.addEventListener('click', () => {
+      if (showOptions) {
         setShowOptions(false);
         setFocusedOption(-1);
       }
@@ -61,7 +57,11 @@ const Autocomplete = ({
           )
         : options || []
       ).filter((option) =>
-        (option?.name || option?.value || option?.label).includes(inputValue)
+        (
+          option?.name.toLowerCase() ||
+          option?.value.toLowerCase() ||
+          option?.label.toLowerCase()
+        ).includes(inputValue)
       ),
     [inputValue, value]
   );
@@ -92,6 +92,7 @@ const Autocomplete = ({
         else setFocusedOption(filteredList.length - 1);
       }
     } else if (e.key === 'Enter' && focusedOption >= 0) {
+      e.preventDefault();
       const selectedItem = filteredList[focusedOption];
       onChange({
         target: {
@@ -125,7 +126,7 @@ const Autocomplete = ({
     <div
       className={`select-wrapper ${multiple && 'select-wrapper-multiple'} ${
         !!(value || '').length && 'select-wrapper-multiple-valid'
-      }`}
+      } ${name}`}
       style={style}
     >
       <Input
@@ -148,7 +149,7 @@ const Autocomplete = ({
           }
         }}
         onFocus={() => {
-          setShowOptions(true);
+          setTimeout(() => setShowOptions(true), 100);
         }}
         onClick={() => setShowOptions(true)}
         isSelectInput
