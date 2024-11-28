@@ -234,13 +234,21 @@ const CreateTemplate = ({ isEdit }) => {
             </div>
           ))}
           <div className="create-template-actions">
-            <Button type="button" onClick={addField}>
+            <Button
+              type="button"
+              onClick={addField}
+              loading={templateFieldsLoading}
+            >
               Добавить поле
             </Button>
             <Button
               type="submit"
               variant="outlined"
-              loading={createTemplateLoading || editTemplateLoading}
+              loading={
+                createTemplateLoading ||
+                editTemplateLoading ||
+                templateFieldsLoading
+              }
             >
               {isEdit ? 'Сохранить' : 'Создать'}
             </Button>

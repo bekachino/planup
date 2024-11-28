@@ -12,7 +12,9 @@ import './templates.css';
 const Templates = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { templateTypes } = useAppSelector((state) => state.filtersDataState);
+  const { templateTypes, templateTypesLoading } = useAppSelector(
+    (state) => state.filtersDataState
+  );
   const { deleteTemplateLoading } = useAppSelector((state) => state.dataState);
   const [templateForDelete, setTemplateForDelete] = useState(-1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -70,29 +72,35 @@ const Templates = () => {
           </button>
         </div>
         <div className="types-list">
-          {templateTypes.map((template) => (
-            <div className="type-item" key={template.id}>
-              <Link to="/templates">{template.name}</Link>
-              <Button
-                className="edit-type-btn"
-                onClick={() => navigate(`/edit-template/${template?.id}`)}
-              >
-                <RefreshIcon />
-                Обновить
-              </Button>
-              <Button
-                className="edit-type-btn delete-type-btn"
-                color="error"
-                onClick={() => {
-                  setTemplateForDelete(template?.id);
-                  setModalIsOpen(true);
-                }}
-              >
-                <DeleteIcon />
-                Удалить
-              </Button>
+          {templateTypesLoading && (
+            <div className="type-item">
+              <h2>Загрузка...</h2>
             </div>
-          ))}
+          )}
+          {!templateTypesLoading &&
+            templateTypes.map((template) => (
+              <div className="type-item" key={template.id}>
+                <Link to="/templates">{template.name}</Link>
+                <Button
+                  className="edit-type-btn"
+                  onClick={() => navigate(`/edit-template/${template?.id}`)}
+                >
+                  <RefreshIcon />
+                  Обновить
+                </Button>
+                <Button
+                  className="edit-type-btn delete-type-btn"
+                  color="error"
+                  onClick={() => {
+                    setTemplateForDelete(template?.id);
+                    setModalIsOpen(true);
+                  }}
+                >
+                  <DeleteIcon />
+                  Удалить
+                </Button>
+              </div>
+            ))}
         </div>
       </div>
     </>

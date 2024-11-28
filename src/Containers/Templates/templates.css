@@ -58,6 +58,10 @@
   border-radius: 12px;
 }
 
+.type-item h2 {
+  margin: 10px auto;
+}
+
 .type-item a {
   font-size: 22px;
   line-height: 26px;
