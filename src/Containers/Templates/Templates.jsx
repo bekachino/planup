@@ -5,8 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 import { ReactComponent as RefreshIcon } from '../../assets/refresh.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
-import './templates.css';
 import { deleteTemplate } from '../../features/data/dataThunk';
+import Modal from '../../Components/Modal/Modal';
+import './templates.css';
 
 const Templates = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Templates = () => {
   const { templateTypes } = useAppSelector((state) => state.filtersDataState);
   const { deleteTemplateLoading } = useAppSelector((state) => state.dataState);
   const [templateForDelete, setTemplateForDelete] = useState(-1);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getTemplateTypes());
@@ -24,48 +26,76 @@ const Templates = () => {
   }, [deleteTemplateLoading]);
 
   const onDelete = async (id) => {
-    setTemplateForDelete(id);
     await dispatch(deleteTemplate(id));
     dispatch(getTemplateTypes());
+    toggleModal(false);
   };
 
+  const toggleModal = (value) => setModalIsOpen(value);
+
   return (
-    <div className="types">
-      <div className="types-header">
-        <h2>Список шаблонов</h2>
-        <button
-          className="create-template-btn"
-          onClick={() => navigate('/create-template')}
-        >
-          Создать шаблон
-        </button>
+    <>
+      <Modal open={modalIsOpen} toggleModal={toggleModal}>
+        <div className="create-template-paper-header">
+          <h2>Удалить шаблон?</h2>
+          <span className="create-template-paper-header-desc">
+            Вы уверены что хотите удалить эту резолюцию?
+          </span>
+        </div>
+        <div className="delete-modal-btns">
+          <Button
+            color="error"
+            onClick={() => onDelete(templateForDelete)}
+            loading={deleteTemplateLoading}
+          >
+            Удалить
+          </Button>
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={() => toggleModal(false)}
+          >
+            Отмена
+          </Button>
+        </div>
+      </Modal>
+      <div className="types">
+        <div className="types-header">
+          <h2>Список шаблонов</h2>
+          <button
+            className="create-template-btn"
+            onClick={() => navigate('/create-template')}
+          >
+            Создать шаблон
+          </button>
+        </div>
+        <div className="types-list">
+          {templateTypes.map((template) => (
+            <div className="type-item" key={template.id}>
+              <Link to="/templates">{template.name}</Link>
+              <Button
+                className="edit-type-btn"
+                onClick={() => navigate(`/edit-template/${template?.id}`)}
+              >
+                <RefreshIcon />
+                Обновить
+              </Button>
+              <Button
+                className="edit-type-btn delete-type-btn"
+                color="error"
+                onClick={() => {
+                  setTemplateForDelete(template?.id);
+                  setModalIsOpen(true);
+                }}
+              >
+                <DeleteIcon />
+                Удалить
+              </Button>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="types-list">
-        {templateTypes.map((template) => (
-          <div className="type-item" key={template.id}>
-            <Link to="/templates">{template.name}</Link>
-            <Button
-              className="edit-type-btn"
-              onClick={() => navigate(`/edit-template/${template?.id}`)}
-            >
-              <RefreshIcon />
-              Обновить
-            </Button>
-            <Button
-              className="edit-type-btn delete-type-btn"
-              color="error"
-              onClick={() => onDelete(template?.id)}
-              loading={
-                deleteTemplateLoading && templateForDelete === template?.id
-              }
-            >
-              <DeleteIcon />
-              Удалить
-            </Button>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 

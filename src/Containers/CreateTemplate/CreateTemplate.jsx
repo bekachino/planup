@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import Checkbox from '../../Components/Checkbox/Checkbox';
 import { nanoid } from 'nanoid';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
+import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as DragIcon } from '../../assets/drag-icon.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';

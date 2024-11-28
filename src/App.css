@@ -62,11 +62,15 @@ body {
   align-items: center;
   position: absolute;
   inset: 0;
-  margin: auto auto auto 0;
+  margin: auto auto auto -45px;
   width: 35px;
   height: 35px;
   background-color: transparent;
   border: 0;
   cursor: pointer;
   padding: 0;
+}
+
+body:has(.modal) {
+  overflow: hidden;
 }

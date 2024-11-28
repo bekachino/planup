@@ -81,3 +81,16 @@
 .delete-type-btn {
   margin-left: 0;
 }
+
+.delete-modal-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 64px;
+}
+
+.delete-modal-btns button {
+  font-size: 22px;
+  line-height: 26px;
+  padding: 22px;
+}
