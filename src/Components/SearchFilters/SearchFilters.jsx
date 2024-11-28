@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  getExecuterTypes,
+  getExecuterTypes, getResolutionTypes,
   getStatusTypes, getTemplateTypes,
 } from '../../features/statuses/filtersDataThunk';
 import { filterCategories } from '../../constants';
@@ -48,8 +48,9 @@ const SearchFilters = ({ ...rest }) => {
   const [searchCategory, setSearchCategory] = useState(null);
 
   useEffect(() => {
+    //dispatch(getExecuterTypes());
     dispatch(getTemplateTypes());
-    dispatch(getExecuterTypes());
+    dispatch(getResolutionTypes());
     dispatch(getStatusTypes());
   }, []);
 
@@ -99,7 +100,7 @@ const SearchFilters = ({ ...rest }) => {
           .querySelector('label.filters-category-is-found')
           ?.scrollIntoView({
             behavior: 'smooth',
-            block: 'start',
+            block: 'center',
           });
       } else {
         setShowCategoriesOptions(false);

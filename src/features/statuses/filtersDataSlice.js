@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   getExecuterTypes,
+  getResolutionTypes,
   getStatusTypes,
   getTemplateFields,
   getTemplateTypes,
@@ -39,6 +40,21 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getExecuterTypes.rejected, (state) => {
       state.executerTypesLoading = false;
+    });
+
+    builder.addCase(getResolutionTypes.pending, (state) => {
+      state.resolutionTypesLoading = true;
+    });
+    builder.addCase(getResolutionTypes.fulfilled, (state, { payload: res }) => {
+      state.resolutionTypesLoading = false;
+      state.resolutionTypes = (res || []).map((option) => ({
+        ...option,
+        category: 'resolutionTypes',
+        index: 2,
+      }));
+    });
+    builder.addCase(getResolutionTypes.rejected, (state) => {
+      state.resolutionTypesLoading = false;
     });
 
     builder.addCase(getStatusTypes.pending, (state) => {

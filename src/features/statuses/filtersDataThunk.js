@@ -20,6 +20,24 @@ export const getExecuterTypes = createAsyncThunk(
   }
 );
 
+export const getResolutionTypes = createAsyncThunk(
+  'user/getResolutionTypes',
+  async (noAlert, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi('v2/resolution/');
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: 'Ошибка при получении резолюций',
+        })
+      );
+      rejectWithValue('Ошибка при получении резолюций');
+    }
+  }
+);
+
 export const getStatusTypes = createAsyncThunk(
   'user/getStatusTypes',
   async (noAlert, { dispatch, rejectWithValue }) => {

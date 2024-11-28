@@ -8,7 +8,10 @@ import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as DragIcon } from '../../assets/drag-icon.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getTemplateFields } from '../../features/statuses/filtersDataThunk';
+import {
+  getTemplateFields,
+  getTemplateTypes,
+} from '../../features/statuses/filtersDataThunk';
 import Autocomplete from '../../Components/Autocomplete/Autocomplete';
 import {
   createTemplate,
@@ -21,9 +24,8 @@ const CreateTemplate = ({ isEdit }) => {
   const { templateId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { templateFields, templateFieldsLoading } = useAppSelector(
-    (state) => state.filtersDataState
-  );
+  const { templateTypes, templateFields, templateFieldsLoading } =
+    useAppSelector((state) => state.filtersDataState);
   const { createTemplateLoading, editTemplateLoading } = useAppSelector(
     (state) => state.dataState
   );
@@ -33,6 +35,7 @@ const CreateTemplate = ({ isEdit }) => {
   const [dragItem, setDragItem] = useState(null);
 
   useEffect(() => {
+    dispatch(getTemplateTypes());
     dispatch(getTemplateFields());
     if (isEdit)
       dispatch(getTemplate(templateId)).then((res) =>
@@ -124,6 +127,7 @@ const CreateTemplate = ({ isEdit }) => {
       dispatch(
         editTemplate({
           ...state,
+          parent: state?.parent?.id,
           fields: state.fields.map((field, i) => ({
             field: field?.field?.id,
             numbers: i + 1,
@@ -139,6 +143,7 @@ const CreateTemplate = ({ isEdit }) => {
       dispatch(
         createTemplate({
           ...state,
+          parent: state?.parent?.id,
           fields: state.fields.map((field, i) => ({
             ...field,
             field: field?.field?.id,
@@ -164,6 +169,14 @@ const CreateTemplate = ({ isEdit }) => {
         </div>
         <form onSubmit={onSubmit}>
           <div className="template-field-row">
+            <Autocomplete
+              label="Родительский шаблон"
+              placeholder="Введите название"
+              name="parent"
+              value={state?.parent?.name}
+              options={templateTypes}
+              onChange={onChange}
+            />
             <Input
               label="Название"
               placeholder="Введите название"
