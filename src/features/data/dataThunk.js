@@ -62,3 +62,23 @@ export const editTemplate = createAsyncThunk(
     }
   }
 );
+
+export const deleteTemplate = createAsyncThunk(
+  'data/deleteTemplate',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi.delete(`/v2/template/${id}/`);
+      return await req.data;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);

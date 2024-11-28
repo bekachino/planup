@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createTemplate, editTemplate, getTemplate } from './dataThunk';
+import {
+  createTemplate,
+  deleteTemplate,
+  editTemplate,
+  getTemplate,
+} from './dataThunk';
 
 const initialState = {
   alerts: [],
@@ -7,6 +12,7 @@ const initialState = {
   getTemplateLoading: false,
   createTemplateLoading: false,
   editTemplateLoading: false,
+  deleteTemplateLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -59,6 +65,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(editTemplate.rejected, (state) => {
       state.editTemplateLoading = false;
+    });
+    
+    builder.addCase(deleteTemplate.pending, (state) => {
+      state.deleteTemplateLoading = true;
+    });
+    builder.addCase(deleteTemplate.fulfilled, (state) => {
+      state.deleteTemplateLoading = false;
+    });
+    builder.addCase(deleteTemplate.rejected, (state) => {
+      state.deleteTemplateLoading = false;
     });
   },
 });
