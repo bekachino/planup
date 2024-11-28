@@ -195,7 +195,12 @@ const CreateTemplate = ({ isEdit }) => {
                 placeholder="Введите название"
                 name="field"
                 value={field?.field?.name}
-                options={templateFields}
+                options={templateFields.filter(
+                  (field) =>
+                    !state.fields.find(
+                      (f) => f.id === field.id || f.field?.id === field.id
+                    )
+                )}
                 required
                 onChange={(e) =>
                   onFieldChange({

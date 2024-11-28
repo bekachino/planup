@@ -71,6 +71,6 @@ body {
   padding: 0;
 }
 
-body:has(.modal) {
+body:has(.modal-true) {
   overflow: hidden;
 }

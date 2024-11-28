@@ -73,7 +73,7 @@ const Autocomplete = ({
           option?.name.toLowerCase() ||
           option?.value.toLowerCase() ||
           option?.label.toLowerCase()
-        ).includes(inputValue)
+        ).includes(inputValue?.toLowerCase())
       ),
     [inputValue, value, options]
   );

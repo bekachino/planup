@@ -18,8 +18,6 @@ const Template = () => {
     dispatch(getTemplate(templateId));
   }, []);
 
-  console.log(template);
-
   return (
     <div className="template">
       <div className="template-paper">
