@@ -5,7 +5,10 @@ import './autocomplete.css';
 const Autocomplete = ({
   name = '',
   value,
+  label,
+  placeholder,
   options = [],
+  required,
   onChange,
   multiple = false,
   style,
@@ -15,7 +18,7 @@ const Autocomplete = ({
   const [selectOptionsHeight, setSelectOptionsHeight] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [focusedOption, setFocusedOption] = useState(-1);
-
+  
   useEffect(() => {
     !multiple && setInputValue(value || '');
   }, [value]);
@@ -63,7 +66,7 @@ const Autocomplete = ({
           option?.label.toLowerCase()
         ).includes(inputValue)
       ),
-    [inputValue, value]
+    [inputValue, value, options]
   );
 
   const onSelectedOptionRemove = (id) => {
@@ -133,8 +136,8 @@ const Autocomplete = ({
         autoComplete="off"
         value={inputValue}
         values={multiple ? value : []}
-        label="Монтажник"
-        placeholder="Выберите монтажника"
+        label={label}
+        placeholder={placeholder}
         onChange={(e) => {
           setInputValue(e.target.value);
           if (!multiple) {
@@ -148,6 +151,7 @@ const Autocomplete = ({
             setShowOptions(true);
           }
         }}
+        required={required}
         onFocus={() => {
           setTimeout(() => setShowOptions(true), 100);
         }}

@@ -58,6 +58,7 @@ const filtersDataSlice = createSlice({
 
     builder.addCase(getTemplateTypes.pending, (state) => {
       state.templateTypesLoading = true;
+      state.templateTypes = [];
     });
     builder.addCase(getTemplateTypes.fulfilled, (state, { payload: res }) => {
       state.templateTypesLoading = false;
@@ -76,7 +77,7 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getTemplateFields.fulfilled, (state, { payload: res }) => {
       state.templateFieldsLoading = false;
-      state.templateFields = res.map((field) => field?.field);
+      state.templateFields = res?.map((field) => field?.field);
     });
     builder.addCase(getTemplateFields.rejected, (state) => {
       state.templateFieldsLoading = false;

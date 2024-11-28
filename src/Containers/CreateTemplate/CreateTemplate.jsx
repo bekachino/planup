@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Checkbox from '../../Components/Checkbox/Checkbox';
 import { nanoid } from 'nanoid';
 import Input from '../../Components/Input/Input';
@@ -10,14 +10,22 @@ import { ReactComponent as DragIcon } from '../../assets/drag-icon.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getTemplateFields } from '../../features/statuses/filtersDataThunk';
 import Autocomplete from '../../Components/Autocomplete/Autocomplete';
-import { createTemplate } from '../../features/data/dataThunk';
+import {
+  createTemplate,
+  editTemplate,
+  getTemplate,
+} from '../../features/data/dataThunk';
 import './createTemplate.css';
 
 const CreateTemplate = ({ isEdit }) => {
+  const { templateId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { templateFields, templateFieldsLoading } = useAppSelector(
     (state) => state.filtersDataState
+  );
+  const { createTemplateLoading, editTemplateLoading } = useAppSelector(
+    (state) => state.dataState
   );
   const [state, setState] = useState({
     fields: [],
@@ -26,6 +34,21 @@ const CreateTemplate = ({ isEdit }) => {
 
   useEffect(() => {
     dispatch(getTemplateFields());
+    if (isEdit)
+      dispatch(getTemplate(templateId)).then((res) =>
+        setState({
+          id: res.payload?.id,
+          name: res.payload?.name,
+          fields: res.payload?.fields.map((field) => ({
+            field: {
+              name: field?.field?.name,
+              id: field?.field?.id,
+            },
+            id: field?.field?.id,
+            required: field?.required,
+          })),
+        })
+      );
   }, []);
 
   const onChange = (e) => {
@@ -97,16 +120,29 @@ const CreateTemplate = ({ isEdit }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      createTemplate({
-        ...state,
-        fields: state.fields.map((field, i) => ({
-          ...field,
-          field: field?.field?.id,
-          numbers: i + 1,
-        })),
-      })
-    );
+    if (isEdit) {
+      dispatch(
+        editTemplate({
+          ...state,
+          fields: state.fields.map((field, i) => ({
+            field: field?.field?.id,
+            numbers: i + 1,
+            required: field?.required,
+          })),
+        })
+      );
+    } else {
+      dispatch(
+        createTemplate({
+          ...state,
+          fields: state.fields.map((field, i) => ({
+            ...field,
+            field: field?.field?.id,
+            numbers: i + 1,
+          })),
+        })
+      );
+    }
   };
 
   return (
@@ -116,7 +152,7 @@ const CreateTemplate = ({ isEdit }) => {
           <button className="page-back" onClick={() => navigate('/templates')}>
             <ArrowPointerRight />
           </button>
-          <h2>Создать шаблон</h2>
+          <h2>{isEdit ? 'Редактировать' : 'Создать'} шаблон</h2>
         </div>
         <form onSubmit={onSubmit}>
           <div className="template-field-row">
@@ -124,10 +160,12 @@ const CreateTemplate = ({ isEdit }) => {
               label="Название"
               placeholder="Введите название"
               name="name"
+              value={state?.name}
               onChange={onChange}
+              required
             />
           </div>
-          {state.fields.map((field) => (
+          {state.fields?.map((field) => (
             <div
               className={`template-field-row ${dragItem?.id === field.id && 'template-field-row-is-dragging'}`}
               key={field.id}
@@ -150,6 +188,7 @@ const CreateTemplate = ({ isEdit }) => {
                 name="field"
                 value={field?.field?.name}
                 options={templateFields}
+                required
                 onChange={(e) =>
                   onFieldChange({
                     target: {
@@ -190,7 +229,11 @@ const CreateTemplate = ({ isEdit }) => {
             <Button type="button" onClick={addField}>
               Добавить поле
             </Button>
-            <Button type="submit" variant="outlined">
+            <Button
+              type="submit"
+              variant="outlined"
+              loading={createTemplateLoading || editTemplateLoading}
+            >
               {isEdit ? 'Сохранить' : 'Создать'}
             </Button>
           </div>

@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTemplateFields } from '../statuses/filtersDataThunk';
-import { createTemplate } from './dataThunk';
+import { createTemplate, editTemplate, getTemplate } from './dataThunk';
 
 const initialState = {
   alerts: [],
+  template: null,
+  getTemplateLoading: false,
   createTemplateLoading: false,
+  editTemplateLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -27,14 +29,36 @@ const DataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getTemplate.pending, (state) => {
+      state.getTemplateLoading = true;
+      state.template = null;
+    });
+    builder.addCase(getTemplate.fulfilled, (state, { payload: res }) => {
+      state.getTemplateLoading = false;
+      state.template = res || null;
+    });
+    builder.addCase(getTemplate.rejected, (state) => {
+      state.getTemplateLoading = false;
+    });
+
     builder.addCase(createTemplate.pending, (state) => {
       state.createTemplateLoading = true;
     });
-    builder.addCase(createTemplate.fulfilled, (state, { payload: res }) => {
+    builder.addCase(createTemplate.fulfilled, (state) => {
       state.createTemplateLoading = false;
     });
     builder.addCase(createTemplate.rejected, (state) => {
       state.createTemplateLoading = false;
+    });
+
+    builder.addCase(editTemplate.pending, (state) => {
+      state.editTemplateLoading = true;
+    });
+    builder.addCase(editTemplate.fulfilled, (state) => {
+      state.editTemplateLoading = false;
+    });
+    builder.addCase(editTemplate.rejected, (state) => {
+      state.editTemplateLoading = false;
     });
   },
 });

@@ -12,8 +12,6 @@ const Templates = () => {
   const dispatch = useAppDispatch();
   const { templateTypes } = useAppSelector((state) => state.filtersDataState);
 
-  console.log(templateTypes);
-
   useEffect(() => {
     dispatch(getTemplateTypes());
   }, []);
@@ -30,39 +28,22 @@ const Templates = () => {
         </button>
       </div>
       <div className="types-list">
-        <div className="type-item">
-          <Link to="/templates">Выезд на БС</Link>
-          <Button className="edit-type-btn">
-            <RefreshIcon />
-            Обновить
-          </Button>
-          <Button className="edit-type-btn delete-type-btn" color="error">
-            <DeleteIcon />
-            Удалить
-          </Button>
-        </div>
-        <div className="type-item">
-          <Link to="/templates">Выезд на БС</Link>
-          <Button className="edit-type-btn">
-            <RefreshIcon />
-            Обновить
-          </Button>
-          <Button className="edit-type-btn delete-type-btn" color="error">
-            <DeleteIcon />
-            Удалить
-          </Button>
-        </div>
-        <div className="type-item">
-          <Link to="/templates">Выезд на БС</Link>
-          <Button className="edit-type-btn">
-            <RefreshIcon />
-            Обновить
-          </Button>
-          <Button className="edit-type-btn delete-type-btn" color="error">
-            <DeleteIcon />
-            Удалить
-          </Button>
-        </div>
+        {templateTypes.map((template) => (
+          <div className="type-item" key={template.id}>
+            <Link to="/templates">{template.name}</Link>
+            <Button
+              className="edit-type-btn"
+              onClick={() => navigate(`/edit-template/${template?.id}`)}
+            >
+              <RefreshIcon />
+              Обновить
+            </Button>
+            <Button className="edit-type-btn delete-type-btn" color="error">
+              <DeleteIcon />
+              Удалить
+            </Button>
+          </div>
+        ))}
       </div>
     </div>
   );

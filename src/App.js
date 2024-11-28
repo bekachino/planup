@@ -17,6 +17,7 @@ const App = () => {
         <Route path="home" element={<Home />} />
         <Route path="templates" element={<Templates />} />
         <Route path="create-template" element={<CreateTemplate />} />
+        <Route path="edit-template/:templateId" element={<CreateTemplate isEdit />} />
       </Routes>
     </div>
   );
