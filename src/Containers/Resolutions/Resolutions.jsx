@@ -1,35 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getTemplateTypes } from '../../features/statuses/filtersDataThunk';
+import { getResolutionTypes } from '../../features/statuses/filtersDataThunk';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 import { ReactComponent as RefreshIcon } from '../../assets/refresh.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
-import { deleteTemplate } from '../../features/data/dataThunk';
 import Modal from '../../Components/Modal/Modal';
-import './templates.css';
+import { deleteResolution } from '../../features/data/dataThunk';
+import '../Templates/templates.css';
 
-const Templates = () => {
+const Resolutions = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { templateTypes, templateTypesLoading } = useAppSelector(
+  const { resolutionTypes, resolutionTypesLoading } = useAppSelector(
     (state) => state.filtersDataState
   );
-  const { deleteTemplateLoading } = useAppSelector((state) => state.dataState);
-  const [templateForDelete, setTemplateForDelete] = useState(-1);
+  const { deleteResolutionLoading } = useAppSelector(
+    (state) => state.dataState
+  );
+  const [resolutionForDelete, setResolutionForDelete] = useState(-1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getTemplateTypes());
+    dispatch(getResolutionTypes());
   }, []);
 
   useEffect(() => {
-    if (!deleteTemplateLoading) setTemplateForDelete(-1);
-  }, [deleteTemplateLoading]);
+    if (!deleteResolutionLoading) setResolutionForDelete(-1);
+  }, [deleteResolutionLoading]);
 
   const onDelete = async (id) => {
-    await dispatch(deleteTemplate(id));
-    dispatch(getTemplateTypes());
+    await dispatch(deleteResolution(id));
+    dispatch(getResolutionTypes());
     toggleModal(false);
   };
 
@@ -39,16 +41,16 @@ const Templates = () => {
     <>
       <Modal open={modalIsOpen} toggleModal={toggleModal}>
         <div className="create-template-paper-header">
-          <h2>Удалить шаблон?</h2>
+          <h2>Удалить резолюцию?</h2>
           <span className="create-template-paper-header-desc">
-            Вы уверены что хотите удалить этот шаблон?
+            Вы уверены что хотите удалить эту резолюцию?
           </span>
         </div>
         <div className="delete-modal-btns">
           <Button
             color="error"
-            onClick={() => onDelete(templateForDelete)}
-            loading={deleteTemplateLoading}
+            onClick={() => onDelete(resolutionForDelete)}
+            loading={deleteResolutionLoading}
           >
             Удалить
           </Button>
@@ -63,27 +65,29 @@ const Templates = () => {
       </Modal>
       <div className="types">
         <div className="types-header">
-          <h2>Список шаблонов</h2>
+          <h2>Список резолюций</h2>
           <button
             className="create-template-btn"
             onClick={() => navigate('/create-template')}
           >
-            Создать шаблон
+            Создать резолюцию
           </button>
         </div>
         <div className="types-list">
-          {templateTypesLoading && (
+          {resolutionTypesLoading && (
             <div className="type-item">
               <h2>Загрузка...</h2>
             </div>
           )}
-          {!templateTypesLoading &&
-            templateTypes.map((template) => (
-              <div className="type-item" key={template.id}>
-                <Link to={`/templates/${template?.id}`}>{template.name}</Link>
+          {!resolutionTypesLoading &&
+            resolutionTypes.map((resolution) => (
+              <div className="type-item" key={resolution.id}>
+                <Link to={`/templates/${resolution?.id}`}>
+                  {resolution.name}
+                </Link>
                 <Button
                   className="edit-type-btn"
-                  onClick={() => navigate(`/edit-template/${template?.id}`)}
+                  onClick={() => navigate(`/edit-template/${resolution?.id}`)}
                 >
                   <RefreshIcon />
                   Обновить
@@ -92,7 +96,7 @@ const Templates = () => {
                   className="edit-type-btn delete-type-btn"
                   color="error"
                   onClick={() => {
-                    setTemplateForDelete(template?.id);
+                    setResolutionForDelete(resolution?.id);
                     setModalIsOpen(true);
                   }}
                 >
@@ -107,4 +111,4 @@ const Templates = () => {
   );
 };
 
-export default Templates;
+export default Resolutions;

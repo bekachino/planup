@@ -82,3 +82,23 @@ export const deleteTemplate = createAsyncThunk(
     }
   }
 );
+
+export const deleteResolution = createAsyncThunk(
+  'data/deleteResolution',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi.delete(`/v2/resolution/${id}/`);
+      return await req.data;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createTemplate,
+  deleteResolution,
   deleteTemplate,
   editTemplate,
   getTemplate,
@@ -13,6 +14,7 @@ const initialState = {
   createTemplateLoading: false,
   editTemplateLoading: false,
   deleteTemplateLoading: false,
+  deleteResolutionLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -66,7 +68,7 @@ const DataSlice = createSlice({
     builder.addCase(editTemplate.rejected, (state) => {
       state.editTemplateLoading = false;
     });
-    
+
     builder.addCase(deleteTemplate.pending, (state) => {
       state.deleteTemplateLoading = true;
     });
@@ -75,6 +77,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(deleteTemplate.rejected, (state) => {
       state.deleteTemplateLoading = false;
+    });
+
+    builder.addCase(deleteResolution.pending, (state) => {
+      state.deleteResolutionLoading = true;
+    });
+    builder.addCase(deleteResolution.fulfilled, (state) => {
+      state.deleteResolutionLoading = false;
+    });
+    builder.addCase(deleteResolution.rejected, (state) => {
+      state.deleteResolutionLoading = false;
     });
   },
 });
