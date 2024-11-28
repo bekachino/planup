@@ -80,7 +80,7 @@ const Templates = () => {
           {!templateTypesLoading &&
             templateTypes.map((template) => (
               <div className="type-item" key={template.id}>
-                <Link to="/templates">{template.name}</Link>
+                <Link to={`/templates/${template?.id}`}>{template.name}</Link>
                 <Button
                   className="edit-type-btn"
                   onClick={() => navigate(`/edit-template/${template?.id}`)}

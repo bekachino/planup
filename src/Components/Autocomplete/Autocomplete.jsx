@@ -18,20 +18,19 @@ const Autocomplete = ({
   const [selectOptionsHeight, setSelectOptionsHeight] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [focusedOption, setFocusedOption] = useState(-1);
-  
+
   useEffect(() => {
     !multiple && setInputValue(value || '');
   }, [value]);
 
   useEffect(() => {
-    if (selectOptionsRef.current) {
-      setSelectOptionsHeight(
-        window.innerHeight -
-          selectOptionsRef.current.getBoundingClientRect().top -
-          10
-      );
-    }
+    resizeOptions();
   }, [showOptions]);
+
+  useEffect(() => {
+    document.addEventListener('scroll', resizeOptions);
+    return window.removeEventListener('scroll', resizeOptions);
+  }, []);
 
   useEffect(() => {
     document.addEventListener('click', () => {
@@ -50,6 +49,16 @@ const Autocomplete = ({
       });
     }
   }, [focusedOption, showOptions]);
+
+  const resizeOptions = () => {
+    if (selectOptionsRef.current) {
+      setSelectOptionsHeight(
+        window.innerHeight -
+          selectOptionsRef.current.getBoundingClientRect().top -
+          10
+      );
+    }
+  };
 
   const filteredList = useMemo(
     () =>

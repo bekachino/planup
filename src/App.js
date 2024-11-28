@@ -6,6 +6,7 @@ import 'moment/locale/ru';
 import Templates from './Containers/Templates/Templates';
 import CreateTemplate from './Containers/CreateTemplate/CreateTemplate';
 import './App.css';
+import Template from './Containers/Template/Template';
 
 moment.locale('ru');
 
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="templates" element={<Templates />} />
         <Route path="create-template" element={<CreateTemplate />} />
         <Route path="edit-template/:templateId" element={<CreateTemplate isEdit />} />
+        <Route path="templates/:templateId" element={<Template />} />
       </Routes>
     </div>
   );
