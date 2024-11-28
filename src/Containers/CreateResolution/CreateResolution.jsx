@@ -27,7 +27,7 @@ const CreateResolution = ({ isEdit }) => {
     if (resolution) setState({ ...resolution });
     return () => setState(null);
   }, [resolution]);
-  
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({

@@ -19,7 +19,7 @@
 
 .modal-true {
   opacity: 1;
-  
+
   @starting-style {
     opacity: 0;
   }

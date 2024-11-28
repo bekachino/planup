@@ -41,11 +41,11 @@ nav a {
   padding: 20px 18px;
   text-wrap: nowrap;
   border-radius: 12px;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 nav a svg path {
-  transition: .2s;
+  transition: 0.2s;
 }
 
 nav a:hover {
@@ -61,7 +61,7 @@ nav a:hover svg path {
 }
 
 .nav-burger-btn {
-  transition: .1s;
+  transition: 0.1s;
 }
 
 .nav-burger-btn,
@@ -98,7 +98,7 @@ nav a:hover svg path {
   padding: 17px 5px;
   border-radius: 4px;
   background-color: var(--white);
-  box-shadow: 0 4px 25px 0 #5763FF33;
+  box-shadow: 0 4px 25px 0 #5763ff33;
   z-index: 10;
 }
 

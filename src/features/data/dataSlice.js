@@ -5,7 +5,8 @@ import {
   deleteResolution,
   deleteTemplate,
   editResolution,
-  editTemplate, getResolution,
+  editTemplate,
+  getResolution,
   getTemplate,
 } from './dataThunk';
 
@@ -54,7 +55,7 @@ const DataSlice = createSlice({
     builder.addCase(getTemplate.rejected, (state) => {
       state.getTemplateLoading = false;
     });
-    
+
     builder.addCase(getResolution.pending, (state) => {
       state.getResolutionLoading = true;
       state.resolution = null;

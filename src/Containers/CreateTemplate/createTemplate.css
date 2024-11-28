@@ -47,7 +47,7 @@
 }
 
 .template-field-row-is-dragging {
-  opacity: .01;
+  opacity: 0.01;
 }
 
 .template-field-row .select-wrapper,

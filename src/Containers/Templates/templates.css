@@ -41,7 +41,7 @@
   height: 28px;
   border-radius: 50%;
   background-color: var(--main-2);
-  background-image: url("../../assets/add-white.svg");
+  background-image: url('../../assets/add-white.svg');
   background-position: center;
 }
 

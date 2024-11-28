@@ -4,7 +4,7 @@ import './modal.css';
 const Modal = ({ open, toggleModal, children }) => {
   return (
     <div className={`modal modal-${open}`} onClick={() => toggleModal(false)}>
-      <div className="modal-paper" onClick={e => e.stopPropagation()}>
+      <div className="modal-paper" onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
     </div>
