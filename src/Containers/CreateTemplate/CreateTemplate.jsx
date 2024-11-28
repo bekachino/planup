@@ -74,7 +74,7 @@ const CreateTemplate = ({ isEdit }) => {
     setState((prevState) => ({
       ...prevState,
       fields: [
-        ...prevState.fields,
+        ...prevState?.fields,
         {
           id: nanoid(),
           field: null,
@@ -130,7 +130,11 @@ const CreateTemplate = ({ isEdit }) => {
             required: field?.required,
           })),
         })
-      );
+      ).then((res) => {
+        if (res?.meta?.requestStatus === 'fulfilled') {
+          navigate('/templates');
+        }
+      });
     } else {
       dispatch(
         createTemplate({
@@ -141,7 +145,11 @@ const CreateTemplate = ({ isEdit }) => {
             numbers: i + 1,
           })),
         })
-      );
+      ).then((res) => {
+        if (res?.meta?.requestStatus === 'fulfilled') {
+          navigate('/templates');
+        }
+      });
     }
   };
 

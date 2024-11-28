@@ -57,3 +57,7 @@
   background-position: 10px center;
   background-size: 15px;
 }
+
+.select-wrapper .input {
+  padding-right: 35px;
+}
