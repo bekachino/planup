@@ -4,7 +4,7 @@ import { addAlert } from '../data/dataSlice';
 
 export const getExecuterTypes = createAsyncThunk(
   'user/getExecuterTypes',
-  async (noAlert, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/resolution/');
       return (await req.data) || [];
@@ -22,7 +22,7 @@ export const getExecuterTypes = createAsyncThunk(
 
 export const getResolutionTypes = createAsyncThunk(
   'user/getResolutionTypes',
-  async (noAlert, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/resolution/');
       return (await req.data) || [];
@@ -40,7 +40,7 @@ export const getResolutionTypes = createAsyncThunk(
 
 export const getStatusTypes = createAsyncThunk(
   'user/getStatusTypes',
-  async (noAlert, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/status/');
       return (await req.data) || [];
@@ -58,7 +58,7 @@ export const getStatusTypes = createAsyncThunk(
 
 export const getTemplateTypes = createAsyncThunk(
   'user/getTemplateTypes',
-  async (noAlert, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/template/');
       return (await req.data) || [];
@@ -76,7 +76,7 @@ export const getTemplateTypes = createAsyncThunk(
 
 export const getTemplateFields = createAsyncThunk(
   'user/getTemplateFields',
-  async (noAlert, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/field/');
       return (await req.data) || [];
@@ -88,6 +88,42 @@ export const getTemplateFields = createAsyncThunk(
         })
       );
       rejectWithValue('Ошибка при получении полей');
+    }
+  }
+);
+
+export const getStages = createAsyncThunk(
+  'user/getStages',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi('v2/stage/');
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: 'Ошибка при получении типов работы',
+        })
+      );
+      rejectWithValue('Ошибка при получении типов работы');
+    }
+  }
+);
+
+export const getCategories = createAsyncThunk(
+  'user/getCategories',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi('v2/category/');
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: 'Ошибка при получении типов категориев',
+        })
+      );
+      rejectWithValue('Ошибка при получении типов категориев');
     }
   }
 );

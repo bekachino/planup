@@ -9,6 +9,8 @@ import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as DragIcon } from '../../assets/drag-icon.svg';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
+  getCategories,
+  getStages,
   getTemplateFields,
   getTemplateTypes,
 } from '../../features/statuses/filtersDataThunk';
@@ -24,8 +26,16 @@ const CreateTemplate = ({ isEdit }) => {
   const { templateId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { templateTypes, templateFields, templateFieldsLoading } =
-    useAppSelector((state) => state.filtersDataState);
+  const {
+    stages,
+    categories,
+    templateTypes,
+    templateTypesLoading,
+    templateFields,
+    templateFieldsLoading,
+    stagesLoading,
+    categoriesLoading,
+  } = useAppSelector((state) => state.filtersDataState);
   const { createTemplateLoading, editTemplateLoading } = useAppSelector(
     (state) => state.dataState
   );
@@ -36,20 +46,26 @@ const CreateTemplate = ({ isEdit }) => {
 
   useEffect(() => {
     dispatch(getTemplateTypes());
+    dispatch(getStages());
+    dispatch(getCategories());
     dispatch(getTemplateFields());
     if (isEdit)
       dispatch(getTemplate(templateId)).then((res) =>
         setState({
           id: res.payload?.id,
           name: res.payload?.name,
-          fields: res.payload?.fields.map((field) => ({
-            field: {
-              name: field?.field?.name,
+          category: res.payload?.category?.[0] || null,
+          parent: res.payload?.parent?.[0] || null,
+          stage: res.payload?.stage?.[0] || null,
+          fields:
+            res.payload?.fields?.map((field) => ({
+              field: {
+                name: field?.field?.name,
+                id: field?.field?.id,
+              },
               id: field?.field?.id,
-            },
-            id: field?.field?.id,
-            required: field?.required,
-          })),
+              required: field?.required,
+            })) || [],
         })
       );
   }, []);
@@ -128,6 +144,8 @@ const CreateTemplate = ({ isEdit }) => {
         editTemplate({
           ...state,
           parent: state?.parent?.id,
+          stage: state?.stage?.id,
+          category: Number(state?.category?.id || 0),
           fields: state.fields.map((field, i) => ({
             field: field?.field?.id,
             numbers: i + 1,
@@ -144,6 +162,8 @@ const CreateTemplate = ({ isEdit }) => {
         createTemplate({
           ...state,
           parent: state?.parent?.id,
+          stage: state?.stage?.id,
+          category: Number(state?.category?.id || 0),
           fields: state.fields.map((field, i) => ({
             ...field,
             field: field?.field?.id,
@@ -169,6 +189,16 @@ const CreateTemplate = ({ isEdit }) => {
         </div>
         <form onSubmit={onSubmit}>
           <div className="template-field-row">
+            <Input
+              label="Название"
+              placeholder="Введите название"
+              name="name"
+              value={state?.name}
+              onChange={onChange}
+              required
+            />
+          </div>
+          <div className="template-field-row">
             <Autocomplete
               label="Родительский шаблон"
               placeholder="Введите название"
@@ -177,13 +207,25 @@ const CreateTemplate = ({ isEdit }) => {
               options={templateTypes}
               onChange={onChange}
             />
-            <Input
-              label="Название"
-              placeholder="Введите название"
-              name="name"
-              value={state?.name}
+          </div>
+          <div className="template-field-row">
+            <Autocomplete
+              label="Тип работы Б24"
+              placeholder="Выберите тип работы"
+              name="stage"
+              value={state?.stage?.name}
+              options={stages}
               onChange={onChange}
-              required
+            />
+          </div>
+          <div className="template-field-row">
+            <Autocomplete
+              label="Категорий"
+              placeholder="Выберите категорий"
+              name="category"
+              value={state?.category?.name}
+              options={categories}
+              onChange={onChange}
             />
           </div>
           {state.fields?.map((field) => (
@@ -224,7 +266,6 @@ const CreateTemplate = ({ isEdit }) => {
                     },
                   })
                 }
-                loading={templateFieldsLoading}
               />
               <Checkbox
                 label="Обязательное поле"
@@ -255,7 +296,12 @@ const CreateTemplate = ({ isEdit }) => {
             <Button
               type="button"
               onClick={addField}
-              loading={templateFieldsLoading}
+              loading={
+                templateFieldsLoading ||
+                templateTypesLoading ||
+                stagesLoading ||
+                categoriesLoading
+              }
             >
               Добавить поле
             </Button>
@@ -265,7 +311,10 @@ const CreateTemplate = ({ isEdit }) => {
               loading={
                 createTemplateLoading ||
                 editTemplateLoading ||
-                templateFieldsLoading
+                templateFieldsLoading ||
+                templateTypesLoading ||
+                stagesLoading ||
+                categoriesLoading
               }
             >
               {isEdit ? 'Сохранить' : 'Создать'}

@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  getCategories,
   getExecuterTypes,
   getResolutionTypes,
+  getStages,
   getStatusTypes,
   getTemplateFields,
   getTemplateTypes,
@@ -14,12 +16,16 @@ const initialState = {
   templateTypes: [],
   templateFields: [],
   squareTypes: [],
+  stages: [],
+  categories: [],
   executerTypesLoading: false,
   statusTypesLoading: false,
   resolutionTypesLoading: false,
   templateTypesLoading: false,
   templateFieldsLoading: false,
   squareTypesLoading: false,
+  stagesLoading: false,
+  categoriesLoading: false,
 };
 
 const filtersDataSlice = createSlice({
@@ -97,6 +103,28 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getTemplateFields.rejected, (state) => {
       state.templateFieldsLoading = false;
+    });
+
+    builder.addCase(getStages.pending, (state) => {
+      state.stagesLoading = true;
+    });
+    builder.addCase(getStages.fulfilled, (state, { payload: res }) => {
+      state.stagesLoading = false;
+      state.stages = res?.deal_types;
+    });
+    builder.addCase(getStages.rejected, (state) => {
+      state.stagesLoading = false;
+    });
+
+    builder.addCase(getCategories.pending, (state) => {
+      state.categoriesLoading = true;
+    });
+    builder.addCase(getCategories.fulfilled, (state, { payload: res }) => {
+      state.categoriesLoading = false;
+      state.categories = res?.deal_types;
+    });
+    builder.addCase(getCategories.rejected, (state) => {
+      state.categoriesLoading = false;
     });
   },
 });
