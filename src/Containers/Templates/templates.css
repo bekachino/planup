@@ -6,6 +6,8 @@
 }
 
 .types-header {
+  position: sticky;
+  top: 5px;
   display: flex;
   justify-content: space-between;
   padding: 18px 34px;

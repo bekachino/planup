@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SearchFilters from '../SearchFilters/SearchFilters';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as ServerIcon } from '../../assets/server.svg';
 import { ReactComponent as CheckIcon } from '../../assets/check.svg';
 import { ReactComponent as FileIcon } from '../../assets/file.svg';
@@ -16,6 +16,7 @@ import Alerts from '../Alerts/Alerts';
 import './header.css';
 
 const Header = () => {
+  const location = useLocation();
   const [showBurgerTooltip, setShowBurgerTooltip] = useState(false);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const Header = () => {
           PlanUp
         </Link>
       </h1>
-      <SearchFilters placeholder="Поиск" />
+      {location.pathname === '/home' && <SearchFilters placeholder="Поиск" />}
       <nav>
         <NavLink to="/value-types">
           <ServerIcon />

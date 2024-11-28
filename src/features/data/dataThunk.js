@@ -23,6 +23,26 @@ export const getTemplate = createAsyncThunk(
   }
 );
 
+export const getResolution = createAsyncThunk(
+  'data/getResolution',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/v2/resolution/${id}/`);
+      return await req.data;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
 export const createTemplate = createAsyncThunk(
   'data/createTemplate',
   async (template, { dispatch, rejectWithValue }) => {
@@ -88,6 +108,50 @@ export const deleteResolution = createAsyncThunk(
   async (id, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi.delete(`/v2/resolution/${id}/`);
+      return await req.data;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const createResolution = createAsyncThunk(
+  'data/createResolution',
+  async (resolution, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi.post('/v2/resolution/', resolution);
+      return await req.data;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const editResolution = createAsyncThunk(
+  'data/editResolution',
+  async (resolution, { dispatch, rejectWithValue }) => {
+    try {
+      console.log(resolution);
+      const req = await axiosApi.put(
+        `/v2/resolution/${resolution?.id}/`,
+        resolution
+      );
       return await req.data;
     } catch (e) {
       dispatch(

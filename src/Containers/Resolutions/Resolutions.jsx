@@ -68,7 +68,7 @@ const Resolutions = () => {
           <h2>Список резолюций</h2>
           <button
             className="create-template-btn"
-            onClick={() => navigate('/create-template')}
+            onClick={() => navigate('/create-resolution')}
           >
             Создать резолюцию
           </button>
@@ -82,12 +82,12 @@ const Resolutions = () => {
           {!resolutionTypesLoading &&
             resolutionTypes.map((resolution) => (
               <div className="type-item" key={resolution.id}>
-                <Link to={`/templates/${resolution?.id}`}>
+                <Link to={`/resolutions/${resolution?.id}`}>
                   {resolution.name}
                 </Link>
                 <Button
                   className="edit-type-btn"
-                  onClick={() => navigate(`/edit-template/${resolution?.id}`)}
+                  onClick={() => navigate(`/edit-resolution/${resolution?.id}`)}
                 >
                   <RefreshIcon />
                   Обновить

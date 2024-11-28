@@ -1,20 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  createResolution,
   createTemplate,
   deleteResolution,
   deleteTemplate,
-  editTemplate,
+  editResolution,
+  editTemplate, getResolution,
   getTemplate,
 } from './dataThunk';
 
 const initialState = {
   alerts: [],
   template: null,
+  resolution: null,
   getTemplateLoading: false,
+  getResolutionLoading: false,
   createTemplateLoading: false,
   editTemplateLoading: false,
   deleteTemplateLoading: false,
   deleteResolutionLoading: false,
+  createResolutionLoading: false,
+  editResolutionLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -47,6 +53,18 @@ const DataSlice = createSlice({
     });
     builder.addCase(getTemplate.rejected, (state) => {
       state.getTemplateLoading = false;
+    });
+    
+    builder.addCase(getResolution.pending, (state) => {
+      state.getResolutionLoading = true;
+      state.resolution = null;
+    });
+    builder.addCase(getResolution.fulfilled, (state, { payload: res }) => {
+      state.getResolutionLoading = false;
+      state.resolution = res || null;
+    });
+    builder.addCase(getResolution.rejected, (state) => {
+      state.getResolutionLoading = false;
     });
 
     builder.addCase(createTemplate.pending, (state) => {
@@ -87,6 +105,26 @@ const DataSlice = createSlice({
     });
     builder.addCase(deleteResolution.rejected, (state) => {
       state.deleteResolutionLoading = false;
+    });
+
+    builder.addCase(createResolution.pending, (state) => {
+      state.createResolutionLoading = true;
+    });
+    builder.addCase(createResolution.fulfilled, (state) => {
+      state.createResolutionLoading = false;
+    });
+    builder.addCase(createResolution.rejected, (state) => {
+      state.createResolutionLoading = false;
+    });
+
+    builder.addCase(editResolution.pending, (state) => {
+      state.editResolutionLoading = true;
+    });
+    builder.addCase(editResolution.fulfilled, (state) => {
+      state.editResolutionLoading = false;
+    });
+    builder.addCase(editResolution.rejected, (state) => {
+      state.editResolutionLoading = false;
     });
   },
 });

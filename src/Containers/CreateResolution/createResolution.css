@@ -1,0 +1,33 @@
+.create-resolution {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 13px 50px 50px;
+  flex-grow: 1;
+}
+
+.create-resolution-paper {
+  padding: 48px 100px;
+  border-radius: 14px;
+  max-width: 815px;
+  width: 100%;
+  background-color: var(--white);
+}
+
+.create-resolution form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 70px;
+}
+
+.create-resolution form button {
+  font-size: 22px;
+  line-height: 26px;
+  padding: 22px;
+  font-weight: normal;
+}
+
+.create-resolution form button[type=submit] {
+  margin-top: 100px;
+}
