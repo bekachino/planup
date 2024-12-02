@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as StartedIcon } from '../../assets/started.svg';
 import { ReactComponent as StoppedIcon } from '../../assets/stopped.svg';
 import './home.css';
+import Modal from '../../Components/Modal/Modal';
 
 const Home = () => {
   const dutiesTableRef = useRef(null);

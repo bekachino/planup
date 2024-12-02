@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SearchFilters from '../SearchFilters/SearchFilters';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as ServerIcon } from '../../assets/server.svg';
 import { ReactComponent as CheckIcon } from '../../assets/check.svg';
 import { ReactComponent as FileIcon } from '../../assets/file.svg';
@@ -13,15 +13,50 @@ import { ReactComponent as NewsIcon } from '../../assets/news.svg';
 import { ReactComponent as UserIcon } from '../../assets/user.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 import Alerts from '../Alerts/Alerts';
+import Modal from '../Modal/Modal';
+import Autocomplete from '../Autocomplete/Autocomplete';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import Button from '../Button/Button';
 import './header.css';
+import { addAlert } from '../../features/data/dataSlice';
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [showBurgerTooltip, setShowBurgerTooltip] = useState(false);
+  const [createWorkModalOpen, setCreateWorkModalOpen] = useState(false);
+  const { resolutionTypes } = useAppSelector((state) => state.filtersDataState);
+  const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
 
   useEffect(() => {
     document.addEventListener('mousedown', () => setShowBurgerTooltip(false));
   }, []);
+
+  const toggleCreateWorkModal = (value) => {
+    if (!value) setCreateWorkTemplate(null);
+    setCreateWorkModalOpen(value);
+  };
+
+  const handleWorkTemplateChange = (e) => {
+    const { value } = e.target;
+    setCreateWorkTemplate(value);
+  };
+
+  const onCreateWorkTemplateSubmit = (e) => {
+    e.preventDefault();
+    if (!createWorkTemplate?.id) {
+      dispatch(
+        addAlert({
+          type: 'warning',
+          message: 'Ошибка при выборе шаблона',
+        })
+      );
+      return;
+    }
+    toggleCreateWorkModal(false);
+    navigate(`/create-template/${createWorkTemplate?.id}`);
+  };
 
   return (
     <header className="header">
@@ -48,7 +83,13 @@ const Header = () => {
           <CheckIcon />
           Статусы
         </NavLink>
-        <NavLink to="/works">
+        <NavLink
+          to="/works"
+          onClick={(e) => {
+            e.preventDefault();
+            toggleCreateWorkModal(true);
+          }}
+        >
           <LucidIcon />
           Создать наряд
         </NavLink>
@@ -85,6 +126,33 @@ const Header = () => {
         </div>
       </nav>
       <Alerts />
+      <Modal
+        className="create-work-modal-paper"
+        open={createWorkModalOpen}
+        toggleModal={toggleCreateWorkModal}
+      >
+        <button
+          className="close-modal-btn"
+          onClick={() => toggleCreateWorkModal(false)}
+        >
+          <RemoveIcon />
+        </button>
+        <div className="create-template-paper-header">
+          <h2>Создание нового наряда</h2>
+        </div>
+        <form onSubmit={onCreateWorkTemplateSubmit}>
+          <Autocomplete
+            label="Шаблон"
+            placeholder="Выберите шаблон"
+            name="createWorkTemplate"
+            value={createWorkTemplate?.name}
+            options={resolutionTypes}
+            onChange={handleWorkTemplateChange}
+            required
+          />
+          <Button className="create-work-modal-btn">Выбрать</Button>
+        </form>
+      </Modal>
     </header>
   );
 };
