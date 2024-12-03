@@ -42,6 +42,9 @@ const DataSlice = createSlice({
     removeAlert: (state, { payload }) => {
       state.alerts.find((alert) => alert.id === payload).show = false;
     },
+    clearResolution: state => {
+      state.resolution = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getTemplate.pending, (state) => {
@@ -131,4 +134,4 @@ const DataSlice = createSlice({
 });
 
 export const dataReducer = DataSlice.reducer;
-export const { addAlert, removeAlert } = DataSlice.actions;
+export const { addAlert, removeAlert, clearResolution } = DataSlice.actions;

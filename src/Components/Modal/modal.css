@@ -13,7 +13,7 @@
 }
 
 .modal-false {
-  display: none;
+  display: none!important;
   opacity: 0;
 }
 

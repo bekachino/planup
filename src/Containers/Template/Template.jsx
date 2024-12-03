@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
-import './template.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getTemplate } from '../../features/data/dataThunk';
 import { useAppSelector } from '../../app/hooks';
+import './template.css';
 
 const Template = () => {
   const { templateId } = useParams();

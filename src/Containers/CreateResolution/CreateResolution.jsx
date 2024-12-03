@@ -4,12 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import './createResolution.css';
 import {
   createResolution,
   editResolution,
   getResolution,
 } from '../../features/data/dataThunk';
+import { clearResolution } from '../../features/data/dataSlice';
+import './createResolution.css';
 
 const CreateResolution = ({ isEdit }) => {
   const { resolutionId } = useParams();
@@ -21,6 +22,7 @@ const CreateResolution = ({ isEdit }) => {
 
   useEffect(() => {
     if (isEdit && !!resolutionId) dispatch(getResolution(resolutionId));
+    return () => dispatch(clearResolution());
   }, []);
 
   useEffect(() => {

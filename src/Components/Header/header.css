@@ -112,3 +112,42 @@ nav a:hover svg path {
 .nav-burger-tooltip-btn:last-child {
   margin-top: 40px;
 }
+
+.create-work-modal-paper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 815px;
+  padding-bottom: 180px;
+}
+
+.create-work-modal-paper .close-modal-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.create-work-modal-paper .close-modal-btn svg path {
+  stroke: #25282B;
+}
+
+.create-work-modal-paper .create-template-paper-header {
+  margin-top: 50px;
+}
+
+.create-work-modal-paper form {
+  margin-top: 40px;
+}
+
+.create-work-modal-paper .create-work-modal-btn {
+  margin-top: 70px;
+  font-size: 20px;
+  line-height: 24px;
+  padding: 22px;
+  width: 100%;
+}
