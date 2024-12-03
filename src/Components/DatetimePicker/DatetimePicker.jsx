@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Input from '../Input/Input';
 import { ReactComponent as CalendarIcon } from '../../assets/calendar.svg';
 import { ReactComponent as ClockIcon } from '../../assets/clock.svg';
@@ -18,7 +18,9 @@ const DatetimePicker = ({
   noTime,
   ...rest
 }) => {
+  const datePickerRef = useRef(null);
   const [datepickerType, setDatepickerType] = useState('date');
+  const [datePickerIsOnTopHalf, setDatePickerIsOnTopHalf] = useState(false);
   const [currentDate, setCurrentDate] = useState(moment());
   const [showCalendar, setShowCalendar] = useState(false);
   const calendar = [];
@@ -114,6 +116,15 @@ const DatetimePicker = ({
     };
   }, []);
 
+  useEffect(() => {
+    const datePickerPositionTop =
+      datePickerRef.current.getBoundingClientRect().top;
+    const bodyHeight = document.body.offsetHeight;
+    setDatePickerIsOnTopHalf(
+      bodyHeight - datePickerPositionTop > bodyHeight / 2
+    );
+  }, [showCalendar]);
+
   const Datepicker = () => (
     <div className="date-time-calendar-body-top">
       <div className="date-time-calendar-body-top-actions">
@@ -199,7 +210,7 @@ const DatetimePicker = ({
   );
 
   return (
-    <div className={`date-time-picker ${id}`}>
+    <div className={`date-time-picker ${id}`} ref={datePickerRef}>
       <Input
         className="date-time-picker-input"
         value={value}
@@ -211,7 +222,11 @@ const DatetimePicker = ({
       <div className="date-time-picker-icon" />
       <div
         className={`date-time-calendar ${id}`}
-        style={{ display: showCalendar ? 'block' : 'none' }}
+        style={{
+          display: showCalendar ? 'block' : 'none',
+          top: datePickerIsOnTopHalf ? 'calc(100% + 6px)' : 'unset',
+          bottom: datePickerIsOnTopHalf ? 'unset' : 'calc(100% + 6px)',
+        }}
       >
         <div className="date-time-calendar-header">
           <div
