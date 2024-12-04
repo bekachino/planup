@@ -73,13 +73,13 @@
 
 .home-table-wrapper tbody td {
   position: relative;
-  padding: 30px 14px;
+  padding: 30px 20px;
   text-align: center;
   font-size: 20px;
 }
 
 .home-table-wrapper tbody td:first-child {
-  padding-left: 20px;
+  padding-left: 30px;
 }
 
 .home-table-wrapper tbody td::before {
@@ -101,6 +101,16 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.duty-item-cell-title-text,
+.duty-item-cell-value-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 150px;
 }
 
 .home-table-wrapper tbody td a {

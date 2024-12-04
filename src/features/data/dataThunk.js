@@ -147,7 +147,6 @@ export const editResolution = createAsyncThunk(
   'data/editResolution',
   async (resolution, { dispatch, rejectWithValue }) => {
     try {
-      console.log(resolution);
       const req = await axiosApi.put(
         `/v2/resolution/${resolution?.id}/`,
         resolution

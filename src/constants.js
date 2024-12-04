@@ -1,3 +1,9 @@
+import { ReactComponent as StartedIcon } from './assets/started.svg';
+import { ReactComponent as PlannedIcon } from './assets/planned.svg';
+import { ReactComponent as StoppedIcon } from './assets/stopped.svg';
+import { ReactComponent as OnWayIcon } from './assets/on-way.svg';
+import { ReactComponent as FinishedIcon } from './assets/finished.svg';
+
 export const apiUrl = 'http://10.1.2.63:8000/api';
 
 export const ERROR_MESSAGES = {
@@ -41,3 +47,11 @@ export const filterCategories = [
 ];
 
 export const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+
+export const statusIcons = {
+  Начат: <StartedIcon />,
+  Запланировано: <PlannedIcon />,
+  'В пути': <OnWayIcon />,
+  Завершен: <FinishedIcon />,
+  Приостановить: <StoppedIcon />,
+};

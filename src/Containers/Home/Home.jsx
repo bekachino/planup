@@ -2,14 +2,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../Components/Button/Button';
 import { ReactComponent as AddIcon } from '../../assets/add-white.svg';
 import { Link } from 'react-router-dom';
-import { ReactComponent as StartedIcon } from '../../assets/started.svg';
-import { ReactComponent as StoppedIcon } from '../../assets/stopped.svg';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getWorks } from '../../features/works/worksThunk';
+import moment from 'moment';
+import { statusIcons } from '../../constants';
 import './home.css';
-import Modal from '../../Components/Modal/Modal';
 
 const Home = () => {
+  const dispatch = useAppDispatch();
   const dutiesTableRef = useRef(null);
+  const { works, worksLoading } = useAppSelector((state) => state.worksState);
   const [dutiesTableHeight, setDutiesTableHeight] = useState(0);
+
+  useEffect(() => {
+    dispatch(getWorks());
+  }, []);
 
   useEffect(() => {
     if (dutiesTableRef.current) {
@@ -33,337 +40,60 @@ const Home = () => {
         <div
           className="home-table-wrapper"
           style={{
-            height: dutiesTableHeight,
+            maxHeight: dutiesTableHeight,
           }}
           ref={dutiesTableRef}
         >
           <table>
             <thead>
               <tr>
-                <th>Номер</th>
-                <th>Квадрат</th>
-                <th>Запланирован</th>
-                <th>Статус</th>
-                <th>Шаблон</th>
-                <th>Исполнитель</th>
-                <th>Резолюция</th>
-                <th>Адрес</th>
-                <th>Б24</th>
+                {worksLoading && (
+                  <th>
+                    <span className="duty-item-cell-title-text">
+                      Загрузка...
+                    </span>
+                  </th>
+                )}
+                {!worksLoading &&
+                  (works[0] || []).map((work, i) => (
+                    <th key={i}>
+                      <span className="duty-item-cell-title-text">
+                        {work.name}
+                      </span>
+                    </th>
+                  ))}
               </tr>
             </thead>
             <tbody>
-              <tr className="duty-item-status-started">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StartedIcon />
-                    Начато
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
-              <tr className="duty-item-status-stopped">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StoppedIcon />
-                    Приостановлено
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
-              <tr className="duty-item-status-stopped">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StoppedIcon />
-                    Приостановлено
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
-              <tr className="duty-item-status-stopped">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StoppedIcon />
-                    Приостановлено
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
-              <tr className="duty-item-status-stopped">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StoppedIcon />
-                    Приостановлено
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
-              <tr className="duty-item-status-stopped">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StoppedIcon />
-                    Приостановлено
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
-              <tr className="duty-item-status-stopped">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StoppedIcon />
-                    Приостановлено
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
-              <tr className="duty-item-status-stopped">
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">44565</Link>
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Базар Коргон</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">15-10-2024</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <StoppedIcon />
-                    Приостановлено
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Подключение Чуй</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Бакай Кокенов</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">Нет дома</span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    Кыргызстан, Джалал-Абадская обл., г.Джалал-Абад, ул.Женижок,
-                    д. 18/17
-                  </span>
-                </td>
-                <td>
-                  <span className="duty-item-cell-value">
-                    <Link to="/home">354544</Link>
-                  </span>
-                </td>
-              </tr>
+              {(works || []).map((work, i) => (
+                <tr className="duty-item-status-started" key={i}>
+                  {(work || []).map((workField, i) => (
+                    <td key={i}>
+                      <span className="duty-item-cell-value">
+                        {workField.name === 'Статус' &&
+                          statusIcons[workField.field_value]}
+                        <span className="duty-item-cell-value-text">
+                          {['Б24', 'ID'].includes(workField.name) ? (
+                            <Link to="/home">
+                              {workField.field_value || '-'}
+                            </Link>
+                          ) : workField.name === 'Желаемая дата  приезда' ? (
+                            !!workField.field_value ? (
+                              moment(workField.field_value).format(
+                                'DD-MM-YYYY HH:mm'
+                              )
+                            ) : (
+                              '-'
+                            )
+                          ) : (
+                            workField.field_value || '-'
+                          )}
+                        </span>
+                      </span>
+                    </td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

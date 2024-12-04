@@ -13,6 +13,7 @@ import storage from 'redux-persist/lib/storage';
 import { dataReducer } from '../features/data/dataSlice';
 import { userReducer } from '../features/user/usersSlice';
 import { filtersDataReducer } from '../features/statuses/filtersDataSlice';
+import { worksReducer } from '../features/works/worksSlice';
 
 const usersPersistConfig = {
   key: 'PlanUp:user',
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   userState: persistReducer(usersPersistConfig, userReducer),
   dataState: dataReducer,
   filtersDataState: filtersDataReducer,
+  worksState: worksReducer,
 });
 
 export const store = configureStore({
