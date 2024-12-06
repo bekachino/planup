@@ -16,7 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getWorks());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (dutiesTableRef.current) {
@@ -29,6 +29,22 @@ const Home = () => {
       }, 200);
     }
   }, []);
+
+  const getTableCellValue = (workField) => {
+    if (['Б24', 'ID'].includes(workField.name)) {
+      return (
+        <Link to={workField.name === 'ID' ? `/work/${workField?.id}` : '/home'}>
+          {workField.field_value || '-'}
+        </Link>
+      );
+    } else if (workField.name === 'Желаемая дата  приезда') {
+      return !!workField.field_value
+        ? moment(workField.field_value).format('DD-MM-YYYY HH:mm')
+        : '-';
+    } else {
+      return workField.field_value || '-';
+    }
+  };
 
   return (
     <div className="home">
@@ -62,6 +78,13 @@ const Home = () => {
                       </span>
                     </th>
                   ))}
+                {!worksLoading && !works.length && (
+                  <th>
+                    <span className="duty-item-cell-title-text">
+                      Нет данных
+                    </span>
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody>
@@ -73,21 +96,7 @@ const Home = () => {
                         {workField.name === 'Статус' &&
                           statusIcons[workField.field_value]}
                         <span className="duty-item-cell-value-text">
-                          {['Б24', 'ID'].includes(workField.name) ? (
-                            <Link to="/home">
-                              {workField.field_value || '-'}
-                            </Link>
-                          ) : workField.name === 'Желаемая дата  приезда' ? (
-                            !!workField.field_value ? (
-                              moment(workField.field_value).format(
-                                'DD-MM-YYYY HH:mm'
-                              )
-                            ) : (
-                              '-'
-                            )
-                          ) : (
-                            workField.field_value || '-'
-                          )}
+                          {getTableCellValue(workField)}
                         </span>
                       </span>
                     </td>

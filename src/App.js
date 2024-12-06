@@ -1,11 +1,12 @@
 import moment from 'moment';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
 import Header from './Components/Header/Header';
 import 'moment/locale/ru';
 import './App.css';
 import { lazy, Suspense } from 'react';
 
+const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
 const CreateTemplate = lazy(
   () => import('./Containers/CreateTemplate/CreateTemplate')
@@ -23,6 +24,15 @@ const App = () => {
     <div className="App">
       <Header />
       <Routes>
+        <Route path="*" element={<Navigate to="/home" replace />} />
+        <Route
+          path="work/:workId"
+          element={
+            <Suspense fallback={<></>}>
+              <Work />
+            </Suspense>
+          }
+        />
         <Route
           path="home"
           element={
@@ -65,11 +75,19 @@ const App = () => {
         />
         <Route
           path="edit-template/:templateId"
-          element={<CreateTemplate isEdit />}
+          element={
+            <Suspense fallback={<></>}>
+              <CreateTemplate isEdit />
+            </Suspense>
+          }
         />
         <Route
           path="edit-resolution/:resolutionId"
-          element={<CreateResolution isEdit />}
+          element={
+            <Suspense fallback={<></>}>
+              <CreateResolution isEdit />
+            </Suspense>
+          }
         />
         <Route
           path="templates/:templateId"

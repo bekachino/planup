@@ -14,6 +14,10 @@
   background-color: var(--white);
 }
 
+.create-template-paper-header {
+  position: relative;
+}
+
 .create-resolution form {
   display: flex;
   flex-direction: column;
@@ -30,4 +34,12 @@
 
 .create-resolution form button[type='submit'] {
   margin-top: 100px;
+}
+
+.create-template-paper-header h2 {
+  margin: 0 auto;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  font-weight: 500;
 }

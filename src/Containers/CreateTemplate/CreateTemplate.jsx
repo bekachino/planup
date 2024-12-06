@@ -68,6 +68,7 @@ const CreateTemplate = ({ isEdit }) => {
             })) || [],
         })
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onChange = (e) => {
@@ -220,8 +221,8 @@ const CreateTemplate = ({ isEdit }) => {
           </div>
           <div className="template-field-row">
             <Autocomplete
-              label="Категорий"
-              placeholder="Выберите категорий"
+              label="Воронки"
+              placeholder="Выберите воронки"
               name="category"
               value={state?.category?.name}
               options={categories}

@@ -136,8 +136,12 @@ nav a:hover svg path {
   stroke: #25282B;
 }
 
-.create-work-modal-paper .create-template-paper-header {
-  margin-top: 50px;
+.create-work-modal-paper .create-template-paper-header h2 {
+  margin: 50px auto 0;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  font-weight: 500;
 }
 
 .create-work-modal-paper form {

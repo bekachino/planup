@@ -110,7 +110,7 @@
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 150px;
+  min-width: 120px;
 }
 
 .home-table-wrapper tbody td a {

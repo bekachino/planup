@@ -13,6 +13,7 @@ const WorksSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getWorks.pending, (state) => {
       state.worksLoading = true;
+      state.works = [];
     });
     builder.addCase(getWorks.fulfilled, (state, { payload: res }) => {
       state.worksLoading = false;
@@ -38,7 +39,7 @@ const WorksSlice = createSlice({
           field_value: work.works[0].template.name || null,
         },
         ...(work.works[0].fields || []),
-      ]);
+      ]) || [];
     });
     builder.addCase(getWorks.rejected, (state) => {
       state.worksLoading = false;
