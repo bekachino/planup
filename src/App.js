@@ -3,8 +3,8 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
 import Header from './Components/Header/Header';
 import 'moment/locale/ru';
-import './App.css';
 import { lazy, Suspense } from 'react';
+import './App.css';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));

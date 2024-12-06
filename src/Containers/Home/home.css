@@ -68,7 +68,6 @@
   height: calc(100% + 4px);
   border-top-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  background-color: var(--stopped);
 }
 
 .home-table-wrapper tbody td {
@@ -119,6 +118,18 @@
 
 .home-table-wrapper tbody tr.duty-item-status-started::after {
   background-color: var(--started);
+}
+
+.home-table-wrapper tbody tr.duty-item-status-planned::after {
+  background-color: var(--planned);
+}
+
+.home-table-wrapper tbody tr.duty-item-status-on-way::after {
+  background-color: var(--on-way);
+}
+
+.home-table-wrapper tbody tr.duty-item-status-finished::after {
+  background-color: var(--finished);
 }
 
 .home-table-wrapper tbody tr.duty-item-status-stopped::after {

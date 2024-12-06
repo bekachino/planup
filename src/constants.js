@@ -55,3 +55,11 @@ export const statusIcons = {
   Завершен: <FinishedIcon />,
   Приостановить: <StoppedIcon />,
 };
+
+export const workStatuses = {
+  Запланировано: 'planned',
+  'В пути': 'on-way',
+  Начат: 'started',
+  Завершен: 'finished',
+  Приостановить: 'stopped',
+};
