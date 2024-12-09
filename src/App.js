@@ -1,11 +1,13 @@
 import moment from 'moment';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
-import 'moment/locale/ru';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
-import './App.css';
 import Header from './Components/Header/Header';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import 'moment/locale/ru';
+import './App.css';
+import { setUser } from './features/user/usersSlice';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -21,9 +23,21 @@ const CreateResolution = lazy(
 moment.locale('ru');
 
 const App = () => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.userState);
+
+  useEffect(() => {
+    dispatch(
+      setUser({
+        name: 'Админ',
+        role: 'admin',
+      })
+    );
+  }, []);
+
   return (
     <div className="App">
-      <AdminHeader />
+      {user.role === 'admin' ? <AdminHeader /> : <Header />}
       <Routes>
         <Route path="*" element={<Navigate to="/home" replace />} />
         <Route

@@ -5,8 +5,12 @@ import { ReactComponent as RemoveIcon } from '../../assets/remove-white.svg';
 import { ReactComponent as UserIcon } from '../../assets/user.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 import './adminHeader.css';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { handleSearchValueChange } from '../../features/data/dataSlice';
 
 const AdminHeader = () => {
+  const dispatch = useAppDispatch();
+  const { searchValue } = useAppSelector((state) => state.dataState);
   const [showBurgerTooltip, setShowBurgerTooltip] = useState(false);
 
   useEffect(() => {
@@ -24,8 +28,8 @@ const AdminHeader = () => {
         <input
           className="admin-header-search-input"
           type="text"
-          value=""
-          onChange={() => {}}
+          value={searchValue}
+          onChange={e => dispatch(handleSearchValueChange(e.target.value))}
           placeholder="Поиск"
         />
         <div className="admin-header-tooltip-toggle-btn-wrapper">
@@ -54,12 +58,12 @@ const AdminHeader = () => {
         </div>
       </div>
       <nav className="admin-header-bottom">
-        <Link to='/home'>Роли разрешения</Link>
-        <Link to='/home'>Разрешения</Link>
-        <Link to='/home'>Локации</Link>
-        <Link to='/home'>Список НУ</Link>
-        <Link to='/home'>Создать СИ</Link>
-        <Link to='/home'>Квадраты</Link>
+        <Link to="/home">Роли разрешения</Link>
+        <Link to="/home">Разрешения</Link>
+        <Link to="/home">Локации</Link>
+        <Link to="/home">Список НУ</Link>
+        <Link to="/home">Создать СИ</Link>
+        <Link to="/home">Квадраты</Link>
       </nav>
     </header>
   );

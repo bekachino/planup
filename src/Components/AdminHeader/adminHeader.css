@@ -99,6 +99,7 @@
 .admin-header-bottom {
   display: flex;
   margin: 40px 0 0;
+  background-color: transparent;
 }
 
 .admin-header-bottom a {

@@ -59,7 +59,7 @@ body {
   background-color: var(--white-grey);
 }
 
-.App:has(.admin-header) {
+.App:has(.admin-header):not(:has(.home)) {
   background-color: var(--white);
 }
 

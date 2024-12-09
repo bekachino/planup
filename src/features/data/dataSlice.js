@@ -11,6 +11,7 @@ import {
 } from './dataThunk';
 
 const initialState = {
+  searchValue: '',
   alerts: [],
   template: null,
   resolution: null,
@@ -42,8 +43,11 @@ const DataSlice = createSlice({
     removeAlert: (state, { payload }) => {
       state.alerts.find((alert) => alert.id === payload).show = false;
     },
-    clearResolution: state => {
+    clearResolution: (state) => {
       state.resolution = null;
+    },
+    handleSearchValueChange: (state, { payload }) => {
+      state.searchValue = payload;
     },
   },
   extraReducers: (builder) => {
@@ -134,4 +138,5 @@ const DataSlice = createSlice({
 });
 
 export const dataReducer = DataSlice.reducer;
-export const { addAlert, removeAlert, clearResolution } = DataSlice.actions;
+export const { addAlert, removeAlert, clearResolution, handleSearchValueChange } =
+  DataSlice.actions;
