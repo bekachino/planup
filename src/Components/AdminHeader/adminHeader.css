@@ -95,3 +95,14 @@
 .admin-header-tooltip button:last-child {
   margin-top: 35px;
 }
+
+.admin-header-bottom {
+  display: flex;
+  margin: 40px 0 0;
+}
+
+.admin-header-bottom a {
+  margin: auto;
+  padding: 0;
+  font-size: 24px;
+}

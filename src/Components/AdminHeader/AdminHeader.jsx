@@ -53,7 +53,14 @@ const AdminHeader = () => {
           )}
         </div>
       </div>
-      <div className="admin-header-bottom"></div>
+      <nav className="admin-header-bottom">
+        <Link to='/home'>Роли разрешения</Link>
+        <Link to='/home'>Разрешения</Link>
+        <Link to='/home'>Локации</Link>
+        <Link to='/home'>Список НУ</Link>
+        <Link to='/home'>Создать СИ</Link>
+        <Link to='/home'>Квадраты</Link>
+      </nav>
     </header>
   );
 };

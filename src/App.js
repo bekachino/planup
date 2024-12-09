@@ -5,6 +5,7 @@ import 'moment/locale/ru';
 import { lazy, Suspense } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import './App.css';
+import Header from './Components/Header/Header';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
