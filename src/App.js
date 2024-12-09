@@ -1,9 +1,9 @@
 import moment from 'moment';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
-import Header from './Components/Header/Header';
 import 'moment/locale/ru';
 import { lazy, Suspense } from 'react';
+import AdminHeader from './Components/AdminHeader/AdminHeader';
 import './App.css';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
@@ -22,7 +22,7 @@ moment.locale('ru');
 const App = () => {
   return (
     <div className="App">
-      <Header />
+      <AdminHeader />
       <Routes>
         <Route path="*" element={<Navigate to="/home" replace />} />
         <Route

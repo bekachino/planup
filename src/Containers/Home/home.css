@@ -50,7 +50,7 @@
   line-height: 26px;
   background-color: var(--main-1);
   color: var(--white);
-  padding: 25px 21px;
+  padding: 15px 21px;
 }
 
 .home-table-wrapper tbody tr {
@@ -72,7 +72,7 @@
 
 .home-table-wrapper tbody td {
   position: relative;
-  padding: 30px 20px;
+  padding: 15px 20px;
   text-align: center;
   font-size: 20px;
 }

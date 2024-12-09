@@ -4,7 +4,7 @@ import { ReactComponent as StoppedIcon } from './assets/stopped.svg';
 import { ReactComponent as OnWayIcon } from './assets/on-way.svg';
 import { ReactComponent as FinishedIcon } from './assets/finished.svg';
 
-export const apiUrl = 'http://10.1.2.63:8000/api';
+export const apiUrl = 'http://10.1.2.30:8000/api';
 
 export const ERROR_MESSAGES = {
   400: 'Неверные данные',

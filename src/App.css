@@ -21,6 +21,7 @@
   --main-2-hover: rgba(13, 129, 225, 0.15);
   --white: #ffffff;
   --white-grey: #f6f6f6;
+  --white-grey-2: #fcfcfc;
   --purple-1: #5d5fec;
   --purple-2: #3e57a9;
   --input-text-color: #2c2b2b;
@@ -56,6 +57,10 @@ body {
   flex-direction: column;
   min-height: 100vh;
   background-color: var(--white-grey);
+}
+
+.App:has(.admin-header) {
+  background-color: var(--white);
 }
 
 .page-back {
