@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import './App.css';
 import { setUser } from './features/user/usersSlice';
+import Squares from './Containers/Squares/Squares';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -31,6 +32,8 @@ const App = () => {
       setUser({
         name: 'Админ',
         role: 'admin',
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzNzUyOTY4LCJpYXQiOjE3MzM3NDkzNjgsImp0aSI6ImU3NWVhYzYwOWUwZjQ0ZDliODNlNDFlODNlNTBkOWZjIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.Z3y6u2cVJ3Kvrh0oq9TaDCQxwbI8g735mf7zg4l5T9o',
       })
     );
   }, []);
@@ -109,6 +112,14 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <Template />
+            </Suspense>
+          }
+        />
+        <Route
+          path="squares"
+          element={
+            <Suspense fallback={<></>}>
+              <Squares />
             </Suspense>
           }
         />

@@ -127,3 +127,21 @@ export const getCategories = createAsyncThunk(
     }
   }
 );
+
+export const getSquares = createAsyncThunk(
+  'user/getSquares',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi('accounts/squares/');
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: 'Ошибка при получении типов квадратов',
+        })
+      );
+      rejectWithValue('Ошибка при получении типов квадратов');
+    }
+  }
+);

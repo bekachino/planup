@@ -17,7 +17,7 @@ const UsersSlice = createSlice({
       state.user = payload;
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: () => {},
 });
 
 export const userReducer = UsersSlice.reducer;

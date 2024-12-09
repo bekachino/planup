@@ -29,7 +29,7 @@ const AdminHeader = () => {
           className="admin-header-search-input"
           type="text"
           value={searchValue}
-          onChange={e => dispatch(handleSearchValueChange(e.target.value))}
+          onChange={(e) => dispatch(handleSearchValueChange(e.target.value))}
           placeholder="Поиск"
         />
         <div className="admin-header-tooltip-toggle-btn-wrapper">
@@ -63,7 +63,7 @@ const AdminHeader = () => {
         <Link to="/home">Локации</Link>
         <Link to="/home">Список НУ</Link>
         <Link to="/home">Создать СИ</Link>
-        <Link to="/home">Квадраты</Link>
+        <Link to="/squares">Квадраты</Link>
       </nav>
     </header>
   );

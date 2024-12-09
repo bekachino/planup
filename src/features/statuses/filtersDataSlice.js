@@ -3,6 +3,7 @@ import {
   getCategories,
   getExecuterTypes,
   getResolutionTypes,
+  getSquares,
   getStages,
   getStatusTypes,
   getTemplateFields,
@@ -18,6 +19,7 @@ const initialState = {
   squareTypes: [],
   stages: [],
   categories: [],
+  squares: [],
   executerTypesLoading: false,
   statusTypesLoading: false,
   resolutionTypesLoading: false,
@@ -26,6 +28,7 @@ const initialState = {
   squareTypesLoading: false,
   stagesLoading: false,
   categoriesLoading: false,
+  squaresLoading: false,
 };
 
 const filtersDataSlice = createSlice({
@@ -125,6 +128,17 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getCategories.rejected, (state) => {
       state.categoriesLoading = false;
+    });
+
+    builder.addCase(getSquares.pending, (state) => {
+      state.squaresLoading = true;
+    });
+    builder.addCase(getSquares.fulfilled, (state, { payload: res }) => {
+      state.squaresLoading = false;
+      state.squares = res || [];
+    });
+    builder.addCase(getSquares.rejected, (state) => {
+      state.squaresLoading = false;
     });
   },
 });
