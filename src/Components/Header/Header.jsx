@@ -17,8 +17,8 @@ import Modal from '../Modal/Modal';
 import Autocomplete from '../Autocomplete/Autocomplete';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../Button/Button';
-import './header.css';
 import { addAlert } from '../../features/data/dataSlice';
+import './header.css';
 
 const Header = () => {
   const location = useLocation();
@@ -65,7 +65,9 @@ const Header = () => {
           PlanUp
         </Link>
       </h1>
-      {location.pathname === '/home' && <SearchFilters placeholder="Поиск" />}
+      {['/home'].includes(location.pathname) && (
+        <SearchFilters placeholder="Поиск" />
+      )}
       <nav>
         <NavLink to="/value-types">
           <ServerIcon />

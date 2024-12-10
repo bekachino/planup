@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiUrl } from './constants';
+import { API_URL } from './constants';
 
 export const addInterceptors = (store) => {
   axiosApi.interceptors.request.use((config) => {
@@ -15,7 +15,7 @@ export const addInterceptors = (store) => {
 };
 
 const axiosApi = axios.create({
-  baseURL: apiUrl,
+  baseURL: API_URL,
 });
 
 export default axiosApi;

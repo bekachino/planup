@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getWorks } from '../../features/works/worksThunk';
 import moment from 'moment';
-import { statusIcons, workStatuses } from '../../constants';
+import { STATUS_ICONS, WORK_STATUSES } from '../../constants';
 import './home.css';
 
 const Home = () => {
@@ -96,14 +96,14 @@ const Home = () => {
             <tbody>
               {(works || []).map((work, i) => (
                 <tr
-                  className={`duty-item-status-${workStatuses[work.find((workField) => workField.name === 'Статус')?.field_value]}`}
+                  className={`duty-item-status-${WORK_STATUSES[work.find((workField) => workField.name === 'Статус')?.field_value]}`}
                   key={i}
                 >
                   {(work || []).map((workField, i) => (
                     <td key={i}>
                       <span className="duty-item-cell-value">
                         {workField.name === 'Статус' &&
-                          statusIcons[workField.field_value]}
+                          STATUS_ICONS[workField.field_value]}
                         <span className="duty-item-cell-value-text">
                           {getTableCellValue(workField)}
                         </span>

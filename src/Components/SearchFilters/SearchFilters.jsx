@@ -5,7 +5,7 @@ import {
   getStatusTypes,
   getTemplateTypes,
 } from '../../features/statuses/filtersDataThunk';
-import { filterCategories } from '../../constants';
+import { FILTER_CATEGORIES } from '../../constants';
 import Button from '../Button/Button';
 import DatetimePicker from '../DatetimePicker/DatetimePicker';
 import { nanoid } from 'nanoid';
@@ -298,7 +298,7 @@ const SearchFilters = ({ ...rest }) => {
               className="search-filters-categories"
               ref={searchFiltersCategoriesRef}
             >
-              {filterCategories.map((category, i) => (
+              {FILTER_CATEGORIES.map((category, i) => (
                 <button
                   className="search-filters-category"
                   onMouseEnter={(_) => {

@@ -202,7 +202,7 @@ const CreateTemplate = ({ isEdit }) => {
           <div className="template-field-row">
             <Autocomplete
               label="Родительский шаблон"
-              placeholder="Введите название"
+              placeholder="Выберите родительский шаблон"
               name="parent"
               value={state?.parent?.name}
               options={templateTypes}

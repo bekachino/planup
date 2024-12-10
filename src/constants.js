@@ -4,7 +4,7 @@ import { ReactComponent as StoppedIcon } from './assets/stopped.svg';
 import { ReactComponent as OnWayIcon } from './assets/on-way.svg';
 import { ReactComponent as FinishedIcon } from './assets/finished.svg';
 
-export const apiUrl = 'http://10.1.2.30:8000/api';
+export const API_URL = 'http://10.1.2.30:8000/api';
 
 export const ERROR_MESSAGES = {
   400: 'Неверные данные',
@@ -15,7 +15,7 @@ export const ERROR_MESSAGES = {
   500: 'Ошибка сервера',
 };
 
-export const filterCategories = [
+export const FILTER_CATEGORIES = [
   {
     name: 'executerTypes',
     value: 'Исполнитель',
@@ -48,7 +48,7 @@ export const filterCategories = [
 
 export const weekDays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
-export const statusIcons = {
+export const STATUS_ICONS = {
   Начат: <StartedIcon />,
   Запланировано: <PlannedIcon />,
   'В пути': <OnWayIcon />,
@@ -56,10 +56,37 @@ export const statusIcons = {
   Приостановить: <StoppedIcon />,
 };
 
-export const workStatuses = {
+export const WORK_STATUSES = {
   Запланировано: 'planned',
   'В пути': 'on-way',
   Начат: 'started',
   Завершен: 'finished',
   Приостановить: 'stopped',
 };
+
+export const REGIONS = [
+  {
+    id: 'Чуй',
+    name: 'Чуй',
+  },
+  {
+    id: 'Талас',
+    name: 'Талас',
+  },
+  {
+    id: 'Нарын',
+    name: 'Нарын',
+  },
+  {
+    id: 'Джалал-Абад',
+    name: 'Джалал-Абад',
+  },
+  {
+    id: 'Иссык-Куль',
+    name: 'Иссык-Куль',
+  },
+  {
+    id: 'Ош',
+    name: 'Ош',
+  },
+];

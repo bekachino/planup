@@ -1,18 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createResolution,
+  createSquare,
   createTemplate,
   deleteResolution,
   deleteTemplate,
   editResolution,
   editTemplate,
+  getLocations,
   getResolution,
+  getSectionChiefs,
+  getServiceEngineers,
   getTemplate,
 } from './dataThunk';
 
 const initialState = {
-  searchValue: '',
   alerts: [],
+  searchValue: '',
+  locations: [],
+  serviceEngineers: [],
+  sectionChiefs: [],
   template: null,
   resolution: null,
   getTemplateLoading: false,
@@ -23,6 +30,10 @@ const initialState = {
   deleteResolutionLoading: false,
   createResolutionLoading: false,
   editResolutionLoading: false,
+  locationsLoading: false,
+  serviceEngineersLoading: false,
+  sectionChiefsLoading: false,
+  createSquareLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -134,9 +145,68 @@ const DataSlice = createSlice({
     builder.addCase(editResolution.rejected, (state) => {
       state.editResolutionLoading = false;
     });
+
+    builder.addCase(getLocations.pending, (state) => {
+      state.locationsLoading = true;
+      state.locations = [];
+    });
+    builder.addCase(getLocations.fulfilled, (state, { payload: res }) => {
+      state.locationsLoading = false;
+      state.locations = res;
+    });
+    builder.addCase(getLocations.rejected, (state) => {
+      state.locationsLoading = false;
+    });
+
+    builder.addCase(getServiceEngineers.pending, (state) => {
+      state.serviceEngineersLoading = true;
+      state.serviceEngineers = [];
+    });
+    builder.addCase(
+      getServiceEngineers.fulfilled,
+      (state, { payload: res }) => {
+        state.serviceEngineersLoading = false;
+        //state.serviceEngineers = (res || []).map((location) => ({
+        //  ...location,
+        //  value: location.name,
+        //}));
+      }
+    );
+    builder.addCase(getServiceEngineers.rejected, (state) => {
+      state.serviceEngineersLoading = false;
+    });
+
+    builder.addCase(getSectionChiefs.pending, (state) => {
+      state.sectionChiefsLoading = true;
+      state.sectionChiefs = [];
+    });
+    builder.addCase(getSectionChiefs.fulfilled, (state, { payload: res }) => {
+      state.sectionChiefsLoading = false;
+      //state.sectionChiefs = (res || []).map((location) => ({
+      //  ...location,
+      //  value: location.name,
+      //}));
+    });
+    builder.addCase(getSectionChiefs.rejected, (state) => {
+      state.sectionChiefsLoading = false;
+    });
+
+    builder.addCase(createSquare.pending, (state) => {
+      state.createSquareLoading = true;
+    });
+    builder.addCase(createSquare.fulfilled, (state) => {
+      state.createSquareLoading = false;
+    });
+    builder.addCase(createSquare.rejected, (state) => {
+      state.createSquareLoading = false;
+    });
   },
 });
 
 export const dataReducer = DataSlice.reducer;
-export const { addAlert, removeAlert, clearResolution, handleSearchValueChange } =
-  DataSlice.actions;
+export const {
+  addAlert,
+  removeAlert,
+  clearResolution,
+  handleSearchValueChange,
+} = DataSlice.actions;

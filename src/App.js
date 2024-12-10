@@ -9,6 +9,7 @@ import 'moment/locale/ru';
 import './App.css';
 import { setUser } from './features/user/usersSlice';
 import Squares from './Containers/Squares/Squares';
+import CreateSquare from './Containers/CreateSquare/CreateSquare';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -33,7 +34,7 @@ const App = () => {
         name: 'Админ',
         role: 'admin',
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzNzUyOTY4LCJpYXQiOjE3MzM3NDkzNjgsImp0aSI6ImU3NWVhYzYwOWUwZjQ0ZDliODNlNDFlODNlNTBkOWZjIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.Z3y6u2cVJ3Kvrh0oq9TaDCQxwbI8g735mf7zg4l5T9o',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzODM1MTMzLCJpYXQiOjE3MzM4MzE1MzMsImp0aSI6IjlhNmFlMDhhOTg4ZTQ2MTdhZDljMTg3YzA4ZTUzM2M2IiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.fthAuiIhP52ZVpUHzt8uPitp3CdPPqJlOS_AOVqC9as',
       })
     );
   }, []);
@@ -120,6 +121,22 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <Squares />
+            </Suspense>
+          }
+        />
+        <Route
+          path="create-square"
+          element={
+            <Suspense fallback={<></>}>
+              <CreateSquare />
+            </Suspense>
+          }
+        />
+        <Route
+          path="edit-square/:squareId"
+          element={
+            <Suspense fallback={<></>}>
+              <CreateSquare isEdit />
             </Suspense>
           }
         />

@@ -165,3 +165,83 @@ export const editResolution = createAsyncThunk(
     }
   }
 );
+
+export const getLocations = createAsyncThunk(
+  'data/getLocations',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/accounts/locations/`);
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const getServiceEngineers = createAsyncThunk(
+  'data/getServiceEngineers',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/accounts/service engineer/`);
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const getSectionChiefs = createAsyncThunk(
+  'data/getSectionChiefs',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/accounts/section chiefs/`);
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const createSquare = createAsyncThunk(
+  'data/createSquare',
+  async (square, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi.post('/accounts/squares/', square);
+      return await req.data;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message: ERROR_MESSAGES[e?.response?.status || 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);

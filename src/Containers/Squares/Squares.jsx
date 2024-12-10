@@ -68,7 +68,7 @@ const Resolutions = () => {
           <h2>Список квадратов</h2>
           <button
             className="create-template-btn"
-            onClick={() => navigate('/create-resolution')}
+            onClick={() => navigate('/create-square')}
           >
             Создать квадрат
           </button>
@@ -83,12 +83,12 @@ const Resolutions = () => {
           {!squaresLoading &&
             (squares || []).map((resolution) => (
               <div className="type-item" key={resolution.id}>
-                <Link to={`/resolutions/${resolution?.id}`}>
+                <Link to={`/squares/${resolution?.id}`}>
                   {resolution.name}
                 </Link>
                 <Button
                   className="edit-type-btn"
-                  onClick={() => navigate(`/edit-resolution/${resolution?.id}`)}
+                  onClick={() => navigate(`/edit-square/${resolution?.id}`)}
                 >
                   <RefreshIcon />
                   Обновить

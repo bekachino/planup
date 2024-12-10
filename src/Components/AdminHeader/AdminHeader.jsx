@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as BurgerIcon } from '../../assets/burger-black.svg';
 import { ReactComponent as RemoveIcon } from '../../assets/remove-white.svg';
 import { ReactComponent as UserIcon } from '../../assets/user.svg';
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { handleSearchValueChange } from '../../features/data/dataSlice';
 
 const AdminHeader = () => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
   const { searchValue } = useAppSelector((state) => state.dataState);
   const [showBurgerTooltip, setShowBurgerTooltip] = useState(false);
@@ -25,13 +26,15 @@ const AdminHeader = () => {
             PlanUp
           </Link>
         </h1>
-        <input
-          className="admin-header-search-input"
-          type="text"
-          value={searchValue}
-          onChange={(e) => dispatch(handleSearchValueChange(e.target.value))}
-          placeholder="Поиск"
-        />
+        {['/admin-header'].includes(location.pathname) && (
+          <input
+            className="admin-header-search-input"
+            type="text"
+            value={searchValue}
+            onChange={(e) => dispatch(handleSearchValueChange(e.target.value))}
+            placeholder="Поиск"
+          />
+        )}
         <div className="admin-header-tooltip-toggle-btn-wrapper">
           <button
             className="admin-header-tooltip-toggle-btn"
