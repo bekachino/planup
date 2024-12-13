@@ -83,9 +83,7 @@ const Resolutions = () => {
           {!squaresLoading &&
             (squares || []).map((resolution) => (
               <div className="type-item" key={resolution.id}>
-                <Link to={`/squares/${resolution?.id}`}>
-                  {resolution.name}
-                </Link>
+                <Link to={`/squares/${resolution?.id}`}>{resolution.name}</Link>
                 <Button
                   className="edit-type-btn"
                   onClick={() => navigate(`/edit-square/${resolution?.id}`)}

@@ -70,9 +70,9 @@ const Autocomplete = ({
         : options || []
       ).filter((option) =>
         (
-          option?.name.toLowerCase() ||
-          option?.value.toLowerCase() ||
-          option?.label.toLowerCase()
+          option?.name?.toLowerCase() ||
+          option?.value?.toLowerCase() ||
+          option?.label?.toLowerCase()
         ).includes(inputValue?.toLowerCase())
       ),
     [inputValue, value, options]

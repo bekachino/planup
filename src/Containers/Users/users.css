@@ -2,10 +2,10 @@
   padding: 45px 55px;
 }
 
-.users-header  {
+.users-header {
   display: flex;
   justify-content: space-between;
-  padding: 18px 34px;
+  padding: 24px 34px;
   background: var(--main-1);
   border-radius: 12px 12px 0 0;
 }
@@ -38,4 +38,9 @@
   background-color: var(--main-2);
   background-image: url('../../assets/add-white.svg');
   background-position: center;
+}
+
+.users-body {
+  padding: 18px 34px;
+  background: var(--users-bg);
 }

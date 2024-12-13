@@ -13,12 +13,11 @@ export const getTemplate = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -33,12 +32,11 @@ export const getResolution = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -47,18 +45,16 @@ export const createTemplate = createAsyncThunk(
   'data/createTemplate',
   async (template, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi.post('/v2/template/', template);
-      return await req.data;
+      await axiosApi.post('/v2/template/', template);
     } catch (e) {
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -67,18 +63,16 @@ export const editTemplate = createAsyncThunk(
   'data/editTemplate',
   async (template, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi.put(`/v2/template/${template?.id}/`, template);
-      return await req.data;
+      await axiosApi.put(`/v2/template/${template?.id}/`, template);
     } catch (e) {
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -93,12 +87,11 @@ export const deleteTemplate = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -113,12 +106,11 @@ export const deleteResolution = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -127,18 +119,16 @@ export const createResolution = createAsyncThunk(
   'data/createResolution',
   async (resolution, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi.post('/v2/resolution/', resolution);
-      return await req.data;
+      await axiosApi.post('/v2/resolution/', resolution);
     } catch (e) {
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -147,21 +137,16 @@ export const editResolution = createAsyncThunk(
   'data/editResolution',
   async (resolution, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi.put(
-        `/v2/resolution/${resolution?.id}/`,
-        resolution
-      );
-      return await req.data;
+      await axiosApi.put(`/v2/resolution/${resolution?.id}/`, resolution);
     } catch (e) {
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -176,12 +161,11 @@ export const getLocations = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -196,12 +180,11 @@ export const getServiceEngineers = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -216,12 +199,11 @@ export const getSectionChiefs = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );
@@ -230,18 +212,38 @@ export const createSquare = createAsyncThunk(
   'data/createSquare',
   async (square, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi.post('/accounts/squares/', square);
-      return await req.data;
+      await axiosApi.post('/accounts/squares/', square);
     } catch (e) {
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
+    }
+  }
+);
+
+export const createUser = createAsyncThunk(
+  'data/createUser',
+  async (user, { dispatch, rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+
+      Object.keys(user).forEach((key) => formData.append(key, user[key]));
+
+      await axiosApi.post('/accounts/users/', formData);
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
       );
+      return rejectWithValue(ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]);
     }
   }
 );

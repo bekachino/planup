@@ -90,3 +90,29 @@ export const REGIONS = [
     name: 'Ош',
   },
 ];
+
+export const ROLES = {
+  chief: 'Начальник участка',
+  engineer: 'Сервисный инженер',
+  admin: 'Администратор',
+  office: 'Офисник',
+};
+
+export const ROLES_ARRAY = [
+  {
+    id: 'chief',
+    value: 'Начальник участка',
+  },
+  {
+    id: 'engineer',
+    value: 'Сервисный инженер',
+  },
+  {
+    id: 'admin',
+    value: 'Администратор',
+  },
+  {
+    id: 'office',
+    value: 'Офисник',
+  },
+];

@@ -1,0 +1,73 @@
+.create-user {
+  display: flex;
+  flex-direction: column;
+  padding: 45px 55px;
+  flex-grow: 1;
+}
+
+.create-user-header {
+  position: relative;
+}
+
+.create-user-header h2 {
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 41px;
+  text-align: center;
+}
+
+.create-user-body {
+  margin: auto;
+  width: 100%;
+}
+
+.create-user-form {
+}
+
+.create-user-form-fields {
+  display: flex;
+  gap: 25px 22px;
+  flex-wrap: wrap;
+}
+
+.create-user-form .input-container,
+.create-user-form .select-wrapper,
+.create-user-form .file-upload {
+  max-width: calc(50% - (25px / 2));
+  min-width: calc(50% - (25px / 2));
+}
+
+.create-user-form .input-container,
+.create-user-form .select-wrapper {
+  max-width: calc(50% - (25px / 2));
+  min-width: calc(50% - (25px / 2));
+}
+
+.create-user-form .select-wrapper .input-container {
+  max-width: unset;
+  min-width: unset;
+}
+
+.create-user-form .file-uploader-wrapper {
+  align-items: stretch;
+  flex-grow: 1;
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+.create-user-form .file-uploader-wrapper .file-upload-value {
+  justify-content: center;
+}
+
+.create-user-form-actions {
+  display: flex;
+  margin-top: 60px;
+}
+
+.create-user-form-actions button {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  padding: 22px;
+  flex-grow: 1;
+}

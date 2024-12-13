@@ -38,6 +38,7 @@
   --nav-text-2: #41445b;
   --nav-text-hover: #003aff;
   --nav-hover: rgba(24, 45, 117, 0.05);
+  --users-bg: rgba(237, 235, 255, 1);
 }
 
 *,
@@ -65,7 +66,7 @@ body {
   align-items: center;
   position: absolute;
   inset: 0;
-  margin: auto auto auto -45px;
+  margin: auto auto auto 0;
   width: 35px;
   height: 35px;
   background-color: transparent;

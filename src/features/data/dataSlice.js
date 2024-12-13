@@ -3,6 +3,7 @@ import {
   createResolution,
   createSquare,
   createTemplate,
+  createUser,
   deleteResolution,
   deleteTemplate,
   editResolution,
@@ -34,6 +35,7 @@ const initialState = {
   serviceEngineersLoading: false,
   sectionChiefsLoading: false,
   createSquareLoading: false,
+  createUserLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -199,6 +201,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(createSquare.rejected, (state) => {
       state.createSquareLoading = false;
+    });
+
+    builder.addCase(createUser.pending, (state) => {
+      state.createUserLoading = true;
+    });
+    builder.addCase(createUser.fulfilled, (state) => {
+      state.createUserLoading = false;
+    });
+    builder.addCase(createUser.rejected, (state) => {
+      state.createUserLoading = false;
     });
   },
 });

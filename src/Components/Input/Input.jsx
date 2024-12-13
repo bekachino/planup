@@ -1,13 +1,16 @@
 import React from 'react';
 import './input.css';
+import { formatPhoneNumber } from '../../utils';
 
 const Input = ({
+  type = 'text',
   className,
   label,
   values,
   placeholder,
   isSelectInput,
   onValueRemove,
+  onChange,
   textarea,
   style,
   ...rest
@@ -39,9 +42,21 @@ const Input = ({
             />
           ) : (
             <input
+              type={type}
               id={`${label || 'custom'}-input`}
               className={`input ${className}`}
               placeholder={placeholder || label}
+              onChange={(e) =>
+                onChange({
+                  target: {
+                    name: e.target.name || '',
+                    value:
+                      type === 'tel'
+                        ? formatPhoneNumber(e.target.value)
+                        : e.target.value,
+                  },
+                })
+              }
               {...rest}
             />
           )}

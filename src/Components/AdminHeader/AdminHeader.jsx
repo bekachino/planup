@@ -7,6 +7,7 @@ import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
 import './adminHeader.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { handleSearchValueChange } from '../../features/data/dataSlice';
+import Alerts from '../Alerts/Alerts';
 
 const AdminHeader = () => {
   const location = useLocation();
@@ -69,6 +70,7 @@ const AdminHeader = () => {
         <Link to="/home">Создать СИ</Link>
         <Link to="/squares">Квадраты</Link>
       </nav>
+      <Alerts />
     </header>
   );
 };

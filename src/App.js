@@ -24,6 +24,7 @@ const CreateSquare = lazy(
   () => import('./Containers/CreateSquare/CreateSquare')
 );
 const Users = lazy(() => import('./Containers/Users/Users'));
+const CreateUser = lazy(() => import('./Containers/CreateUser/CreateUser'));
 
 moment.locale('ru');
 
@@ -37,7 +38,7 @@ const App = () => {
         name: 'Админ',
         role: 'admin',
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MDY5MjIxLCJpYXQiOjE3MzQwNjU2MjEsImp0aSI6Ijg2OTVlODk4OTc5ZDQyOTM4OWIwZmM4NTNiNmMyYzY2IiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.NuWKhk6hvC49BidNHNfaRo1afphCRioI1N92YVe8mYE',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MDk5NDM0LCJpYXQiOjE3MzQwOTU4MzQsImp0aSI6ImJhODNjMzYyMTM3ZTQxOTU4NzdmY2E0MWNmZDc1OTQzIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.3BTny163xnNzP6zcqfL11CUqjVoBJx9Z0K30XkkhtBU',
       })
     );
   }, []);
@@ -148,6 +149,14 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <Users />
+            </Suspense>
+          }
+        />
+        <Route
+          path="create-user"
+          element={
+            <Suspense fallback={<></>}>
+              <CreateUser />
             </Suspense>
           }
         />

@@ -15,7 +15,7 @@ export const getExecuterTypes = createAsyncThunk(
           message: 'Ошибка при получении исполнителей',
         })
       );
-      rejectWithValue('Ошибка при получении исполнителей');
+      return rejectWithValue('Ошибка при получении исполнителей');
     }
   }
 );
@@ -33,7 +33,7 @@ export const getResolutionTypes = createAsyncThunk(
           message: 'Ошибка при получении резолюций',
         })
       );
-      rejectWithValue('Ошибка при получении резолюций');
+      return rejectWithValue('Ошибка при получении резолюций');
     }
   }
 );
@@ -51,7 +51,7 @@ export const getStatusTypes = createAsyncThunk(
           message: 'Ошибка при получении статусов',
         })
       );
-      rejectWithValue('Ошибка при получении статусов');
+      return rejectWithValue('Ошибка при получении статусов');
     }
   }
 );
@@ -69,7 +69,7 @@ export const getTemplateTypes = createAsyncThunk(
           message: 'Ошибка при получении шаблонов',
         })
       );
-      rejectWithValue('Ошибка при получении шаблонов');
+      return rejectWithValue('Ошибка при получении шаблонов');
     }
   }
 );
@@ -87,7 +87,7 @@ export const getTemplateFields = createAsyncThunk(
           message: 'Ошибка при получении полей',
         })
       );
-      rejectWithValue('Ошибка при получении полей');
+      return rejectWithValue('Ошибка при получении полей');
     }
   }
 );
@@ -105,7 +105,7 @@ export const getStages = createAsyncThunk(
           message: 'Ошибка при получении типов работы',
         })
       );
-      rejectWithValue('Ошибка при получении типов работы');
+      return rejectWithValue('Ошибка при получении типов работы');
     }
   }
 );
@@ -123,7 +123,7 @@ export const getCategories = createAsyncThunk(
           message: 'Ошибка при получении типов категориев',
         })
       );
-      rejectWithValue('Ошибка при получении типов категориев');
+      return rejectWithValue('Ошибка при получении типов категориев');
     }
   }
 );
@@ -141,7 +141,7 @@ export const getSquares = createAsyncThunk(
           message: 'Ошибка при получении типов квадратов',
         })
       );
-      rejectWithValue('Ошибка при получении типов квадратов');
+      return rejectWithValue('Ошибка при получении типов квадратов');
     }
   }
 );

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../Button/Button';
 import { ReactComponent as SheetList } from '../../assets/sheetList.svg';
 import './fileUpload.css';
@@ -6,6 +6,13 @@ import './fileUpload.css';
 const FileUpload = ({ name, value, onChange, label, ...rest }) => {
   const inputRef = useRef(null);
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (!value) {
+      inputRef.current.value = '';
+      inputRef.current.src = null;
+    }
+  }, [value]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -62,7 +69,7 @@ const FileUpload = ({ name, value, onChange, label, ...rest }) => {
       />
       <span className="file-upload-label">{label || 'Выберите файл'}</span>
       <div className="file-uploader-wrapper">
-        <Button onClick={activateInput}>
+        <Button onClick={activateInput} type="button">
           <SheetList />
           Выбор файла
         </Button>
