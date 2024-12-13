@@ -1,0 +1,41 @@
+.users {
+  padding: 45px 55px;
+}
+
+.users-header  {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 34px;
+  background: var(--main-1);
+  border-radius: 12px 12px 0 0;
+}
+
+.users-header h2 {
+  line-height: 41px;
+  margin: 0;
+  font-size: 34px;
+  color: var(--white);
+}
+
+.create-user-btn {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  padding-left: 40px;
+  color: var(--white);
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.create-user-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto auto auto 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--main-2);
+  background-image: url('../../assets/add-white.svg');
+  background-position: center;
+}

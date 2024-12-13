@@ -98,6 +98,7 @@
 
 .admin-header-bottom {
   display: flex;
+  gap: 15px;
   margin: 40px 0 0;
   background-color: transparent;
 }
