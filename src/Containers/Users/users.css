@@ -1,5 +1,8 @@
 .users {
-  padding: 45px 55px;
+  display: flex;
+  flex-direction: column;
+  padding: 45px 55px 20px;
+  flex-grow: 1;
 }
 
 .users-header {
@@ -41,6 +44,89 @@
 }
 
 .users-body {
-  padding: 18px 34px;
+  display: flex;
+  padding: 18px 0;
   background: var(--users-bg);
+  flex-grow: 1;
+}
+
+.users-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: stretch;
+  padding: 0 34px;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+}
+
+.users-list-loading::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border: 8px solid var(--purple-1);
+  border-right: 8px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg
+  }
+}
+
+.users-list-empty {
+  font-weight: 600;
+  text-align: center;
+  margin: auto;
+  opacity: .6;
+}
+
+.user {
+  display: flex;
+  gap: 20px;
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.user:hover {
+  background-color: rgba(237, 235, 255, 1);
+}
+
+.user-avatar {
+  padding: 6px;
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  background-color: rgba(232, 231, 233, 1);
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.user-full-name {
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.user-role {
+  font-size: 20px;
+  line-height: 26px;
+  color: rgba(88, 88, 88, 1);
 }

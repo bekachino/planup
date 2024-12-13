@@ -13,6 +13,7 @@ import {
   getSectionChiefs,
   getServiceEngineers,
   getTemplate,
+  getUsers,
 } from './dataThunk';
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
   locations: [],
   serviceEngineers: [],
   sectionChiefs: [],
+  users: [],
   template: null,
   resolution: null,
   getTemplateLoading: false,
@@ -36,6 +38,7 @@ const initialState = {
   sectionChiefsLoading: false,
   createSquareLoading: false,
   createUserLoading: false,
+  usersLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -211,6 +214,18 @@ const DataSlice = createSlice({
     });
     builder.addCase(createUser.rejected, (state) => {
       state.createUserLoading = false;
+    });
+
+    builder.addCase(getUsers.pending, (state) => {
+      state.usersLoading = true;
+      state.users = [];
+    });
+    builder.addCase(getUsers.fulfilled, (state, { payload: res }) => {
+      state.usersLoading = false;
+      state.users = res;
+    });
+    builder.addCase(getUsers.rejected, (state) => {
+      state.usersLoading = false;
     });
   },
 });

@@ -38,7 +38,8 @@
   --nav-text-2: #41445b;
   --nav-text-hover: #003aff;
   --nav-hover: rgba(24, 45, 117, 0.05);
-  --users-bg: rgba(237, 235, 255, 1);
+  --users-bg: rgba(248, 247, 255, 1);
+  --user-hover-bg: rgba(237, 235, 255, 1);
 }
 
 *,
