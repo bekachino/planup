@@ -6,10 +6,8 @@ import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
-import './App.css';
 import { setUser } from './features/user/usersSlice';
-import Squares from './Containers/Squares/Squares';
-import CreateSquare from './Containers/CreateSquare/CreateSquare';
+import './App.css';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -21,6 +19,11 @@ const Resolutions = lazy(() => import('./Containers/Resolutions/Resolutions'));
 const CreateResolution = lazy(
   () => import('./Containers/CreateResolution/CreateResolution')
 );
+const Squares = lazy(() => import('./Containers/Squares/Squares'));
+const CreateSquare = lazy(
+  () => import('./Containers/CreateSquare/CreateSquare')
+);
+const Users = lazy(() => import('./Containers/Users/Users'));
 
 moment.locale('ru');
 
@@ -34,7 +37,7 @@ const App = () => {
         name: 'Админ',
         role: 'admin',
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzODM1MTMzLCJpYXQiOjE3MzM4MzE1MzMsImp0aSI6IjlhNmFlMDhhOTg4ZTQ2MTdhZDljMTg3YzA4ZTUzM2M2IiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.fthAuiIhP52ZVpUHzt8uPitp3CdPPqJlOS_AOVqC9as',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MDY5MjIxLCJpYXQiOjE3MzQwNjU2MjEsImp0aSI6Ijg2OTVlODk4OTc5ZDQyOTM4OWIwZmM4NTNiNmMyYzY2IiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.NuWKhk6hvC49BidNHNfaRo1afphCRioI1N92YVe8mYE',
       })
     );
   }, []);
@@ -137,6 +140,14 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <CreateSquare isEdit />
+            </Suspense>
+          }
+        />
+        <Route
+          path="users"
+          element={
+            <Suspense fallback={<></>}>
+              <Users />
             </Suspense>
           }
         />

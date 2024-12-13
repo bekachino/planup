@@ -13,7 +13,7 @@ export const getWorks = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -33,7 +33,7 @@ export const getWork = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(

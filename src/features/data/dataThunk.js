@@ -13,7 +13,7 @@ export const getTemplate = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -33,7 +33,7 @@ export const getResolution = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -53,7 +53,7 @@ export const createTemplate = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -73,7 +73,7 @@ export const editTemplate = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -93,7 +93,7 @@ export const deleteTemplate = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -113,7 +113,7 @@ export const deleteResolution = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -133,7 +133,7 @@ export const createResolution = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -156,7 +156,7 @@ export const editResolution = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -176,7 +176,7 @@ export const getLocations = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -190,13 +190,13 @@ export const getServiceEngineers = createAsyncThunk(
   'data/getServiceEngineers',
   async (id, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi(`/accounts/service engineer/`);
+      const req = await axiosApi(`/accounts/service_engineer/`);
       return (await req.data) || [];
     } catch (e) {
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -210,13 +210,13 @@ export const getSectionChiefs = createAsyncThunk(
   'data/getSectionChiefs',
   async (id, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi(`/accounts/section chiefs/`);
+      const req = await axiosApi(`/accounts/section_chiefs/`);
       return (await req.data) || [];
     } catch (e) {
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(
@@ -236,7 +236,7 @@ export const createSquare = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: ERROR_MESSAGES[e?.response?.status || 500],
+          message: ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
         })
       );
       return rejectWithValue(

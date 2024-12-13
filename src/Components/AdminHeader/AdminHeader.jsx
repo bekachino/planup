@@ -38,7 +38,7 @@ const AdminHeader = () => {
         <div className="admin-header-tooltip-toggle-btn-wrapper">
           <button
             className="admin-header-tooltip-toggle-btn"
-            onClick={() => setShowBurgerTooltip(true)}
+            onClick={() => setShowBurgerTooltip(!showBurgerTooltip)}
             onMouseDown={(e) => e.stopPropagation()}
           >
             {showBurgerTooltip ? <RemoveIcon /> : <BurgerIcon />}
@@ -61,6 +61,7 @@ const AdminHeader = () => {
         </div>
       </div>
       <nav className="admin-header-bottom">
+        <Link to="/users">Пользователи</Link>
         <Link to="/home">Роли разрешения</Link>
         <Link to="/home">Разрешения</Link>
         <Link to="/home">Локации</Link>
