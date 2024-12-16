@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as ArrowRightWhiteIcon } from '../../assets/arrow-pointer-right.svg';
 import { ReactComponent as MenuBurgerIcon } from '../../assets/burger-black.svg';
 import { ReactComponent as RemoveWhiteIcon } from '../../assets/remove-icon-white.svg';
@@ -13,13 +13,13 @@ const Work = () => {
   const { workFields, workChildTemplates, workLoading } = useAppSelector(
     (state) => state.worksState
   );
-  const [tooltipOpen, setTooltipOpen] = React.useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   useEffect(() => {
     if (!!params?.workId) {
       dispatch(getWork(params?.workId));
     }
-  }, []);
+  }, [dispatch, params?.workId]);
 
   const toggleTooltip = (value) => setTooltipOpen(value);
 

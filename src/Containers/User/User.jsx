@@ -1,23 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
-import '../CreateUser/createUser.css';
+import { ReactComponent as MenuBurgerIcon } from '../../assets/burger-black.svg';
+import { ReactComponent as RemoveWhiteIcon } from '../../assets/remove-icon-white.svg';
+import { ReactComponent as RefreshDarkIcon } from '../../assets/refresh-dark.svg';
+import { ReactComponent as LockDarkIcon } from '../../assets/lock-dark.svg';
+import { ReactComponent as DeleteDarkIcon } from '../../assets/delete-dark.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUser } from '../../features/data/dataThunk';
-import '../Users/users.css';
-import './user.css';
 import defaultUserPng from '../../assets/default-user.png';
 import { ROLES } from '../../constants';
+import '../CreateUser/createUser.css';
+import '../Users/users.css';
+import './user.css';
 
 const User = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const dispatch = useAppDispatch();
   const { user, userLoading } = useAppSelector((state) => state.dataState);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getUser(userId));
-  }, []);
+  }, [dispatch, userId]);
+
+  const toggleTooltip = (value) => setTooltipOpen(value);
 
   return (
     <div className="single-user-page">
@@ -27,6 +35,30 @@ const User = () => {
             <ArrowPointerRight />
           </button>
           <h2>Информация о пользователе</h2>
+          <div className="user-tooltip-wrapper">
+            <button
+              className="user-tooltip-toggle"
+              onClick={() => toggleTooltip(!tooltipOpen)}
+            >
+              {tooltipOpen ? <RemoveWhiteIcon /> : <MenuBurgerIcon />}
+            </button>
+            {tooltipOpen && (
+              <div className="user-tooltip">
+                <button>
+                  <RefreshDarkIcon />
+                  Обновить
+                </button>
+                <button>
+                  <LockDarkIcon />
+                  Восстановление пароля
+                </button>
+                <button>
+                  <DeleteDarkIcon />
+                  Удалить
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         <div
           className={`users-body users-list-${userLoading ? 'loading' : ''}`}

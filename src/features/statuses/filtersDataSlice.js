@@ -144,4 +144,4 @@ const filtersDataSlice = createSlice({
 });
 
 export const filtersDataReducer = filtersDataSlice.reducer;
-export const {} = filtersDataSlice.actions;
+//export const {} = filtersDataSlice.actions;
