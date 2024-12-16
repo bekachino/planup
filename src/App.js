@@ -31,6 +31,9 @@ const ServiceEngineers = lazy(
 const SectionChiefs = lazy(
   () => import('./Containers/SectionChiefs/SectionChiefs')
 );
+const CreateSectionChief = lazy(
+  () => import('./Containers/CreateSectionChief/CreateSectionChief')
+);
 
 moment.locale('ru');
 
@@ -167,6 +170,14 @@ const App = () => {
           }
         />
         <Route
+          path="section-chiefs"
+          element={
+            <Suspense fallback={<></>}>
+              <SectionChiefs />
+            </Suspense>
+          }
+        />
+        <Route
           path="service-engineers"
           element={
             <Suspense fallback={<></>}>
@@ -175,10 +186,10 @@ const App = () => {
           }
         />
         <Route
-          path="section-chiefs"
+          path="create-section-chief"
           element={
             <Suspense fallback={<></>}>
-              <SectionChiefs />
+              <CreateSectionChief />
             </Suspense>
           }
         />

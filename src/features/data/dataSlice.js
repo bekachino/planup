@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createResolution,
+  createSectionChief,
   createSquare,
   createTemplate,
   createUser,
@@ -39,6 +40,7 @@ const initialState = {
   createSquareLoading: false,
   createUserLoading: false,
   usersLoading: false,
+  createSectionChiefLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -220,6 +222,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(getUsers.rejected, (state) => {
       state.usersLoading = false;
+    });
+
+    builder.addCase(createSectionChief.pending, (state) => {
+      state.creatSectionChiefrLoading = true;
+    });
+    builder.addCase(createSectionChief.fulfilled, (state) => {
+      state.createSectionChiefLoading = false;
+    });
+    builder.addCase(createSectionChief.rejected, (state) => {
+      state.createSectionChiefLoading = false;
     });
   },
 });
