@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import { setUser } from './features/user/usersSlice';
 import './App.css';
+import ServiceEngineers from './Containers/ServiceEngineers/ServiceEngineers';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -38,7 +39,7 @@ const App = () => {
         name: 'Админ',
         role: 'admin',
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MTAwMzIyLCJpYXQiOjE3MzQwOTY3MjIsImp0aSI6IjczZTRmMjAwOGEzZDRhNDk5NDQ2NGY5ZTIxNTM5YWIzIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiIiLCJmdWxsX25hbWUiOm51bGx9.FmdI61L1ZQ_If-7PfAUVLhiQF4eF48kPodKAa8ZdZhU',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MzI4ODI3LCJpYXQiOjE3MzQzMjUyMjcsImp0aSI6IjAzZTdiZWEwYWVhNjQwMzk4ZjM2MmUwNjk3YmNkZTA1IiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.PtCM9wDnYOxTlVOQQPUUuULzRhFz3kACiL-AYzbRZSM',
       })
     );
   }, []);
@@ -157,6 +158,14 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <CreateUser />
+            </Suspense>
+          }
+        />
+        <Route
+          path="service-engineers"
+          element={
+            <Suspense fallback={<></>}>
+              <ServiceEngineers />
             </Suspense>
           }
         />

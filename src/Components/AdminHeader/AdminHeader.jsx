@@ -67,7 +67,7 @@ const AdminHeader = () => {
         <Link to="/home">Разрешения</Link>
         <Link to="/home">Локации</Link>
         <Link to="/home">Список НУ</Link>
-        <Link to="/home">Создать СИ</Link>
+        <Link to="/service-engineers">Создать СИ</Link>
         <Link to="/squares">Квадраты</Link>
       </nav>
       <Alerts />

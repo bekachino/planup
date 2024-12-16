@@ -171,10 +171,7 @@ const DataSlice = createSlice({
       getServiceEngineers.fulfilled,
       (state, { payload: res }) => {
         state.serviceEngineersLoading = false;
-        //state.serviceEngineers = (res || []).map((location) => ({
-        //  ...location,
-        //  value: location.name,
-        //}));
+        state.serviceEngineers = res || [];
       }
     );
     builder.addCase(getServiceEngineers.rejected, (state) => {
