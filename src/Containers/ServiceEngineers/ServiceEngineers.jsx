@@ -70,7 +70,7 @@ const ServiceEngineers = () => {
             className="create-template-btn"
             onClick={() => navigate('/create-service-engineer')}
           >
-            Создать СИ
+            Создать сервис инженера
           </button>
         </div>
         <div className="types-list">

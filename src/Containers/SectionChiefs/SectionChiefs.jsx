@@ -69,7 +69,7 @@ const SectionChiefs = () => {
             className="create-template-btn"
             onClick={() => navigate('/create-section-chief')}
           >
-            Создать НУ
+            Создать начальника участка
           </button>
         </div>
         <div className="types-list">

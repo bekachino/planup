@@ -2,7 +2,7 @@ import React, { lazy, useEffect, useState } from 'react';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { createSectionChief, getUsers } from '../../features/data/dataThunk';
+import { createServiceEngineer, getUsers } from '../../features/data/dataThunk';
 import { addAlert } from '../../features/data/dataSlice';
 import '../CreateUser/createUser.css';
 
@@ -11,11 +11,11 @@ const Autocomplete = lazy(
 );
 const Button = lazy(() => import('../../Components/Button/Button'));
 
-const CreateSectionChief = () => {
+const CreateServiceEngineer = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [state, setState] = useState(null);
-  const { users, usersLoading, createSectionChiefLoading } = useAppSelector(
+  const { users, usersLoading, createServiceEngineerLoading } = useAppSelector(
     (state) => state.dataState
   );
 
@@ -34,17 +34,18 @@ const CreateSectionChief = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const createUserReq = await dispatch(
-      createSectionChief({
+      createServiceEngineer({
         section_chief: state?.sectionChief?.id,
+        service_engineer: state?.serviceEngineer?.id,
       })
     );
 
-    if (createSectionChief.fulfilled.match(createUserReq)) {
-      navigate('/section-chiefs');
+    if (createServiceEngineer.fulfilled.match(createUserReq)) {
+      navigate('/service-engineers');
       dispatch(
         addAlert({
           type: 'success',
-          message: 'Начальник участка успешно создан!',
+          message: 'Сервис инженер успешно создан!',
         })
       );
     }
@@ -55,11 +56,11 @@ const CreateSectionChief = () => {
       <div className="create-user-header">
         <button
           className="page-back"
-          onClick={() => navigate('/section-chiefs')}
+          onClick={() => navigate('/service-engineers')}
         >
           <ArrowPointerRight />
         </button>
-        <h2>Создать начальника участка</h2>
+        <h2>Создать сервис инженера</h2>
       </div>
       <div className="create-user-body">
         <form
@@ -68,6 +69,7 @@ const CreateSectionChief = () => {
           style={{
             maxWidth: '800px',
             margin: '0 auto',
+            gap: '10px'
           }}
         >
           <div className="create-user-form-fields">
@@ -87,10 +89,27 @@ const CreateSectionChief = () => {
               }}
             />
           </div>
+          <div className="create-user-form-fields" style={{ marginTop: '30px' }}>
+            <Autocomplete
+              name="serviceEngineer"
+              value={state?.serviceEngineer?.name}
+              options={(users || []).map((user) => ({
+                ...user,
+                name: user?.full_name || '-',
+              }))}
+              onChange={handleChange}
+              label="Сервис инженер"
+              required
+              style={{
+                maxWidth: 'unset',
+                minWidth: '100%',
+              }}
+            />
+          </div>
           <div className="create-user-form-actions">
             <Button
               type="submit"
-              loading={usersLoading || createSectionChiefLoading}
+              loading={usersLoading || createServiceEngineerLoading}
             >
               Создать
             </Button>
@@ -101,4 +120,4 @@ const CreateSectionChief = () => {
   );
 };
 
-export default CreateSectionChief;
+export default CreateServiceEngineer;
