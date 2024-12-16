@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import { setUser } from './features/user/usersSlice';
 import './App.css';
-import ServiceEngineers from './Containers/ServiceEngineers/ServiceEngineers';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -26,6 +25,12 @@ const CreateSquare = lazy(
 );
 const Users = lazy(() => import('./Containers/Users/Users'));
 const CreateUser = lazy(() => import('./Containers/CreateUser/CreateUser'));
+const ServiceEngineers = lazy(
+  () => import('./Containers/ServiceEngineers/ServiceEngineers')
+);
+const SectionChiefs = lazy(
+  () => import('./Containers/SectionChiefs/SectionChiefs')
+);
 
 moment.locale('ru');
 
@@ -166,6 +171,14 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <ServiceEngineers />
+            </Suspense>
+          }
+        />
+        <Route
+          path="section-chiefs"
+          element={
+            <Suspense fallback={<></>}>
+              <SectionChiefs />
             </Suspense>
           }
         />

@@ -184,10 +184,7 @@ const DataSlice = createSlice({
     });
     builder.addCase(getSectionChiefs.fulfilled, (state, { payload: res }) => {
       state.sectionChiefsLoading = false;
-      //state.sectionChiefs = (res || []).map((location) => ({
-      //  ...location,
-      //  value: location.name,
-      //}));
+      state.sectionChiefs = res || [];
     });
     builder.addCase(getSectionChiefs.rejected, (state) => {
       state.sectionChiefsLoading = false;
