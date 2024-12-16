@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getUsers } from '../../features/data/dataThunk';
+import { getServiceEngineers } from '../../features/data/dataThunk';
 import defaultUserPng from '../../assets/default-user.png';
 import { ROLES } from '../../constants';
 import '../Users/users.css';
@@ -16,7 +16,7 @@ const ServiceEngineers = () => {
   const [usersListHeight, setUsersListHeight] = useState(0);
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getServiceEngineers());
   }, [dispatch]);
 
   useEffect(() => {
@@ -61,23 +61,28 @@ const ServiceEngineers = () => {
                 <div className="user-avatar">
                   <img
                     src={
-                      !!serviceEngineer?.photo
-                        ? serviceEngineer.photo
+                      !!serviceEngineer?.service_engineer?.photo
+                        ? serviceEngineer.service_engineer?.photo
                         : defaultUserPng
                     }
-                    alt={serviceEngineer?.full_name || 'Начальник участка'}
+                    alt={
+                      serviceEngineer?.service_engineer?.full_name ||
+                      'Начальник участка'
+                    }
                   />
                 </div>
                 <div className="user-info">
                   <Link
-                    to={`/user/${serviceEngineer?.id || ''}`}
+                    to={`/user/${serviceEngineer?.service_engineer?.id || ''}`}
                     className="user-full-name"
                   >
-                    {serviceEngineer?.full_name || 'ㅤ'}
+                    {serviceEngineer?.service_engineer?.full_name || 'ㅤ'}
                   </Link>
                   <span className="user-role">
                     права роли -{' '}
-                    {!!serviceEngineer?.role ? ROLES[serviceEngineer.role] : ''}
+                    {!!serviceEngineer?.service_engineer?.role
+                      ? ROLES[serviceEngineer.service_engineer?.role]
+                      : ''}
                   </span>
                 </div>
               </div>

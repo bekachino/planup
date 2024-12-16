@@ -21,7 +21,7 @@ const Autocomplete = ({
 
   useEffect(() => {
     !multiple && setInputValue(value || '');
-  }, [value]);
+  }, [value, multiple]);
 
   useEffect(() => {
     resizeOptions();
@@ -72,10 +72,10 @@ const Autocomplete = ({
         (
           option?.name?.toLowerCase() ||
           option?.value?.toLowerCase() ||
-          option?.label?.toLowerCase()
+          option?.label?.toLowerCase() || ''
         ).includes(inputValue?.toLowerCase())
       ),
-    [inputValue, value, options]
+    [inputValue, value, options, multiple]
   );
 
   const onSelectedOptionRemove = (id) => {

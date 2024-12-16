@@ -34,7 +34,7 @@ const Work = () => {
         ?.toLowerCase()
         .includes(searchWord?.toLowerCase())
     );
-  }, [searchWord]);
+  }, [searchWord, workChildTemplates]);
 
   const handleSearchWordChange = (e) => setSearchWord(e.target.value);
 

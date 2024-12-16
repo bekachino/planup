@@ -7,9 +7,21 @@
   flex-direction: column;
   padding: 48px 100px;
   border-radius: 14px;
+  width: 90%;
   max-width: 1440px;
   background-color: var(--white);
   margin: 0 auto;
+}
+
+.create-template-paper-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.create-template-paper-header .page-back {
+  position: unset;
+  margin: 0;
 }
 
 .template-desc {

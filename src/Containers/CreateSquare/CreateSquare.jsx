@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { nanoid } from 'nanoid';
 import Input from '../../Components/Input/Input';
 import Button from '../../Components/Button/Button';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
@@ -65,20 +64,6 @@ const CreateSquare = ({ isEdit }) => {
     }));
   };
 
-  const addField = () => {
-    setState((prevState) => ({
-      ...prevState,
-      fields: [
-        ...prevState?.fields,
-        {
-          id: nanoid(),
-          field: null,
-          required: false,
-        },
-      ],
-    }));
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (isEdit) {
@@ -107,10 +92,12 @@ const CreateSquare = ({ isEdit }) => {
           location: (state.location || [])?.map(
             (singleLocation) => singleLocation?.id
           ),
+          section_chief: state.section_chief?.id || null,
+          service_engineer: state.service_engineer?.id || null,
         })
       ).then((res) => {
         if (res?.meta?.requestStatus === 'fulfilled') {
-          //navigate('/squares');
+          navigate('/squares');
         }
       });
     }
@@ -141,7 +128,7 @@ const CreateSquare = ({ isEdit }) => {
               label="Регион"
               placeholder="Выберите регион"
               name="region"
-              value={state?.region?.name}
+              value={state?.region?.name || ''}
               options={REGIONS}
               onChange={onChange}
             />
@@ -159,20 +146,25 @@ const CreateSquare = ({ isEdit }) => {
           </div>
           <div className="template-field-row">
             <Autocomplete
-              multiple
               label="Сервис инженер"
               placeholder="Выберите сервис инженера"
               name="service_engineer"
-              value={state?.service_engineer || []}
-              options={serviceEngineers}
+              value={state?.service_engineer?.name}
+              options={(serviceEngineers || []).map((si) => ({
+                id: si.service_engineer.id,
+                name: si.service_engineer.full_name,
+              }))}
               onChange={onChange}
             />
             <Autocomplete
               label="Начальник участка"
               placeholder="Выберите начальника участка"
               name="section_chief"
-              value={state?.section_chief?.name}
-              options={sectionChiefs}
+              value={state?.section_chief?.name || ''}
+              options={(sectionChiefs || []).map((sectionChief) => ({
+                id: sectionChief.section_chief.id,
+                name: sectionChief.section_chief.full_name,
+              }))}
               onChange={onChange}
             />
           </div>

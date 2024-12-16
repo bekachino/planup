@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getUsers } from '../../features/data/dataThunk';
+import { getSectionChiefs } from '../../features/data/dataThunk';
 import defaultUserPng from '../../assets/default-user.png';
 import { ROLES } from '../../constants';
 import '../Users/users.css';
@@ -16,7 +16,7 @@ const SectionChiefs = () => {
   const [usersListHeight, setUsersListHeight] = useState(0);
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getSectionChiefs());
   }, [dispatch]);
 
   useEffect(() => {
@@ -61,23 +61,28 @@ const SectionChiefs = () => {
                 <div className="user-avatar">
                   <img
                     src={
-                      !!sectionChief?.photo
-                        ? sectionChief.photo
+                      !!sectionChief?.section_chief?.photo
+                        ? sectionChief.section_chief.photo
                         : defaultUserPng
                     }
-                    alt={sectionChief?.full_name || 'Начальник участка'}
+                    alt={
+                      sectionChief?.section_chief?.full_name ||
+                      'Начальник участка'
+                    }
                   />
                 </div>
                 <div className="user-info">
                   <Link
-                    to={`/user/${sectionChief?.id || ''}`}
+                    to={`/user/${sectionChief?.section_chief?.id || ''}`}
                     className="user-full-name"
                   >
-                    {sectionChief?.full_name || 'ㅤ'}
+                    {sectionChief?.section_chief?.full_name || 'ㅤ'}
                   </Link>
                   <span className="user-role">
                     права роли -{' '}
-                    {!!sectionChief?.role ? ROLES[sectionChief?.role] : ''}
+                    {!!sectionChief?.section_chief?.role
+                      ? ROLES[sectionChief?.section_chief?.role]
+                      : ''}
                   </span>
                 </div>
               </div>
