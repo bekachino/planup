@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ReactComponent as ArrowRightWhiteIcon } from '../../assets/arrow-pointer-right.svg';
 import { ReactComponent as MenuBurgerIcon } from '../../assets/burger-black.svg';
 import { ReactComponent as RemoveWhiteIcon } from '../../assets/remove-icon-white.svg';
 import { getWork } from '../../features/works/worksThunk';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import './work.css';
 
 const Work = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { workFields, workChildTemplates, workLoading } = useAppSelector(
     (state) => state.worksState
   );
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [currentWorkFields, setCurrentWorkFields] = useState([]);
+  const [searchWord, setSearchWord] = useState('');
 
   useEffect(() => {
     if (!!params?.workId) {
@@ -21,12 +24,39 @@ const Work = () => {
     }
   }, [dispatch, params?.workId]);
 
+  useEffect(() => {
+    setCurrentWorkFields(workFields || []);
+  }, [workFields]);
+
+  const filteredWorkChildTemplates = useCallback(() => {
+    return workChildTemplates.filter((childTemplate) =>
+      childTemplate?.template?.name
+        ?.toLowerCase()
+        .includes(searchWord?.toLowerCase())
+    );
+  }, [searchWord]);
+
+  const handleSearchWordChange = (e) => setSearchWord(e.target.value);
+
   const toggleTooltip = (value) => setTooltipOpen(value);
+
+  const onChildTemplateChange = (id, isDefault) => {
+    if (isDefault) {
+      setCurrentWorkFields(workFields || []);
+    } else {
+      if (!id) return;
+      const foundChildTemplate = (workChildTemplates || []).find(
+        (workChildTemplate) => workChildTemplate?.template?.id === id
+      );
+      setCurrentWorkFields(foundChildTemplate?.fields || []);
+    }
+    toggleTooltip(false);
+  };
 
   return (
     <div className="work">
       <div className="work-header">
-        <button className="work-header-btn">
+        <button className="work-header-btn" onClick={() => navigate('/home')}>
           <ArrowRightWhiteIcon />
         </button>
         <h2>Наряд</h2>
@@ -45,10 +75,24 @@ const Work = () => {
             <input
               className="work-header-tooltip-search"
               placeholder="Выберите вид работ"
+              value={searchWord}
+              onChange={handleSearchWordChange}
             />
             <div className="work-header-tooltip-values">
-              {workChildTemplates.map((childTemplate) => (
-                <button className="work-header-tooltip-value">
+              <button
+                className="work-header-tooltip-value"
+                onClick={() => onChildTemplateChange(null, true)}
+              >
+                Техпод
+              </button>
+              {filteredWorkChildTemplates().map((childTemplate, i) => (
+                <button
+                  className="work-header-tooltip-value"
+                  key={i}
+                  onClick={() =>
+                    onChildTemplateChange(childTemplate.template.id)
+                  }
+                >
                   {childTemplate.template.name}
                 </button>
               ))}
@@ -60,7 +104,7 @@ const Work = () => {
         {!workLoading && !workFields.length && (
           <h2 className="work-body-no-data">Нет данных</h2>
         )}
-        {workFields.map((workField, i) => (
+        {currentWorkFields.map((workField, i) => (
           <div className="work-value-row" key={i}>
             <span className="work-row-name">{workField.name || '-'}</span>
             <span className="work-row-value">
