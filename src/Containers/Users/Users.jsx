@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUsers } from '../../features/data/dataThunk';
 import defaultUserPng from '../../assets/default-user.png';
-import './users.css';
 import { ROLES } from '../../constants';
+import './users.css';
 
 const Users = () => {
   const navigate = useNavigate();
