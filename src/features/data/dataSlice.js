@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createResolution,
-  createSectionChief, createServiceEngineer,
+  createSectionChief,
+  createServiceEngineer,
   createSquare,
   createTemplate,
   createUser,
@@ -14,6 +15,7 @@ import {
   getSectionChiefs,
   getServiceEngineers,
   getTemplate,
+  getUser,
   getUsers,
 } from './dataThunk';
 
@@ -24,6 +26,7 @@ const initialState = {
   serviceEngineers: [],
   sectionChiefs: [],
   users: [],
+  user: null,
   template: null,
   resolution: null,
   getTemplateLoading: false,
@@ -40,6 +43,7 @@ const initialState = {
   createSquareLoading: false,
   createUserLoading: false,
   usersLoading: false,
+  userLoading: false,
   createSectionChiefLoading: false,
   createServiceEngineerLoading: false,
 };
@@ -160,7 +164,7 @@ const DataSlice = createSlice({
     });
     builder.addCase(getLocations.fulfilled, (state, { payload: res }) => {
       state.locationsLoading = false;
-      state.locations = res;
+      state.locations = res || [];
     });
     builder.addCase(getLocations.rejected, (state) => {
       state.locationsLoading = false;
@@ -219,10 +223,22 @@ const DataSlice = createSlice({
     });
     builder.addCase(getUsers.fulfilled, (state, { payload: res }) => {
       state.usersLoading = false;
-      state.users = res;
+      state.users = res || [];
     });
     builder.addCase(getUsers.rejected, (state) => {
       state.usersLoading = false;
+    });
+
+    builder.addCase(getUser.pending, (state) => {
+      state.userLoading = true;
+      state.user = null;
+    });
+    builder.addCase(getUser.fulfilled, (state, { payload: res }) => {
+      state.userLoading = false;
+      state.user = res || null;
+    });
+    builder.addCase(getUser.rejected, (state) => {
+      state.userLoading = false;
     });
 
     builder.addCase(createSectionChief.pending, (state) => {

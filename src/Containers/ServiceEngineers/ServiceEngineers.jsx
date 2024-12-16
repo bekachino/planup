@@ -23,7 +23,7 @@ const ServiceEngineers = () => {
 
   useEffect(() => {
     dispatch(getServiceEngineers());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!deleteSiLoading) setSiForDelete(-1);

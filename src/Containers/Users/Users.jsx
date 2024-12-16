@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUsers } from '../../features/data/dataThunk';
 import defaultUserPng from '../../assets/default-user.png';
@@ -15,7 +15,7 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (usersListRef.current) {
@@ -61,9 +61,12 @@ const Users = () => {
                   />
                 </div>
                 <div className="user-info">
-                  <span className="user-full-name">
-                    {user?.full_name || ''}
-                  </span>
+                  <Link
+                    to={`/user/${user?.id || ''}`}
+                    className="user-full-name"
+                  >
+                    {user?.full_name || 'ㅤ'}
+                  </Link>
                   <span className="user-role">
                     права роли - {!!user?.role ? ROLES[user?.role] : ''}
                   </span>

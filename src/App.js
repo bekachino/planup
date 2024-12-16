@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import { setUser } from './features/user/usersSlice';
 import './App.css';
+import User from './Containers/User/User';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -50,10 +51,10 @@ const App = () => {
         name: 'Админ',
         role: 'admin',
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MzI4ODI3LCJpYXQiOjE3MzQzMjUyMjcsImp0aSI6IjAzZTdiZWEwYWVhNjQwMzk4ZjM2MmUwNjk3YmNkZTA1IiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.PtCM9wDnYOxTlVOQQPUUuULzRhFz3kACiL-AYzbRZSM',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0MzM5NTM1LCJpYXQiOjE3MzQzMzU5MzUsImp0aSI6Ijk1ZmI1ZGQyZTRiYTQwMWQ4MjY0MTdlN2FmNWIwNjhjIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.hnJ_rE5ThteWCNkEEg_Q85WHkxxMu1A9g7ERe-Sb_do',
       })
     );
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -161,6 +162,14 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <Users />
+            </Suspense>
+          }
+        />
+        <Route
+          path="user/:userId"
+          element={
+            <Suspense fallback={<></>}>
+              <User />
             </Suspense>
           }
         />

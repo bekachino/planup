@@ -123,7 +123,7 @@ export const getCategories = createAsyncThunk(
           message: 'Ошибка при получении типов категориев',
         })
       );
-      return rejectWithValue('Ошибка при получении типов категориев');
+      return rejectWithValue('Ошибка при получении категориев');
     }
   }
 );
@@ -138,10 +138,10 @@ export const getSquares = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message: 'Ошибка при получении типов квадратов',
+          message: 'Ошибка при получении квадратов',
         })
       );
-      return rejectWithValue('Ошибка при получении типов квадратов');
+      return rejectWithValue('Ошибка при получении квадратов');
     }
   }
 );

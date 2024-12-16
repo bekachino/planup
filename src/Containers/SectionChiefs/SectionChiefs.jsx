@@ -22,7 +22,7 @@ const SectionChiefs = () => {
 
   useEffect(() => {
     dispatch(getSectionChiefs());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!deleteSiLoading) setSiForDelete(-1);
