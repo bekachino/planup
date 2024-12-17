@@ -182,7 +182,7 @@ const CreateTemplate = ({ isEdit }) => {
   return (
     <div className="create-template">
       <div className="create-template-paper">
-        <div className="create-template-paper-header">
+        <div className="create-template-paper-header" style={{flexDirection: 'row'}}>
           <button className="page-back" onClick={() => navigate('/templates')}>
             <ArrowPointerRight />
           </button>

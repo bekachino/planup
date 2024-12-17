@@ -64,11 +64,16 @@
   margin: 10px auto;
 }
 
-.type-item a {
+.type-item a,
+.type-item-title {
   font-size: 22px;
   line-height: 26px;
   color: var(--main-2);
   text-decoration: none;
+}
+
+.type-item-title {
+  color: unset;
 }
 
 .type-item a:hover {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getResolutionTypes } from '../../features/statuses/filtersDataThunk';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 import { ReactComponent as RefreshIcon } from '../../assets/refresh.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
@@ -39,8 +39,15 @@ const Resolutions = () => {
 
   return (
     <>
-      <Modal open={modalIsOpen} toggleModal={toggleModal}>
-        <div className="create-template-paper-header">
+      <Modal
+        open={modalIsOpen}
+        toggleModal={toggleModal}
+        style={{ minWidth: '600px' }}
+      >
+        <div
+          className="create-template-paper-header"
+          style={{ flexDirection: 'column' }}
+        >
           <h2>Удалить резолюцию?</h2>
           <span className="create-template-paper-header-desc">
             Вы уверены что хотите удалить эту резолюцию?
@@ -82,9 +89,7 @@ const Resolutions = () => {
           {!resolutionTypesLoading &&
             resolutionTypes.map((resolution) => (
               <div className="type-item" key={resolution.id}>
-                <Link to={`/resolutions/${resolution?.id}`}>
-                  {resolution.name}
-                </Link>
+                <span className="type-item-title">{resolution.name}</span>
                 <Button
                   className="edit-type-btn"
                   onClick={() => navigate(`/edit-resolution/${resolution?.id}`)}

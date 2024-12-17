@@ -35,7 +35,7 @@ const CreateSectionChief = () => {
     e.preventDefault();
     const createUserReq = await dispatch(
       createSectionChief({
-        section_chief: state?.sectionChief?.id,
+        section_chief_id: state?.sectionChief?.id,
       })
     );
 
@@ -51,7 +51,7 @@ const CreateSectionChief = () => {
   };
 
   return (
-    <div className="create-user">
+    <div className="create-user create-nu">
       <div className="create-user-header">
         <button
           className="page-back"

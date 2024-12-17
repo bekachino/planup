@@ -5,15 +5,21 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getWorkFields, getWorks } from '../../features/works/worksThunk';
 import moment from 'moment';
-import { STATUS_ICONS, WORK_STATUSES } from '../../constants';
+import { DATE_FIELDS, STATUS_ICONS, WORK_STATUSES } from '../../constants';
+import ManipulateWorksFields from '../../Components/ManipulateWorksFields/ManipulateWorksFields';
 import './home.css';
 
 const Home = () => {
   const dispatch = useAppDispatch();
   const dutiesTableRef = useRef(null);
-  const { works, worksLoading, worksListFields, worksListFieldsLoading } =
+  const { works, worksLoading, shownFields, availFieldsLoading } =
     useAppSelector((state) => state.worksState);
   const [dutiesTableHeight, setDutiesTableHeight] = useState(0);
+
+  const [
+    worksFieldsManipulationModalOpen,
+    setWorksFieldsManipulationModalOpen,
+  ] = useState(false);
 
   useEffect(() => {
     dispatch(getWorks());
@@ -32,6 +38,8 @@ const Home = () => {
     }
   }, []);
 
+  const toggleModal = (value) => setWorksFieldsManipulationModalOpen(value);
+
   const getTableCellValue = (workField) => {
     if (!!workField?.field_value) {
       if (['Номер наряда'].includes(workField.name)) {
@@ -46,7 +54,7 @@ const Home = () => {
             {workField.field_value || '-'}
           </Link>
         );
-      } else if (workField.name === 'Желаемая дата  приезда') {
+      } else if (DATE_FIELDS.includes(workField.name)) {
         return !!workField.field_value
           ? moment(workField.field_value).format('DD-MM-YYYY HH:mm')
           : '-';
@@ -55,11 +63,19 @@ const Home = () => {
       }
     } else return '-';
   };
-
+  
   return (
     <div className="home">
+      <ManipulateWorksFields
+        open={worksFieldsManipulationModalOpen}
+        toggleModal={toggleModal}
+      />
       <div className="home-wrapper">
-        <Button className="home-table-add-field-btn" color="secondary">
+        <Button
+          className="home-table-add-field-btn"
+          color="secondary"
+          onClick={() => toggleModal(true)}
+        >
           <AddIcon />
           Добавить поле
         </Button>
@@ -81,50 +97,57 @@ const Home = () => {
                   </th>
                 )}
                 {!worksLoading &&
-                  !worksListFieldsLoading &&
-                  (worksListFields || []).map((workField, i) => (
-                    <th key={i}>
+                  !availFieldsLoading &&
+                  (shownFields || [])
+                    .filter((workField) => !!workField)
+                    .map((workField, i) => (
+                      <th key={i}>
+                        <span className="duty-item-cell-title-text">
+                          {workField}
+                        </span>
+                      </th>
+                    ))}
+                {!worksLoading &&
+                  !availFieldsLoading &&
+                  (!works.length || !shownFields.length) && (
+                    <th>
                       <span className="duty-item-cell-title-text">
-                        {workField.name}
+                        Нет данных
                       </span>
                     </th>
-                  ))}
-                {!worksLoading && !worksListFieldsLoading && !works.length && (
-                  <th>
-                    <span className="duty-item-cell-title-text">
-                      Нет данных
-                    </span>
-                  </th>
-                )}
+                  )}
               </tr>
             </thead>
             <tbody>
-              {(works || []).map((work, i) => (
-                <tr
-                  className={`duty-item-status-${WORK_STATUSES[work.find((workField) => workField.name === 'Статус')?.field_value]}`}
-                  key={i}
-                >
-                  {(worksListFields || []).map((workField, i) => (
-                    <td key={i}>
-                      <span className="duty-item-cell-value">
-                        {workField.name === 'Статус' &&
-                          STATUS_ICONS[
-                            work.find(
-                              (workCell) => workCell.name === workField.name
-                            ).field_value
-                          ]}
-                        <span className="duty-item-cell-value-text">
-                          {getTableCellValue(
-                            work.find(
-                              (workCell) => workCell.name === workField.name
-                            )
-                          )}
-                        </span>
-                      </span>
-                    </td>
-                  ))}
-                </tr>
-              ))}
+              {!!shownFields.length &&
+                (works || []).map((work, i) => (
+                  <tr
+                    className={`duty-item-status-${WORK_STATUSES[work.find((workField) => workField.name === 'Статус')?.field_value]}`}
+                    key={i}
+                  >
+                    {(shownFields || [])
+                      .filter((field) => !!field)
+                      .map((workField, i) => (
+                        <td key={i}>
+                          <span className="duty-item-cell-value">
+                            {workField === 'Статус' &&
+                              STATUS_ICONS[
+                                work.find(
+                                  (workCell) => workCell.name === workField
+                                ).field_value
+                              ]}
+                            <span className="duty-item-cell-value-text">
+                              {getTableCellValue(
+                                work.find(
+                                  (workCell) => workCell.name === workField
+                                )
+                              )}
+                            </span>
+                          </span>
+                        </td>
+                      ))}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -1,0 +1,46 @@
+.manipulate-works-fields-modal {
+  width: 80%;
+  max-width: 1200px;
+}
+
+.manipulate-works-fields-modal .create-template-paper-header h2 {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 38px;
+  text-align: center;
+  margin: 0;
+}
+
+.manipulate-works-fields-modal .create-template-paper-header .manipulate-works-fields-modal-desc {
+  display: inline-block;
+  width: 100%;
+  font-size: 20px;
+  line-height: 26px;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.manipulate-works-fields-body {
+  margin-top: 20px;
+}
+
+.manipulate-works-fields-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 10px;
+  max-height: 500px;
+  overflow-y: scroll;
+  margin-bottom: 15px;
+}
+
+.manipulate-works-fields-actions {
+  display: flex;
+  gap: 20px;
+}
+
+.manipulate-works-fields-actions button {
+  padding: 15px;
+  font-size: 24px;
+  flex-grow: 1;
+}

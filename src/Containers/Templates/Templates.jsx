@@ -37,8 +37,8 @@ const Templates = () => {
 
   return (
     <>
-      <Modal open={modalIsOpen} toggleModal={toggleModal}>
-        <div className="create-template-paper-header">
+      <Modal open={modalIsOpen} toggleModal={toggleModal} style={{minWidth: '600px'}}>
+        <div className="create-template-paper-header" style={{flexDirection: 'column'}}>
           <h2>Удалить шаблон?</h2>
           <span className="create-template-paper-header-desc">
             Вы уверены что хотите удалить этот шаблон?

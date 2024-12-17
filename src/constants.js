@@ -116,3 +116,17 @@ export const ROLES_ARRAY = [
     value: 'Офисник',
   },
 ];
+
+export const DATE_FIELDS = [
+  'Желаемая дата  приезда',
+  'Дата создания',
+  'Дата закрытия',
+];
+export const REQUIRED_WORKS_LIST_FIELDS = [
+  'Номер наряда',
+  'Битрикс ID',
+  'Шаблон',
+  'Статус',
+  'Дата создания',
+  'Дата закрытия',
+];

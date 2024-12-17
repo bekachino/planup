@@ -4,18 +4,30 @@ import { getWork, getWorkFields, getWorks } from './worksThunk';
 const initialState = {
   works: [],
   workFields: [],
-  worksListFields: [],
   workChildTemplates: [],
+  availFields: [],
+  shownFields: [
+    'Номер наряда',
+    'Битрикс ID',
+    'Шаблон',
+    'Статус',
+    'Дата создания',
+    'Дата закрытия',
+  ],
   worksLoading: false,
   workLoading: false,
   workFieldsLoading: false,
-  worksListFieldsLoading: false,
+  availFieldsLoading: false,
 };
 
 const WorksSlice = createSlice({
   name: 'works',
   initialState,
-  reducers: {},
+  reducers: {
+    setShownFields: (state, { payload }) => {
+      state.shownFields = payload || state.shownFields;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getWorks.pending, (state) => {
       state.worksLoading = true;
@@ -32,7 +44,7 @@ const WorksSlice = createSlice({
           },
           {
             id: work.bitrix_id || null,
-            name: 'Б24' || null,
+            name: 'Битрикс ID' || null,
             field_value: work.bitrix_id || null,
           },
           {
@@ -45,6 +57,14 @@ const WorksSlice = createSlice({
             name: 'Шаблон',
             field_value: work.works[0]?.template.name || null,
           },
+          {
+            name: 'Дата создания',
+            field_value: work.created_at || null,
+          } || null,
+          {
+            name: 'Дата закрытия',
+            field_value: work.closed_at || null,
+          } || null,
           ...(work.works[0]?.fields || []),
         ]) || [];
     });
@@ -65,12 +85,10 @@ const WorksSlice = createSlice({
             field_value: res.id || null,
           },
           {
-            id: res.works[0].template.id || null,
             name: 'Шаблон',
             field_value: res.works[0].template.name || null,
           },
           {
-            id: res.status.id || null,
             name: 'Статус',
             field_value: res.status.name || null,
           } || null,
@@ -83,29 +101,33 @@ const WorksSlice = createSlice({
     });
 
     builder.addCase(getWorkFields.pending, (state) => {
-      state.worksListFieldsrLoading = true;
-      state.worksListFields = [];
+      state.availFieldsLoading = false;
+      state.availFields = [];
     });
     builder.addCase(getWorkFields.fulfilled, (state, { payload: res }) => {
-      state.worksListFieldsLoading = false;
+      state.availFieldsLoading = false;
 
-      const filteredList = (res || []).filter(
-        (field) => !['Номер наряда', 'Шаблон', 'Статус'].includes(field.name)
-      );
+      const filteredList = (res || [])
+        .filter(
+          (field) => !['Номер наряда', 'Шаблон', 'Статус'].includes(field.name)
+        )
+        .map((field) => field.name);
 
-      state.worksListFields =
-        [
-          { name: 'Номер наряда' },
-          { name: 'Шаблон' },
-          { name: 'Статус' },
-          ...filteredList,
-        ] || [];
+      state.availFields = [
+        'Номер наряда',
+        'Битрикс ID',
+        'Шаблон',
+        'Статус',
+        'Дата создания',
+        'Дата закрытия',
+        ...filteredList,
+      ];
     });
     builder.addCase(getWorkFields.rejected, (state) => {
-      state.worksListFieldsLoading = false;
+      state.availFieldsLoading = false;
     });
   },
 });
 
 export const worksReducer = WorksSlice.reducer;
-//export const {} = WorksSlice.actions;
+export const { setShownFields } = WorksSlice.actions;

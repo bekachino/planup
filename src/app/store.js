@@ -21,11 +21,17 @@ const usersPersistConfig = {
   whitelist: ['user'],
 };
 
+const worksPersistConfig = {
+  key: 'PlanUp:works',
+  storage,
+  whitelist: ['shownFields'],
+};
+
 const rootReducer = combineReducers({
   userState: persistReducer(usersPersistConfig, userReducer),
   dataState: dataReducer,
   filtersDataState: filtersDataReducer,
-  worksState: worksReducer,
+  worksState: persistReducer(worksPersistConfig, worksReducer),
 });
 
 export const store = configureStore({

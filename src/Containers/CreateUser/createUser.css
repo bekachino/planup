@@ -5,6 +5,13 @@
   flex-grow: 1;
 }
 
+.create-si,
+.create-nu {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .create-user-header {
   position: relative;
 }
