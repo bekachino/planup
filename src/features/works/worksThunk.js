@@ -44,3 +44,24 @@ export const getWork = createAsyncThunk(
     }
   }
 );
+
+export const getWorkFields = createAsyncThunk(
+  'data/getWorkFields',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`v2/use-fields/`);
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);

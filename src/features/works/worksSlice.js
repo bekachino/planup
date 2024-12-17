@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getWork, getWorks } from './worksThunk';
+import { getWork, getWorkFields, getWorks } from './worksThunk';
 
 const initialState = {
   works: [],
   workFields: [],
+  worksListFields: [],
   workChildTemplates: [],
   worksLoading: false,
   workLoading: false,
+  workFieldsLoading: false,
+  worksListFieldsLoading: false,
 };
 
 const WorksSlice = createSlice({
@@ -77,6 +80,29 @@ const WorksSlice = createSlice({
     });
     builder.addCase(getWork.rejected, (state) => {
       state.workLoading = false;
+    });
+
+    builder.addCase(getWorkFields.pending, (state) => {
+      state.worksListFieldsrLoading = true;
+      state.worksListFields = [];
+    });
+    builder.addCase(getWorkFields.fulfilled, (state, { payload: res }) => {
+      state.worksListFieldsLoading = false;
+
+      const filteredList = (res || []).filter(
+        (field) => !['Номер наряда', 'Шаблон', 'Статус'].includes(field.name)
+      );
+
+      state.worksListFields =
+        [
+          { name: 'Номер наряда' },
+          { name: 'Шаблон' },
+          { name: 'Статус' },
+          ...filteredList,
+        ] || [];
+    });
+    builder.addCase(getWorkFields.rejected, (state) => {
+      state.worksListFieldsLoading = false;
     });
   },
 });

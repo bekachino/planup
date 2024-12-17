@@ -3,7 +3,7 @@ import Button from '../../Components/Button/Button';
 import { ReactComponent as AddIcon } from '../../assets/add-white.svg';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getWorks } from '../../features/works/worksThunk';
+import { getWorkFields, getWorks } from '../../features/works/worksThunk';
 import moment from 'moment';
 import { STATUS_ICONS, WORK_STATUSES } from '../../constants';
 import './home.css';
@@ -11,11 +11,13 @@ import './home.css';
 const Home = () => {
   const dispatch = useAppDispatch();
   const dutiesTableRef = useRef(null);
-  const { works, worksLoading } = useAppSelector((state) => state.worksState);
+  const { works, worksLoading, worksListFields, worksListFieldsLoading } =
+    useAppSelector((state) => state.worksState);
   const [dutiesTableHeight, setDutiesTableHeight] = useState(0);
 
   useEffect(() => {
     dispatch(getWorks());
+    dispatch(getWorkFields());
   }, [dispatch]);
 
   useEffect(() => {
@@ -31,25 +33,27 @@ const Home = () => {
   }, []);
 
   const getTableCellValue = (workField) => {
-    if (['Номер наряда'].includes(workField.name)) {
-      return (
-        <Link
-          to={
-            workField.name === 'Номер наряда'
-              ? `/work/${workField?.id}`
-              : '/home'
-          }
-        >
-          {workField.field_value || '-'}
-        </Link>
-      );
-    } else if (workField.name === 'Желаемая дата  приезда') {
-      return !!workField.field_value
-        ? moment(workField.field_value).format('DD-MM-YYYY HH:mm')
-        : '-';
-    } else {
-      return workField.field_value || '-';
-    }
+    if (!!workField?.field_value) {
+      if (['Номер наряда'].includes(workField.name)) {
+        return (
+          <Link
+            to={
+              workField.name === 'Номер наряда'
+                ? `/work/${workField?.id}`
+                : '/home'
+            }
+          >
+            {workField.field_value || '-'}
+          </Link>
+        );
+      } else if (workField.name === 'Желаемая дата  приезда') {
+        return !!workField.field_value
+          ? moment(workField.field_value).format('DD-MM-YYYY HH:mm')
+          : '-';
+      } else {
+        return workField.field_value || '-';
+      }
+    } else return '-';
   };
 
   return (
@@ -77,14 +81,15 @@ const Home = () => {
                   </th>
                 )}
                 {!worksLoading &&
-                  (works[0] || []).map((work, i) => (
+                  !worksListFieldsLoading &&
+                  (worksListFields || []).map((workField, i) => (
                     <th key={i}>
                       <span className="duty-item-cell-title-text">
-                        {work.name}
+                        {workField.name}
                       </span>
                     </th>
                   ))}
-                {!worksLoading && !works.length && (
+                {!worksLoading && !worksListFieldsLoading && !works.length && (
                   <th>
                     <span className="duty-item-cell-title-text">
                       Нет данных
@@ -99,13 +104,21 @@ const Home = () => {
                   className={`duty-item-status-${WORK_STATUSES[work.find((workField) => workField.name === 'Статус')?.field_value]}`}
                   key={i}
                 >
-                  {(work || []).map((workField, i) => (
+                  {(worksListFields || []).map((workField, i) => (
                     <td key={i}>
                       <span className="duty-item-cell-value">
                         {workField.name === 'Статус' &&
-                          STATUS_ICONS[workField.field_value]}
+                          STATUS_ICONS[
+                            work.find(
+                              (workCell) => workCell.name === workField.name
+                            ).field_value
+                          ]}
                         <span className="duty-item-cell-value-text">
-                          {getTableCellValue(workField)}
+                          {getTableCellValue(
+                            work.find(
+                              (workCell) => workCell.name === workField.name
+                            )
+                          )}
                         </span>
                       </span>
                     </td>

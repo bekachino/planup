@@ -8,7 +8,7 @@ export const getTemplate = createAsyncThunk(
   async (id, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi(`/v2/template/${id}/`);
-      return await req.data;
+      return await req.data || null;
     } catch (e) {
       dispatch(
         addAlert({
@@ -29,7 +29,7 @@ export const getResolution = createAsyncThunk(
   async (id, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi(`/v2/resolution/${id}/`);
-      return await req.data;
+      return await req.data || null;
     } catch (e) {
       dispatch(
         addAlert({
@@ -276,7 +276,7 @@ export const getUser = createAsyncThunk(
   async (id, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi(`/accounts/users/${id}/`);
-      return (await req.data) || [];
+      return (await req.data) || null;
     } catch (e) {
       dispatch(
         addAlert({
