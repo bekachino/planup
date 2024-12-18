@@ -23,7 +23,7 @@ const Resolutions = () => {
 
   useEffect(() => {
     dispatch(getResolutionTypes());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!deleteResolutionLoading) setResolutionForDelete(-1);

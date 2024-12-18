@@ -16,13 +16,13 @@ const Template = () => {
 
   useEffect(() => {
     dispatch(getTemplate(templateId));
-  }, []);
+  }, [dispatch, templateId]);
 
   return (
     <div className="template">
       <div className="template-paper">
         <div className="create-template-paper-header">
-          <button className="page-back" onClick={() => navigate('/templates')}>
+          <button className="page-back" onClick={() => navigate('/templates')} style={{ position: 'unset' }}>
             <ArrowPointerRight />
           </button>
           <h2>{template?.name || 'Шаблон'}</h2>

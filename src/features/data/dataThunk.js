@@ -8,7 +8,7 @@ export const getTemplate = createAsyncThunk(
   async (id, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi(`/v2/template/${id}/`);
-      return await req.data || null;
+      return (await req.data) || null;
     } catch (e) {
       dispatch(
         addAlert({
@@ -29,7 +29,7 @@ export const getResolution = createAsyncThunk(
   async (id, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi(`/v2/resolution/${id}/`);
-      return await req.data || null;
+      return (await req.data) || null;
     } catch (e) {
       dispatch(
         addAlert({
@@ -111,6 +111,27 @@ export const deleteResolution = createAsyncThunk(
   async (id, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi.delete(`/v2/resolution/${id}/`);
+      return await req.data;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const deleteSquare = createAsyncThunk(
+  'data/deleteSquare',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi.delete(`/accounts/squares/${id}/`);
       return await req.data;
     } catch (e) {
       dispatch(

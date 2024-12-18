@@ -6,7 +6,7 @@ import Button from '../../Components/Button/Button';
 import { ReactComponent as RefreshIcon } from '../../assets/refresh.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import Modal from '../../Components/Modal/Modal';
-import { deleteResolution } from '../../features/data/dataThunk';
+import { deleteSquare } from '../../features/data/dataThunk';
 import '../Templates/templates.css';
 
 const Resolutions = () => {
@@ -15,9 +15,7 @@ const Resolutions = () => {
   const { squares, squaresLoading } = useAppSelector(
     (state) => state.filtersDataState
   );
-  const { deleteSquareLoading } = useAppSelector(
-    (state) => state.filtersDataState
-  );
+  const { deleteSquareLoading } = useAppSelector((state) => state.dataState);
   const [resolutionForDelete, setResolutionForDelete] = useState(-1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -30,7 +28,7 @@ const Resolutions = () => {
   }, [deleteSquareLoading]);
 
   const onDelete = async (id) => {
-    await dispatch(deleteResolution(id));
+    await dispatch(deleteSquare(id));
     dispatch(getSquares());
     toggleModal(false);
   };
@@ -81,12 +79,12 @@ const Resolutions = () => {
               </div>
             ))}
           {!squaresLoading &&
-            (squares || []).map((resolution) => (
-              <div className="type-item" key={resolution.id}>
-                <Link to={`/squares/${resolution?.id}`}>{resolution.name}</Link>
+            (squares || []).map((square) => (
+              <div className="type-item" key={square.id}>
+                <Link to={`/squares/${square?.id}`}>{square.squares}</Link>
                 <Button
                   className="edit-type-btn"
-                  onClick={() => navigate(`/edit-square/${resolution?.id}`)}
+                  onClick={() => navigate(`/edit-square/${square?.id}`)}
                 >
                   <RefreshIcon />
                   Обновить
@@ -95,7 +93,7 @@ const Resolutions = () => {
                   className="edit-type-btn delete-type-btn"
                   color="error"
                   onClick={() => {
-                    setResolutionForDelete(resolution?.id);
+                    setResolutionForDelete(square?.id);
                     setModalIsOpen(true);
                   }}
                 >

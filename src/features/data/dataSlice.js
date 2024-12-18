@@ -7,6 +7,7 @@ import {
   createTemplate,
   createUser,
   deleteResolution,
+  deleteSquare,
   deleteTemplate,
   editResolution,
   editTemplate,
@@ -35,6 +36,7 @@ const initialState = {
   editTemplateLoading: false,
   deleteTemplateLoading: false,
   deleteResolutionLoading: false,
+  deleteSquareLoading: false,
   createResolutionLoading: false,
   editResolutionLoading: false,
   locationsLoading: false,
@@ -136,6 +138,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(deleteResolution.rejected, (state) => {
       state.deleteResolutionLoading = false;
+    });
+
+    builder.addCase(deleteSquare.pending, (state) => {
+      state.deleteSquareLoading = true;
+    });
+    builder.addCase(deleteSquare.fulfilled, (state) => {
+      state.deleteSquareLoading = false;
+    });
+    builder.addCase(deleteSquare.rejected, (state) => {
+      state.deleteSquareLoading = false;
     });
 
     builder.addCase(createResolution.pending, (state) => {

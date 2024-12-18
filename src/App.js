@@ -51,7 +51,7 @@ const App = () => {
         name: 'Админ',
         role: 'admin',
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0NDQxNjMyLCJpYXQiOjE3MzQ0MzgwMzIsImp0aSI6ImRmMTEzYmU0ZTVlYzQ0NDBhNTYzNTAwYzgxOThiM2NhIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJlbmdpbmVlciIsImZ1bGxfbmFtZSI6bnVsbH0.0BTySsLkWN8UATt9yC7t2np_D-w0Up-_3sc9jZG1Ua4',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0NTIwODUxLCJpYXQiOjE3MzQ1MTcyNTEsImp0aSI6ImYwNTAyMjAyMGUyYjQ0ZTA5MzcyMmNlNTczNGMwMjdhIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImZ1bGxfbmFtZSI6ImFkbWluIn0.lnyTXONvHcBb3WZQXoVgn3DQHSngR_NKTaXsbCQ5Qw8',
       })
     );
   }, [dispatch]);

@@ -93,7 +93,7 @@ const CreateSquare = ({ isEdit }) => {
             (singleLocation) => singleLocation?.id
           ),
           section_chief: state.section_chief?.id || null,
-          service_engineer: state.service_engineer?.id || null,
+          service_engineer: [state.service_engineer?.id] || [],
         })
       ).then((res) => {
         if (res?.meta?.requestStatus === 'fulfilled') {
@@ -151,7 +151,7 @@ const CreateSquare = ({ isEdit }) => {
               name="service_engineer"
               value={state?.service_engineer?.name}
               options={(serviceEngineers || []).map((si) => ({
-                id: si.service_engineer.id,
+                id: si.id,
                 name: si.service_engineer.full_name,
               }))}
               onChange={onChange}
@@ -162,7 +162,7 @@ const CreateSquare = ({ isEdit }) => {
               name="section_chief"
               value={state?.section_chief?.name || ''}
               options={(sectionChiefs || []).map((sectionChief) => ({
-                id: sectionChief.section_chief.id,
+                id: sectionChief.id,
                 name: sectionChief.section_chief.full_name,
               }))}
               onChange={onChange}

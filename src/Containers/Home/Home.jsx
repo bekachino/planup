@@ -28,15 +28,13 @@ const Home = () => {
 
   useEffect(() => {
     if (dutiesTableRef.current) {
-      setTimeout(() => {
-        setDutiesTableHeight(
-          window.innerHeight -
-            dutiesTableRef.current.getBoundingClientRect().top -
-            20
-        );
-      }, 200);
+      setDutiesTableHeight(
+        window.innerHeight -
+          dutiesTableRef.current.getBoundingClientRect().top -
+          20
+      );
     }
-  }, []);
+  }, [works]);
 
   const toggleModal = (value) => setWorksFieldsManipulationModalOpen(value);
 
@@ -63,7 +61,7 @@ const Home = () => {
       }
     } else return '-';
   };
-  
+
   return (
     <div className="home">
       <ManipulateWorksFields
