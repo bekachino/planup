@@ -45,6 +45,27 @@ export const getResolution = createAsyncThunk(
   }
 );
 
+export const getSquare = createAsyncThunk(
+  'data/getSquare',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/accounts/squares/${id}/`);
+      return (await req.data) || null;
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
 export const createTemplate = createAsyncThunk(
   'data/createTemplate',
   async (template, { dispatch, rejectWithValue }) => {
@@ -256,6 +277,26 @@ export const createSquare = createAsyncThunk(
   async (square, { dispatch, rejectWithValue }) => {
     try {
       await axiosApi.post('/accounts/squares/', square);
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const editSquare = createAsyncThunk(
+  'data/editSquare',
+  async (square, { dispatch, rejectWithValue }) => {
+    try {
+      await axiosApi.put('/accounts/squares/', square);
     } catch (e) {
       dispatch(
         addAlert({

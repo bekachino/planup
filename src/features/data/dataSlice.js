@@ -9,12 +9,13 @@ import {
   deleteResolution,
   deleteSquare,
   deleteTemplate,
-  editResolution,
+  editResolution, editSquare,
   editTemplate,
   getLocations,
   getResolution,
   getSectionChiefs,
   getServiceEngineers,
+  getSquare,
   getTemplate,
   getUser,
   getUsers,
@@ -30,24 +31,27 @@ const initialState = {
   user: null,
   template: null,
   resolution: null,
+  square: null,
+  usersLoading: false,
+  userLoading: false,
+  locationsLoading: false,
+  serviceEngineersLoading: false,
   getTemplateLoading: false,
   getResolutionLoading: false,
+  getSquareLoading: false,
   createTemplateLoading: false,
+  createResolutionLoading: false,
+  createSquareLoading: false,
+  createUserLoading: false,
+  createSectionChiefLoading: false,
+  createServiceEngineerLoading: false,
   editTemplateLoading: false,
+  editResolutionLoading: false,
+  sectionChiefsLoading: false,
+  editSquareLoading: false,
   deleteTemplateLoading: false,
   deleteResolutionLoading: false,
   deleteSquareLoading: false,
-  createResolutionLoading: false,
-  editResolutionLoading: false,
-  locationsLoading: false,
-  serviceEngineersLoading: false,
-  sectionChiefsLoading: false,
-  createSquareLoading: false,
-  createUserLoading: false,
-  usersLoading: false,
-  userLoading: false,
-  createSectionChiefLoading: false,
-  createServiceEngineerLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -98,6 +102,18 @@ const DataSlice = createSlice({
     });
     builder.addCase(getResolution.rejected, (state) => {
       state.getResolutionLoading = false;
+    });
+
+    builder.addCase(getSquare.pending, (state) => {
+      state.getSquareLoading = true;
+      state.square = null;
+    });
+    builder.addCase(getSquare.fulfilled, (state, { payload: res }) => {
+      state.getSquareLoading = false;
+      state.square = res || null;
+    });
+    builder.addCase(getSquare.rejected, (state) => {
+      state.getSquareLoading = false;
     });
 
     builder.addCase(createTemplate.pending, (state) => {
@@ -217,6 +233,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(createSquare.rejected, (state) => {
       state.createSquareLoading = false;
+    });
+    
+    builder.addCase(editSquare.pending, (state) => {
+      state.editSquareLoading = true;
+    });
+    builder.addCase(editSquare.fulfilled, (state) => {
+      state.editSquareLoading = false;
+    });
+    builder.addCase(editSquare.rejected, (state) => {
+      state.editSquareLoading = false;
     });
 
     builder.addCase(createUser.pending, (state) => {

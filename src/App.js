@@ -8,7 +8,6 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import { setUser } from './features/user/usersSlice';
 import './App.css';
-import User from './Containers/User/User';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -25,6 +24,7 @@ const CreateSquare = lazy(
   () => import('./Containers/CreateSquare/CreateSquare')
 );
 const Users = lazy(() => import('./Containers/Users/Users'));
+const User = lazy(() => import('./Containers/User/User'));
 const CreateUser = lazy(() => import('./Containers/CreateUser/CreateUser'));
 const ServiceEngineers = lazy(
   () => import('./Containers/ServiceEngineers/ServiceEngineers')

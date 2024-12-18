@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Autocomplete from '../../Components/Autocomplete/Autocomplete';
 import {
   createSquare,
-  editTemplate,
+  editSquare,
   getLocations,
   getSectionChiefs,
   getServiceEngineers,
-  getTemplate,
+  getSquare,
 } from '../../features/data/dataThunk';
 import { REGIONS } from '../../constants';
 import '../CreateTemplate/createTemplate.css';
@@ -27,6 +27,9 @@ const CreateSquare = ({ isEdit }) => {
     serviceEngineersLoading,
     sectionChiefs,
     sectionChiefsLoading,
+    getSquareLoading,
+    createSquareLoading,
+    editSquareLoading,
   } = useAppSelector((state) => state.dataState);
   const [state, setState] = useState({});
 
@@ -34,27 +37,42 @@ const CreateSquare = ({ isEdit }) => {
     dispatch(getLocations());
     dispatch(getServiceEngineers());
     dispatch(getSectionChiefs());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (isEdit)
-      dispatch(getTemplate(squareId)).then((res) =>
+      dispatch(getSquare(squareId)).then((res) => {
+        const foundLocation = locations.filter(
+          (location) => location?.id === (res.payload.location?.[0] || null)
+        );
+        const foundSi = serviceEngineers.find(
+          (si) => si.id === res.payload.service_engineer[0]
+        );
+        const foundNu = sectionChiefs.find(
+          (si) => si.id === res.payload.section_chief
+        );
+        const foundRegion = REGIONS.find(
+          (region) => region.name === res.payload?.region
+        );
+
         setState({
-          id: res.payload?.id,
-          name: res.payload?.name,
-          category: res.payload?.category?.[0] || null,
-          parent: res.payload?.parent?.[0] || null,
-          stage: res.payload?.stage?.[0] || null,
-          fields:
-            res.payload?.fields?.map((field) => ({
-              field: {
-                name: field?.field?.name,
-                id: field?.field?.id,
-              },
-              id: field?.field?.id,
-              required: field?.required,
-            })) || [],
-        })
-      );
+          ...res.payload,
+          location: foundLocation || [],
+          region: foundRegion,
+          service_engineer:
+            {
+              id: foundSi?.service_engineer?.id,
+              name: foundSi?.service_engineer?.full_name,
+            } || null,
+          section_chief:
+            {
+              id: foundNu?.section_chief?.id,
+              name: foundNu?.section_chief?.full_name,
+            } || null,
+        });
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, squareId, locations]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -67,21 +85,20 @@ const CreateSquare = ({ isEdit }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (isEdit) {
+      console.log(state);
       dispatch(
-        editTemplate({
+        editSquare({
           ...state,
-          parent: state?.parent?.id,
-          stage: state?.stage?.id,
-          category: Number(state?.category?.id || 0),
-          fields: state.fields.map((field, i) => ({
-            field: field?.field?.id,
-            numbers: i + 1,
-            required: field?.required,
-          })),
+          region: state?.region?.id,
+          location: (state.location || [])?.map(
+            (singleLocation) => singleLocation?.id
+          ),
+          section_chief: state.section_chief?.id || null,
+          service_engineer: [state.service_engineer?.id] || [],
         })
       ).then((res) => {
         if (res?.meta?.requestStatus === 'fulfilled') {
-          navigate('/templates');
+          navigate('/squares');
         }
       });
     } else {
@@ -107,7 +124,7 @@ const CreateSquare = ({ isEdit }) => {
     <div className="create-template">
       <div className="create-template-paper">
         <div className="create-template-paper-header">
-          <button className="page-back" onClick={() => navigate('/templates')}>
+          <button className="page-back" onClick={() => navigate('/squares')}>
             <ArrowPointerRight />
           </button>
           <h2>{isEdit ? 'Редактировать' : 'Создать'} квадрат</h2>
@@ -175,7 +192,10 @@ const CreateSquare = ({ isEdit }) => {
               loading={
                 locationsLoading ||
                 serviceEngineersLoading ||
-                sectionChiefsLoading
+                sectionChiefsLoading ||
+                getSquareLoading ||
+                createSquareLoading ||
+                editSquareLoading
               }
             >
               {isEdit ? 'Сохранить' : 'Создать'}

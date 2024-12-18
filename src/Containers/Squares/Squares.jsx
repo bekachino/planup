@@ -21,7 +21,7 @@ const Resolutions = () => {
 
   useEffect(() => {
     dispatch(getSquares());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!deleteSquareLoading) setResolutionForDelete(-1);
