@@ -86,7 +86,7 @@ const CreateServiceEngineer = () => {
               name="sectionChief"
               value={state?.sectionChief?.name}
               options={(sectionChiefs || []).map((sectionChief) => ({
-                id: sectionChief?.section_chief?.id || null,
+                id: sectionChief?.id || null,
                 name: sectionChief?.section_chief?.full_name || '-',
               }))}
               onChange={handleChange}

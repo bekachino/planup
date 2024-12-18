@@ -56,8 +56,8 @@ const ServiceEngineers = () => {
             </h2>
           )}
           {!!serviceEngineers?.length &&
-            serviceEngineers.map((serviceEngineer) => (
-              <div className="user">
+            serviceEngineers.map((serviceEngineer, i) => (
+              <div className="user" key={i}>
                 <div className="user-avatar">
                   <img
                     src={

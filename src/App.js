@@ -1,13 +1,14 @@
 import moment from 'moment';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import { setUser } from './features/user/usersSlice';
 import './App.css';
+import axiosApi from './axiosApi';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -44,16 +45,24 @@ moment.locale('ru');
 const App = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.userState);
+  const [access, setAccess] = useState('');
 
   useEffect(() => {
-    dispatch(
-      setUser({
-        name: 'Админ',
-        role: 'admin',
-        token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzM0NTIwODUxLCJpYXQiOjE3MzQ1MTcyNTEsImp0aSI6ImYwNTAyMjAyMGUyYjQ0ZTA5MzcyMmNlNTczNGMwMjdhIiwidXNlcl9pZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImZ1bGxfbmFtZSI6ImFkbWluIn0.lnyTXONvHcBb3WZQXoVgn3DQHSngR_NKTaXsbCQ5Qw8',
-      })
-    );
+    const auth = async () => {
+      const req = await axiosApi.post('accounts/token/', {
+        username: 'admin',
+        password: 'admin',
+      });
+      const res = await req?.data;
+      dispatch(
+        setUser({
+          name: 'Админ',
+          role: 'admin',
+          token: res?.access,
+        })
+      );
+    };
+    void auth();
   }, [dispatch]);
 
   return (

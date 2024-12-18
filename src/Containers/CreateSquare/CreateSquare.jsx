@@ -169,7 +169,7 @@ const CreateSquare = ({ isEdit }) => {
               value={state?.service_engineer?.name}
               options={(serviceEngineers || []).map((si) => ({
                 id: si.id,
-                name: si.service_engineer.full_name,
+                name: si.service_engineer?.full_name,
               }))}
               onChange={onChange}
             />
@@ -180,7 +180,7 @@ const CreateSquare = ({ isEdit }) => {
               value={state?.section_chief?.name || ''}
               options={(sectionChiefs || []).map((sectionChief) => ({
                 id: sectionChief.id,
-                name: sectionChief.section_chief.full_name,
+                name: sectionChief.section_chief?.full_name,
               }))}
               onChange={onChange}
             />
