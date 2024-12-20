@@ -19,15 +19,13 @@ const Users = () => {
 
   useEffect(() => {
     if (usersListRef.current) {
-      setTimeout(() => {
-        setUsersListHeight(
-          window.innerHeight -
-            usersListRef.current.getBoundingClientRect().top -
-            20
-        );
-      }, 200);
+      setUsersListHeight(
+        window.innerHeight -
+          usersListRef.current.getBoundingClientRect().top -
+          20
+      );
     }
-  }, []);
+  }, [users]);
 
   return (
     <div className="users">

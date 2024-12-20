@@ -6,6 +6,7 @@ import { getWork } from '../../features/works/worksThunk';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import './work.css';
+import moment from 'moment';
 
 const Work = () => {
   const params = useParams();
@@ -108,7 +109,11 @@ const Work = () => {
           <div className="work-value-row" key={i}>
             <span className="work-row-name">{workField.name || '-'}</span>
             <span className="work-row-value">
-              {workField.field_value || '-'}
+              {workField.name === 'Желаемая дата  приезда'
+                ? !!workField.field_value
+                  ? moment(workField.field_value).format('DD-MM-YYYY HH:mm')
+                  : '-'
+                : workField.field_value || '-'}
             </span>
           </div>
         ))}

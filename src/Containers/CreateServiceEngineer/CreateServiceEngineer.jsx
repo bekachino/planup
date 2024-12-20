@@ -44,8 +44,8 @@ const CreateServiceEngineer = () => {
     e.preventDefault();
     const createUserReq = await dispatch(
       createServiceEngineer({
-        section_chief: state?.sectionChief?.id,
-        service_engineer: state?.serviceEngineer?.id,
+        section_chief_id: state?.sectionChief?.id,
+        user_id: state?.serviceEngineer?.id,
       })
     );
 

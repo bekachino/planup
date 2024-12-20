@@ -86,15 +86,15 @@ const WorksSlice = createSlice({
           },
           {
             name: 'Шаблон',
-            field_value: res.works[0].template.name || null,
+            field_value: res.works[0]?.template.name || null,
           },
           {
             name: 'Статус',
             field_value: res.status.name || null,
           } || null,
-          ...(res.works[0].fields || []),
+          ...(res.works[0]?.fields || []),
         ] || [];
-      state.workChildTemplates = res.works[0].child_templates;
+      state.workChildTemplates = res.works[0]?.child_templates;
     });
     builder.addCase(getWork.rejected, (state) => {
       state.workLoading = false;

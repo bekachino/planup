@@ -7,10 +7,11 @@ import Header from './Components/Header/Header';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import { setUser } from './features/user/usersSlice';
-import './App.css';
 import axiosApi from './axiosApi';
+import './App.css';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
+const CreateWork = lazy(() => import('./Containers/CreateWork/CreateWork'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
 const CreateTemplate = lazy(
   () => import('./Containers/CreateTemplate/CreateTemplate')
@@ -75,6 +76,14 @@ const App = () => {
           element={
             <Suspense fallback={<></>}>
               <Work />
+            </Suspense>
+          }
+        />
+        <Route
+          path="create-work/:templateId"
+          element={
+            <Suspense fallback={<></>}>
+              <CreateWork />
             </Suspense>
           }
         />

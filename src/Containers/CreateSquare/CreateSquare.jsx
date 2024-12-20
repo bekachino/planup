@@ -40,7 +40,12 @@ const CreateSquare = ({ isEdit }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isEdit)
+    if (
+      isEdit &&
+      !locationsLoading &&
+      !serviceEngineersLoading &&
+      !sectionChiefsLoading
+    )
       dispatch(getSquare(squareId)).then((res) => {
         const foundLocation = locations.filter(
           (location) => location?.id === (res.payload.location?.[0] || null)
@@ -72,7 +77,12 @@ const CreateSquare = ({ isEdit }) => {
         });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, squareId, locations]);
+  }, [
+    dispatch,
+    locationsLoading,
+    serviceEngineersLoading,
+    sectionChiefsLoading,
+  ]);
 
   const onChange = (e) => {
     const { name, value } = e.target;

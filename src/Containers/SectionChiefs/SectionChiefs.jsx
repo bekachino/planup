@@ -21,15 +21,13 @@ const SectionChiefs = () => {
 
   useEffect(() => {
     if (!!sectionChiefsListRef?.current) {
-      setTimeout(() => {
-        setUsersListHeight(
-          window.innerHeight -
-            sectionChiefsListRef.current?.getBoundingClientRect().top -
-            20
-        );
-      }, 200);
+      setUsersListHeight(
+        window.innerHeight -
+        sectionChiefsListRef.current?.getBoundingClientRect().top -
+        20
+      );
     }
-  }, []);
+  }, [sectionChiefs]);
 
   return (
     <div className="users">

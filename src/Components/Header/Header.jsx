@@ -55,7 +55,7 @@ const Header = () => {
       return;
     }
     toggleCreateWorkModal(false);
-    navigate(`/create-template/${createWorkTemplate?.id}`);
+    navigate(`/create-work/${createWorkTemplate?.id}`);
   };
 
   return (

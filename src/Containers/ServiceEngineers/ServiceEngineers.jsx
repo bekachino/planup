@@ -21,15 +21,13 @@ const ServiceEngineers = () => {
 
   useEffect(() => {
     if (!!serviceEngineersListRef?.current) {
-      setTimeout(() => {
-        setUsersListHeight(
-          window.innerHeight -
-            serviceEngineersListRef.current?.getBoundingClientRect().top -
-            20
-        );
-      }, 200);
+      setUsersListHeight(
+        window.innerHeight -
+        serviceEngineersListRef.current?.getBoundingClientRect().top -
+        20
+      );
     }
-  }, []);
+  }, [serviceEngineers]);
 
   return (
     <div className="users">
