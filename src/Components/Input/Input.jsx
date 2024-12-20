@@ -4,6 +4,7 @@ import { formatPhoneNumber } from '../../utils';
 
 const Input = ({
   type = 'text',
+  key,
   className,
   label,
   values,
@@ -16,7 +17,7 @@ const Input = ({
   ...rest
 }) => {
   return (
-    <div className="input-container" style={style}>
+    <div className="input-container" style={style} key={key}>
       {!!label && (
         <label className="input-label" htmlFor={`${label}-input`}>
           {label}

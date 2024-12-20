@@ -130,3 +130,14 @@ export const REQUIRED_WORKS_LIST_FIELDS = [
   'Дата создания',
   'Дата закрытия',
 ];
+
+export const DATA_TYPES = {
+  text: 'text',
+  int: 'number',
+  datetime: 'datetime',
+  file: 'file',
+  url: 'text',
+  list: 'list',
+  deal_type: 'deal_type',
+  crm_contact: 'crm_contact',
+};

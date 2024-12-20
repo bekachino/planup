@@ -4,9 +4,9 @@ import { ReactComponent as AddIcon } from '../../assets/add-white.svg';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getWorkFields, getWorks } from '../../features/works/worksThunk';
-import moment from 'moment';
 import { DATE_FIELDS, STATUS_ICONS, WORK_STATUSES } from '../../constants';
 import ManipulateWorksFields from '../../Components/ManipulateWorksFields/ManipulateWorksFields';
+import moment from 'moment';
 import './home.css';
 
 const Home = () => {

@@ -18,6 +18,7 @@ import Autocomplete from '../Autocomplete/Autocomplete';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../Button/Button';
 import { addAlert } from '../../features/data/dataSlice';
+import { getTemplateTypes } from '../../features/statuses/filtersDataThunk';
 import './header.css';
 
 const Header = () => {
@@ -26,12 +27,16 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const [showBurgerTooltip, setShowBurgerTooltip] = useState(false);
   const [createWorkModalOpen, setCreateWorkModalOpen] = useState(false);
-  const { resolutionTypes } = useAppSelector((state) => state.filtersDataState);
+  const { templateTypes } = useAppSelector((state) => state.filtersDataState);
   const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
 
   useEffect(() => {
     document.addEventListener('mousedown', () => setShowBurgerTooltip(false));
   }, []);
+
+  useEffect(() => {
+    dispatch(getTemplateTypes());
+  }, [dispatch]);
 
   const toggleCreateWorkModal = (value) => {
     if (!value) setCreateWorkTemplate(null);
@@ -148,7 +153,7 @@ const Header = () => {
             placeholder="Выберите шаблон"
             name="createWorkTemplate"
             value={createWorkTemplate?.name}
-            options={resolutionTypes}
+            options={templateTypes}
             onChange={handleWorkTemplateChange}
             required
           />

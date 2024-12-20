@@ -3,7 +3,7 @@ import Button from '../Button/Button';
 import { ReactComponent as SheetList } from '../../assets/sheetList.svg';
 import './fileUpload.css';
 
-const FileUpload = ({ name, value, onChange, label, ...rest }) => {
+const FileUpload = ({ key, name, value, onChange, label, ...rest }) => {
   const inputRef = useRef(null);
   const [progress, setProgress] = useState(0);
 
@@ -59,7 +59,7 @@ const FileUpload = ({ name, value, onChange, label, ...rest }) => {
   };
 
   return (
-    <div className="file-upload">
+    <div className="file-upload" key={key}>
       <input
         ref={inputRef}
         type="file"

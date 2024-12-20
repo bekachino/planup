@@ -1,0 +1,54 @@
+.create-work {
+  padding: 27px 55px;
+}
+
+.create-work-inner {
+  padding: 48px 100px;
+  background-color: var(--white);
+  border-radius: 12px;
+}
+
+.create-work-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.create-work-header h2 {
+  font-size: 38px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.create-work-body {
+  margin-top: 20px;
+}
+
+.create-work-form-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+  gap: 17px;
+}
+
+.create-work-form-fields .file-uploader-wrapper {
+  padding: 10px;
+}
+
+.create-work-form-fields .file-uploader-wrapper .file-upload-value {
+  font-size: 18px;
+}
+
+.create-work-form-fields .file-uploader-wrapper button {
+  font-size: 18px;
+  padding: 10px 8px;
+}
+
+.create-work-form-actions {
+  margin-top: 40px;
+}
+
+.create-work-form-actions button {
+  font-size: 20px;
+  padding: 20px;
+  width: 100%;
+}

@@ -10,6 +10,7 @@ import Button from '../Button/Button';
 import './datetimePicker.css';
 
 const DatetimePicker = ({
+  key,
   id,
   name,
   value,
@@ -24,7 +25,7 @@ const DatetimePicker = ({
   const [currentDate, setCurrentDate] = useState(moment());
   const [showCalendar, setShowCalendar] = useState(false);
   const calendar = [];
-
+  
   const startDay = currentDate.clone().startOf('month').startOf('week');
   const endDay = currentDate.clone().endOf('month').endOf('week');
   const day = startDay.clone();
@@ -64,7 +65,6 @@ const DatetimePicker = ({
         value: newValue,
       },
     });
-    setShowCalendar(false);
     setTimeout(() =>
       document.querySelector('.date-time-clock .date-time-clock-hour').focus()
     );
@@ -89,7 +89,6 @@ const DatetimePicker = ({
         value: newValue,
       },
     });
-    setShowCalendar(false);
     setTimeout(() =>
       document.querySelector('.date-time-clock .date-time-clock-minute').focus()
     );
@@ -210,7 +209,7 @@ const DatetimePicker = ({
   );
 
   return (
-    <div className={`date-time-picker ${id}`} ref={datePickerRef}>
+    <div className={`date-time-picker ${id}`} ref={datePickerRef} key={key}>
       <Input
         className="date-time-picker-input"
         value={value}

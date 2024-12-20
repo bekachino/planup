@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
 import { useAppDispatch, useAppSelector } from './app/hooks';
@@ -46,7 +46,6 @@ moment.locale('ru');
 const App = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.userState);
-  const [access, setAccess] = useState('');
 
   useEffect(() => {
     const auth = async () => {
@@ -58,7 +57,7 @@ const App = () => {
       dispatch(
         setUser({
           name: 'Админ',
-          role: 'admin',
+          role: 'user',
           token: res?.access,
         })
       );

@@ -35,6 +35,7 @@
   min-width: 340px;
   overflow: hidden;
   user-select: none;
+  z-index: 999;
 }
 
 .date-time-calendar-header {

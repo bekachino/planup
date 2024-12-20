@@ -3,6 +3,7 @@ import Input from '../Input/Input';
 import './autocomplete.css';
 
 const Autocomplete = ({
+  key,
   name = '',
   value,
   label,
@@ -72,7 +73,8 @@ const Autocomplete = ({
         (
           option?.name?.toLowerCase() ||
           option?.value?.toLowerCase() ||
-          option?.label?.toLowerCase() || ''
+          option?.label?.toLowerCase() ||
+          ''
         ).includes(inputValue?.toLowerCase())
       ),
     [inputValue, value, options, multiple]
@@ -136,6 +138,7 @@ const Autocomplete = ({
 
   return (
     <div
+      key={key}
       className={`select-wrapper ${multiple && 'select-wrapper-multiple'} ${
         !!(value || '').length && 'select-wrapper-multiple-valid'
       } ${name}`}
