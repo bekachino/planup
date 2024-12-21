@@ -6,8 +6,8 @@ import { nanoid } from 'nanoid';
 import Button from '../Button/Button';
 import { addAlert } from '../../features/data/dataSlice';
 import { setShownFields } from '../../features/works/worksSlice';
-import './manipulateWorksFields.css';
 import { REQUIRED_WORKS_LIST_FIELDS } from '../../constants';
+import './manipulateWorksFields.css';
 
 const ManipulateWorksFields = ({ open, toggleModal }) => {
   const dispatch = useAppDispatch();
@@ -21,7 +21,6 @@ const ManipulateWorksFields = ({ open, toggleModal }) => {
   }, [shownFields]);
 
   const handleFieldChange = (name, value) => {
-    if (REQUIRED_WORKS_LIST_FIELDS.includes(name)) return;
     if (value) {
       setLocalShownFields([...localShownFields, name]);
     } else
@@ -63,6 +62,7 @@ const ManipulateWorksFields = ({ open, toggleModal }) => {
               id={nanoid()}
               checked={localShownFields.includes(field)}
               label={field}
+              disabled={REQUIRED_WORKS_LIST_FIELDS.includes(field)}
               onChange={(e) => handleFieldChange(field, e.target.checked)}
             />
           ))}
