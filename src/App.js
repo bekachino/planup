@@ -48,21 +48,23 @@ const App = () => {
   const { user } = useAppSelector((state) => state.userState);
 
   useEffect(() => {
-    const auth = async () => {
-      const req = await axiosApi.post('accounts/token/', {
-        username: 'admin',
-        password: 'admin',
-      });
-      const res = await req?.data;
-      dispatch(
-        setUser({
-          name: 'Админ',
-          role: 'user',
-          token: res?.access,
-        })
-      );
-    };
-    void auth();
+    try {
+      const auth = async () => {
+        const req = await axiosApi.post('accounts/token/', {
+          username: 'admin',
+          password: 'admin',
+        });
+        const res = await req?.data;
+        dispatch(
+          setUser({
+            name: 'Админ',
+            role: 'user',
+            token: res?.access,
+          })
+        );
+      };
+      void auth();
+    } catch {}
   }, [dispatch]);
 
   return (

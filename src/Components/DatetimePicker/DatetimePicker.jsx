@@ -113,7 +113,7 @@ const DatetimePicker = ({
     return () => {
       document.body.removeEventListener('mousedown', handleMouseDown);
     };
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const datePickerPositionTop =
