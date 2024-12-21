@@ -86,6 +86,7 @@ const WorksSlice = createSlice({
           },
           {
             name: 'Шаблон',
+            id: res.works[0]?.template.id || null,
             field_value: res.works[0]?.template.name || null,
           },
           {

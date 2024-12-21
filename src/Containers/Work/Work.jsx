@@ -2,11 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ReactComponent as ArrowRightWhiteIcon } from '../../assets/arrow-pointer-right.svg';
 import { ReactComponent as MenuBurgerIcon } from '../../assets/burger-black.svg';
 import { ReactComponent as RemoveWhiteIcon } from '../../assets/remove-icon-white.svg';
+import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
+import { ReactComponent as EditDarkIcon } from '../../assets/edit-dark.svg';
 import { getWork } from '../../features/works/worksThunk';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import './work.css';
 import moment from 'moment';
+import './work.css';
 
 const Work = () => {
   const params = useParams();
@@ -61,16 +63,31 @@ const Work = () => {
           <ArrowRightWhiteIcon />
         </button>
         <h2>Наряд</h2>
-        {!!workFields.find(
-          (workField) => workField.field_value === 'Техпод'
-        ) && (
+        <div className="work-header-actions">
           <button
-            className="work-header-btn"
-            onClick={() => toggleTooltip(!tooltipOpen)}
+            className="work-header-btn work-header-edit-btn"
+            onClick={() =>
+              navigate(
+                `/edit-work/${workFields?.find((workField) => workField.name === 'Шаблон')?.id}`
+              )
+            }
           >
-            {tooltipOpen ? <RemoveWhiteIcon /> : <MenuBurgerIcon />}
+            <EditDarkIcon />
           </button>
-        )}
+          <button className="work-header-btn work-header-delete-btn">
+            <DeleteIcon />
+          </button>
+          {!!workFields.find(
+            (workField) => workField.field_value === 'Техпод'
+          ) && (
+            <button
+              className="work-header-btn"
+              onClick={() => toggleTooltip(!tooltipOpen)}
+            >
+              {tooltipOpen ? <RemoveWhiteIcon /> : <MenuBurgerIcon />}
+            </button>
+          )}
+        </div>
         {tooltipOpen && (
           <div className="work-header-tooltip">
             <input

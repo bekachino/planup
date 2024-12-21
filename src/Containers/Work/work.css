@@ -27,13 +27,25 @@
   cursor: pointer;
 }
 
-.work-header h2 + .work-header-btn {
+.work-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
   margin-left: auto;
+}
+
+.work-header-delete-btn {
+  margin-right: 10px;
 }
 
 .work-header-btn svg {
   width: 30px;
   height: 30px;
+}
+
+.work-header-edit-btn svg,
+.work-header-delete-btn svg {
+  max-height: 22px;
 }
 
 .work-header-btn svg path {
