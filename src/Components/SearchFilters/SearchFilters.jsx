@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   getResolutionTypes,
+  getSquareTypes,
   getStatusTypes,
   getTemplateTypes,
 } from '../../features/statuses/filtersDataThunk';
@@ -36,6 +37,7 @@ const SearchFilters = ({ ...rest }) => {
     statusTypes: [],
     squareTypes: [],
   });
+  
   const filtersValues = useCallback(() => {
     return [
       ...(state['executerTypes'] || []),
@@ -53,7 +55,8 @@ const SearchFilters = ({ ...rest }) => {
     dispatch(getTemplateTypes());
     dispatch(getResolutionTypes());
     dispatch(getStatusTypes());
-  }, []);
+    dispatch(getSquareTypes());
+  }, [dispatch]);
 
   useEffect(() => {
     const handleMouseDown = (e) => {
@@ -111,7 +114,7 @@ const SearchFilters = ({ ...rest }) => {
       setShowCategoriesOptions(false);
       setSearchCategory(null);
     }
-  }, [searchWord]);
+  }, [searchWord, filtersData]);
 
   const onChange = (e) => {
     const { name, value } = e.target;

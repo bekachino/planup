@@ -4,6 +4,7 @@ import {
   getExecuterTypes,
   getResolutionTypes,
   getSquares,
+  getSquareTypes,
   getStages,
   getStatusTypes,
   getTemplateFields,
@@ -139,6 +140,21 @@ const filtersDataSlice = createSlice({
     });
     builder.addCase(getSquares.rejected, (state) => {
       state.squaresLoading = false;
+    });
+
+    builder.addCase(getSquareTypes.pending, (state) => {
+      state.squareTypessLoading = true;
+    });
+    builder.addCase(getSquareTypes.fulfilled, (state, { payload: res }) => {
+      state.squareTypessLoading = false;
+      state.squareTypes = (res || []).map((square) => ({
+        ...square,
+        category: 'squareTypes',
+        name: square?.squares,
+      }));
+    });
+    builder.addCase(getSquareTypes.rejected, (state) => {
+      state.squareTypessLoading = false;
     });
   },
 });
