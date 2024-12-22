@@ -9,6 +9,7 @@ import {
   getStatusTypes,
   getTemplateFields,
   getTemplateTypes,
+  getUserTypes,
 } from './filtersDataThunk';
 
 const initialState = {
@@ -154,6 +155,21 @@ const filtersDataSlice = createSlice({
       }));
     });
     builder.addCase(getSquareTypes.rejected, (state) => {
+      state.squareTypessLoading = false;
+    });
+
+    builder.addCase(getUserTypes.pending, (state) => {
+      state.squareTypessLoading = true;
+    });
+    builder.addCase(getUserTypes.fulfilled, (state, { payload: res }) => {
+      state.squareTypessLoading = false;
+      state.userTypes = (res || []).map((user) => ({
+        ...user,
+        category: 'userTypes',
+        name: user?.full_name,
+      }));
+    });
+    builder.addCase(getUserTypes.rejected, (state) => {
       state.squareTypessLoading = false;
     });
   },

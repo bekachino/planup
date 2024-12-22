@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosApi from '../../axiosApi';
 import { addAlert } from '../data/dataSlice';
+import { ERROR_MESSAGES } from '../../constants';
 
 export const getExecuterTypes = createAsyncThunk(
   'user/getExecuterTypes',
@@ -160,6 +161,27 @@ export const getSquareTypes = createAsyncThunk(
         })
       );
       return rejectWithValue('Ошибка при получении квадратов');
+    }
+  }
+);
+
+export const getUserTypes = createAsyncThunk(
+  'data/getUserTypes',
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/accounts/users/`);
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
     }
   }
 );

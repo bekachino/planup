@@ -5,6 +5,7 @@ import {
   getSquareTypes,
   getStatusTypes,
   getTemplateTypes,
+  getUserTypes,
 } from '../../features/statuses/filtersDataThunk';
 import { FILTER_CATEGORIES } from '../../constants';
 import Button from '../Button/Button';
@@ -17,30 +18,32 @@ const SearchFilters = ({ ...rest }) => {
   const dispatch = useAppDispatch();
   const filtersData = useAppSelector((state) => state.filtersDataState);
   const {
-    executerTypesLoading,
     statusTypesLoading,
     resolutionTypesLoading,
     templateTypesLoading,
     squareTypesLoading,
   } = useAppSelector((state) => state.filtersDataState);
+  const { userTypes, userTypesLoading } = useAppSelector(
+    (state) => state.dataState
+  );
   const [
     searchFiltersCategoriesOptionPosition,
     setSearchFiltersCategoriesOptionPosition,
   ] = useState(6);
   const [showCategoriesOptions, setShowCategoriesOptions] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState('executerTypes');
+  const [currentCategory, setCurrentCategory] = useState('userTypes');
   const [state, setState] = useState({
-    executerTypes: [],
+    userTypes: [],
     resolutionTypes: [],
     templateTypes: [],
     statusTypes: [],
     squareTypes: [],
   });
-  
+
   const filtersValues = useCallback(() => {
     return [
-      ...(state['executerTypes'] || []),
+      ...(state['userTypes'] || []),
       ...(state['resolutionTypes'] || []),
       ...(state['templateTypes'] || []),
       ...(state['statusTypes'] || []),
@@ -51,11 +54,11 @@ const SearchFilters = ({ ...rest }) => {
   const [searchCategory, setSearchCategory] = useState(null);
 
   useEffect(() => {
-    //dispatch(getExecuterTypes());
     dispatch(getTemplateTypes());
     dispatch(getResolutionTypes());
     dispatch(getStatusTypes());
     dispatch(getSquareTypes());
+    dispatch(getUserTypes());
   }, [dispatch]);
 
   useEffect(() => {
@@ -84,7 +87,7 @@ const SearchFilters = ({ ...rest }) => {
   useEffect(() => {
     if (searchWord) {
       const foundCategoryOption = [
-        ...(filtersData['executerTypes'] || []),
+        ...(filtersData['userTypes'] || []),
         ...(filtersData['resolutionTypes'] || []),
         ...(filtersData['templateTypes'] || []),
         ...(filtersData['statusTypes'] || []),
@@ -95,7 +98,7 @@ const SearchFilters = ({ ...rest }) => {
 
       if (!!foundCategoryOption) {
         setSearchFiltersCategoriesOptionPosition(
-          () => foundCategoryOption.index * (100 / 7) - 4
+          () => foundCategoryOption.index * (100 / 8) - 4
         );
         setCurrentCategory(foundCategoryOption.category);
         setShowCategoriesOptions(true);
@@ -125,6 +128,8 @@ const SearchFilters = ({ ...rest }) => {
         'finished_end_date',
         'start_date',
         'end_date',
+        'desired_start_date',
+        'desired_end_date',
       ].includes(name)
     ) {
       setState((prevState) => ({
@@ -196,11 +201,35 @@ const SearchFilters = ({ ...rest }) => {
     </div>
   );
 
+  const desiredDateOption = () => (
+    <div className="search-filters-categories-options-inner search-filters-date-period">
+      <DatetimePicker
+        name="desired_start_date"
+        placeholder="От"
+        disableLabel
+        value={!!state ? state?.desired_start_date : null}
+        onChange={onChange}
+        noTime
+        id={nanoid()}
+      />
+      -
+      <DatetimePicker
+        name="desired_end_date"
+        placeholder="До"
+        disableLabel
+        value={!!state ? state?.desired_end_date : null}
+        onChange={onChange}
+        noTime
+        id={nanoid()}
+      />
+    </div>
+  );
+
   const searchFiltersCategoryOptions = () => (
     <div className="search-filters-categories-options-inner">
       <div
         className={`search-filters-category-options-inner-options ${
-          (currentCategory === 'executerTypes' && executerTypesLoading) ||
+          (currentCategory === 'userTypes' && userTypesLoading) ||
           (currentCategory === 'resolutionTypes' && resolutionTypesLoading) ||
           (currentCategory === 'templateTypes' && templateTypesLoading) ||
           (currentCategory === 'statusTypes' && statusTypesLoading) ||
@@ -307,13 +336,13 @@ const SearchFilters = ({ ...rest }) => {
                   onMouseEnter={(_) => {
                     setCurrentCategory(category.name);
                     setSearchFiltersCategoriesOptionPosition(
-                      () => i * (100 / 7) - 4
+                      () => i * (100 / 8) - 4
                     );
                     setShowCategoriesOptions(true);
                   }}
                   onFocus={() => {
                     setSearchFiltersCategoriesOptionPosition(
-                      () => i * (100 / 7) - 4
+                      () => i * (100 / 8) - 4
                     );
                     setCurrentCategory(category.name);
                   }}
@@ -330,11 +359,13 @@ const SearchFilters = ({ ...rest }) => {
                 }}
                 onMouseEnter={() => setShowCategoriesOptions(true)}
               >
-                {currentCategory === 'start_date'
+                {currentCategory === 'finished'
                   ? finishedDatePeriodOption()
-                  : currentCategory === 'end_date'
+                  : currentCategory === 'created_date'
                     ? datePeriodOption()
-                    : searchFiltersCategoryOptions()}
+                    : currentCategory === 'desired_date'
+                      ? desiredDateOption()
+                      : searchFiltersCategoryOptions()}
               </div>
             </div>
             <div className="search-filter-actions">

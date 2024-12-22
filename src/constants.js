@@ -17,7 +17,7 @@ export const ERROR_MESSAGES = {
 
 export const FILTER_CATEGORIES = [
   {
-    name: 'executerTypes',
+    name: 'userTypes',
     value: 'Исполнитель',
   },
   {
@@ -37,12 +37,16 @@ export const FILTER_CATEGORIES = [
     value: 'Квадрат',
   },
   {
-    name: 'start_date',
+    name: 'finished',
     value: 'Завершенные',
   },
   {
-    name: 'end_date',
-    value: 'По дате',
+    name: 'created_date',
+    value: 'По дате создания',
+  },
+  {
+    name: 'desired_date',
+    value: 'По желаемой дате приезда',
   },
 ];
 
