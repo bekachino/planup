@@ -5,9 +5,11 @@ import { ERROR_MESSAGES } from '../../constants';
 
 export const getWorks = createAsyncThunk(
   'data/getWorks',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (current_page, { dispatch, rejectWithValue }) => {
     try {
-      const req = await axiosApi(`/v2/order-list/`);
+      const req = await axiosApi(
+        `/v2/order-list/?page=${current_page || 1}`
+      );
       return await req.data;
     } catch (e) {
       dispatch(

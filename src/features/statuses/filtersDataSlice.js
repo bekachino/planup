@@ -31,6 +31,7 @@ const initialState = {
   stagesLoading: false,
   categoriesLoading: false,
   squaresLoading: false,
+  userTypesLoading: false,
 };
 
 const filtersDataSlice = createSlice({
@@ -159,10 +160,10 @@ const filtersDataSlice = createSlice({
     });
 
     builder.addCase(getUserTypes.pending, (state) => {
-      state.squareTypessLoading = true;
+      state.userTypesLoading = true;
     });
     builder.addCase(getUserTypes.fulfilled, (state, { payload: res }) => {
-      state.squareTypessLoading = false;
+      state.userTypesLoading = false;
       state.userTypes = (res || []).map((user) => ({
         ...user,
         category: 'userTypes',
@@ -170,7 +171,7 @@ const filtersDataSlice = createSlice({
       }));
     });
     builder.addCase(getUserTypes.rejected, (state) => {
-      state.squareTypessLoading = false;
+      state.userTypesLoading = false;
     });
   },
 });

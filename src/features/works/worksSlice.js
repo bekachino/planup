@@ -3,6 +3,7 @@ import { getWork, getWorkFields, getWorks } from './worksThunk';
 
 const initialState = {
   works: [],
+  total_pages: 1,
   workFields: [],
   workChildTemplates: [],
   availFields: [],
@@ -31,12 +32,14 @@ const WorksSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getWorks.pending, (state) => {
       state.worksLoading = true;
+      state.total_pages = 1;
       state.works = [];
     });
     builder.addCase(getWorks.fulfilled, (state, { payload: res }) => {
       state.worksLoading = false;
+      state.total_pages = res?.total_pages || 1;
       state.works =
-        (res || []).map((work) => [
+        (res?.results || []).map((work) => [
           {
             id: work.id || null,
             name: 'Номер наряда' || null,

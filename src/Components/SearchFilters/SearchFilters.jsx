@@ -22,10 +22,8 @@ const SearchFilters = ({ ...rest }) => {
     resolutionTypesLoading,
     templateTypesLoading,
     squareTypesLoading,
+    userTypesLoading,
   } = useAppSelector((state) => state.filtersDataState);
-  const { userTypes, userTypesLoading } = useAppSelector(
-    (state) => state.dataState
-  );
   const [
     searchFiltersCategoriesOptionPosition,
     setSearchFiltersCategoriesOptionPosition,

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../Components/Button/Button';
 import { ReactComponent as AddIcon } from '../../assets/add-white.svg';
+import { ReactComponent as ArrowLeftIcon } from '../../assets/arrow-left.svg';
+import { ReactComponent as ArrowRightIcon } from '../../assets/arrow-right.svg';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getWorkFields, getWorks } from '../../features/works/worksThunk';
@@ -12,9 +14,10 @@ import './home.css';
 const Home = () => {
   const dispatch = useAppDispatch();
   const dutiesTableRef = useRef(null);
-  const { works, worksLoading, shownFields, availFieldsLoading } =
+  const { works, worksLoading, shownFields, availFieldsLoading, total_pages } =
     useAppSelector((state) => state.worksState);
   const [dutiesTableHeight, setDutiesTableHeight] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [
     worksFieldsManipulationModalOpen,
@@ -22,7 +25,10 @@ const Home = () => {
   ] = useState(false);
 
   useEffect(() => {
-    dispatch(getWorks());
+    dispatch(getWorks(currentPage));
+  }, [dispatch, currentPage]);
+
+  useEffect(() => {
     dispatch(getWorkFields());
   }, [dispatch]);
 
@@ -31,7 +37,7 @@ const Home = () => {
       setDutiesTableHeight(
         window.innerHeight -
           dutiesTableRef.current.getBoundingClientRect().top -
-          20
+          65
       );
     }
   }, [works]);
@@ -40,13 +46,15 @@ const Home = () => {
 
   const getTableCellValue = (workField) => {
     if (!!workField?.field_value) {
-      if (['Номер наряда'].includes(workField.name)) {
+      if (['Номер наряда', 'Битрикс ID'].includes(workField.name)) {
         return (
           <Link
             to={
               workField.name === 'Номер наряда'
                 ? `/work/${workField?.id}`
-                : '/home'
+                : workField.name === 'Битрикс ID'
+                  ? `https://bitrix24.snt.kg/crm/deal/details/${workField.field_value}/`
+                  : '/home'
             }
           >
             {workField.field_value || '-'}
@@ -61,6 +69,84 @@ const Home = () => {
       }
     } else return '-';
   };
+
+  const Pagination = () => (
+    <div className="works-pagination">
+      <button
+        className="works-pagination-btn"
+        disabled={currentPage <= 1}
+        onClick={() => {
+          if (currentPage > 1) setCurrentPage((prevState) => prevState - 1);
+        }}
+      >
+        <ArrowLeftIcon />
+      </button>
+      {(() => {
+        const pagesList = Array.from(
+          { length: total_pages || 1 },
+          (_, i) => i + 1
+        );
+
+        if (pagesList.length < 10) {
+          return pagesList.map((pageNum) => (
+            <button
+              key={pageNum}
+              className={`works-pagination-page-num ${currentPage === pageNum ? 'active' : ''}`}
+              onClick={() => setCurrentPage(pageNum)}
+            >
+              {pageNum}
+            </button>
+          ));
+        }
+        return (
+          <>
+            <button
+              className={`works-pagination-page-num ${currentPage === 1 ? 'active' : ''}`}
+              onClick={() => setCurrentPage(1)}
+            >
+              1
+            </button>
+            {currentPage > 3 && '...'}
+            {pagesList.slice(1, -1).map((pageNum) =>
+              pageNum === currentPage ||
+              pageNum === currentPage - 1 ||
+              pageNum === currentPage + 1 ||
+              (currentPage === 1 && pageNum < 4) ||
+              (currentPage === pagesList.slice(-1)[0] &&
+                pageNum > pagesList.slice(-4)[0]) ? (
+                <button
+                  key={pageNum}
+                  className={`works-pagination-page-num ${currentPage === pageNum ? 'active' : ''}`}
+                  onClick={() => setCurrentPage(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ) : (
+                <></>
+              )
+            )}
+            {currentPage < pagesList.slice(-3)[0] && '...'}
+            <button
+              className={`works-pagination-page-num ${currentPage === pagesList.slice(-1)[0] ? 'active' : ''}`}
+              onClick={() => setCurrentPage(pagesList.slice(-1)[0])}
+            >
+              {pagesList.slice(-1)[0]}
+            </button>
+          </>
+        );
+      })()}
+      <button
+        className="works-pagination-btn"
+        disabled={currentPage >= total_pages}
+        onClick={() => {
+          if (currentPage < total_pages)
+            setCurrentPage((prevState) => prevState + 1);
+        }}
+      >
+        <ArrowRightIcon />
+      </button>
+    </div>
+  );
 
   return (
     <div className="home">
@@ -149,6 +235,7 @@ const Home = () => {
             </tbody>
           </table>
         </div>
+        <Pagination />
       </div>
     </div>
   );
