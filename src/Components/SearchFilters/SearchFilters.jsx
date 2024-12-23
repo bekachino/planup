@@ -187,6 +187,16 @@ const SearchFilters = ({ ...rest }) => {
     dispatch(setFiltersData(filtersData));
   };
 
+  const onReset = async () => {
+    setState({
+      userTypes: [],
+      resolutionTypes: [],
+      templateTypes: [],
+      statusTypes: [],
+      squareTypes: [],
+    });
+  };
+
   const finishedDatePeriodOption = () => (
     <div className="search-filters-categories-options-inner search-filters-date-period">
       <DatetimePicker
@@ -404,7 +414,9 @@ const SearchFilters = ({ ...rest }) => {
             </div>
             <div className="search-filter-actions">
               <Button onClick={onSubmit}>Фильтровать</Button>
-              <Button variant="outlined">Сбросить</Button>
+              <Button variant="outlined" onClick={onReset}>
+                Сбросить
+              </Button>
             </div>
           </div>
         </div>

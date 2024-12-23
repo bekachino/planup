@@ -20,6 +20,7 @@ import Button from '../Button/Button';
 import { addAlert } from '../../features/data/dataSlice';
 import { getTemplateTypes } from '../../features/statuses/filtersDataThunk';
 import './header.css';
+import { logout } from '../../features/user/usersSlice';
 
 const Header = () => {
   const location = useLocation();
@@ -125,7 +126,10 @@ const Header = () => {
               <UserIcon />
               Привет, Admin!
             </button>
-            <button className="nav-burger-tooltip-btn">
+            <button
+              className="nav-burger-tooltip-btn"
+              onClick={() => dispatch(logout())}
+            >
               <LogoutIcon />
               Выйти
             </button>

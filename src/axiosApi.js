@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_URL } from './constants';
-import { signIn } from './features/user/userThunk';
+import { logout } from './features/user/usersSlice';
 
 export const addInterceptors = (store) => {
   axiosApi.interceptors.request.use((config) => {
@@ -24,14 +24,7 @@ export const addInterceptors = (store) => {
       if (error.response) {
         if (error.response.status === 401) {
           const dispatch = store.dispatch;
-          const username = prompt('Логин');
-          const password = prompt('Пароль');
-          dispatch(
-            signIn({
-              username,
-              password,
-            })
-          );
+          dispatch(logout());
         }
       }
       return Promise.reject(error);

@@ -8,6 +8,7 @@ import './adminHeader.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { handleSearchValueChange } from '../../features/data/dataSlice';
 import Alerts from '../Alerts/Alerts';
+import { logout } from '../../features/user/usersSlice';
 
 const AdminHeader = () => {
   const location = useLocation();
@@ -53,7 +54,7 @@ const AdminHeader = () => {
                 <UserIcon />
                 Привет, Админ!
               </button>
-              <button>
+              <button onClick={() => dispatch(logout())}>
                 <LogoutIcon />
                 Выйти
               </button>
