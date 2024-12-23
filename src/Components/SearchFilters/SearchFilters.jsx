@@ -12,6 +12,9 @@ import Button from '../Button/Button';
 import DatetimePicker from '../DatetimePicker/DatetimePicker';
 import { nanoid } from 'nanoid';
 import './searchFilters.css';
+import { getWorks } from '../../features/works/worksThunk';
+import moment from 'moment';
+import { setFiltersData } from '../../features/statuses/filtersDataSlice';
 
 const SearchFilters = ({ ...rest }) => {
   const searchFiltersCategoriesRef = useRef(null);
@@ -149,6 +152,39 @@ const SearchFilters = ({ ...rest }) => {
       ...prevState,
       [name]: [...prevState[name], value],
     }));
+  };
+
+  const onSubmit = () => {
+    const created_at = [];
+    const closed_at = [];
+
+    if (state?.start_date)
+      created_at.push(
+        moment(state?.start_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
+      );
+    if (state?.end_date)
+      created_at.push(
+        moment(state?.end_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
+      );
+    if (state?.finished_start_date)
+      closed_at.push(
+        moment(state?.finished_start_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
+      );
+    if (state?.finished_end_date)
+      closed_at.push(
+        moment(state?.finished_end_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
+      );
+
+    const filtersData = {
+      user_id: state.userTypes.map((user) => user.id),
+      status_id: state.statusTypes.map((user) => user.id),
+      resolution_id: state.resolutionTypes.map((user) => user.id),
+      template_id: state.templateTypes.map((user) => user.id),
+      created_at,
+      closed_at,
+    };
+    dispatch(getWorks({ filtersData }));
+    dispatch(setFiltersData(filtersData));
   };
 
   const finishedDatePeriodOption = () => (
@@ -367,7 +403,7 @@ const SearchFilters = ({ ...rest }) => {
               </div>
             </div>
             <div className="search-filter-actions">
-              <Button>Фильтровать</Button>
+              <Button onClick={onSubmit}>Фильтровать</Button>
               <Button variant="outlined">Сбросить</Button>
             </div>
           </div>

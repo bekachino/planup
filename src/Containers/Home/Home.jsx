@@ -16,6 +16,7 @@ const Home = () => {
   const dutiesTableRef = useRef(null);
   const { works, worksLoading, shownFields, availFieldsLoading, total_pages } =
     useAppSelector((state) => state.worksState);
+  const { filtersData } = useAppSelector((state) => state.filtersDataState);
   const [dutiesTableHeight, setDutiesTableHeight] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -25,8 +26,13 @@ const Home = () => {
   ] = useState(false);
 
   useEffect(() => {
-    dispatch(getWorks(currentPage));
-  }, [dispatch, currentPage]);
+    dispatch(
+      getWorks({
+        currentPage,
+        filtersData,
+      })
+    );
+  }, [dispatch, currentPage, filtersData]);
 
   useEffect(() => {
     dispatch(getWorkFields());

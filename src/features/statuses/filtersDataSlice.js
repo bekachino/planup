@@ -13,6 +13,7 @@ import {
 } from './filtersDataThunk';
 
 const initialState = {
+  filtersData: null,
   executerTypes: [],
   statusTypes: [],
   resolutionTypes: [],
@@ -37,7 +38,11 @@ const initialState = {
 const filtersDataSlice = createSlice({
   name: 'filtersData',
   initialState,
-  reducers: {},
+  reducers: {
+    setFiltersData: (state, { payload }) => {
+      state.filtersData = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getExecuterTypes.pending, (state) => {
       state.executerTypesLoading = true;
@@ -177,4 +182,4 @@ const filtersDataSlice = createSlice({
 });
 
 export const filtersDataReducer = filtersDataSlice.reducer;
-//export const {} = filtersDataSlice.actions;
+export const { setFiltersData } = filtersDataSlice.actions;

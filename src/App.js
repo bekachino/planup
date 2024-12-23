@@ -1,13 +1,11 @@
 import moment from 'moment';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Home from './Containers/Home/Home';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
-import { useAppDispatch, useAppSelector } from './app/hooks';
+import { useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
-import { setUser } from './features/user/usersSlice';
-import axiosApi from './axiosApi';
 import './App.css';
 
 const Work = lazy(() => import('./Containers/Work/Work'));
@@ -44,32 +42,11 @@ const CreateServiceEngineer = lazy(
 moment.locale('ru');
 
 const App = () => {
-  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.userState);
-
-  useEffect(() => {
-    try {
-      const auth = async () => {
-        const req = await axiosApi.post('accounts/token/', {
-          username: 'admin',
-          password: 'admin',
-        });
-        const res = await req?.data;
-        dispatch(
-          setUser({
-            name: 'Админ',
-            role: 'user',
-            token: res?.access,
-          })
-        );
-      };
-      void auth();
-    } catch {}
-  }, [dispatch]);
 
   return (
     <div className="App">
-      {user.role === 'admin' ? <AdminHeader /> : <Header />}
+      {user?.role === 'admin' ? <AdminHeader /> : <Header />}
       <Routes>
         <Route path="*" element={<Navigate to="/home" replace />} />
         <Route

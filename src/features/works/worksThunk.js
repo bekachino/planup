@@ -5,10 +5,16 @@ import { ERROR_MESSAGES } from '../../constants';
 
 export const getWorks = createAsyncThunk(
   'data/getWorks',
-  async (current_page, { dispatch, rejectWithValue }) => {
+  async ({ filtersData = {}, currentPage }, { dispatch, rejectWithValue }) => {
     try {
+      const user_id_query = `&user_id=${filtersData?.user_id || []}`;
+      const resolution_id_query = `&resolution_id=${filtersData?.resolution_id || []}`;
+      const template_id_query = `&template_id=${filtersData?.template_id || []}`;
+      const created_at_query = `&created_at=${filtersData?.created_at || []}`;
+      const closed_at_query = `&closed_at=${filtersData?.closed_at || []}`;
+
       const req = await axiosApi(
-        `/v2/order-list/?page=${current_page || 1}`
+        `/v2/order-list/?page=${currentPage || 1}${user_id_query}${resolution_id_query}${template_id_query}${created_at_query}${closed_at_query}`
       );
       return await req.data;
     } catch (e) {

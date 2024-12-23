@@ -166,6 +166,10 @@
   background-image: url('../../assets/filters-calendar.svg');
 }
 
+.search-filters-category:nth-child(8)::before {
+  background-image: url('../../assets/filters-calendar.svg');
+}
+
 .search-filters-category::after {
   content: '';
   position: absolute;
