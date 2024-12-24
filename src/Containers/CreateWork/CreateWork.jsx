@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createWork, getTemplate } from '../../features/data/dataThunk';
+import { getTemplate } from '../../features/data/dataThunk';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
 import Button from '../../Components/Button/Button';
 import { DATA_TYPES } from '../../constants';
@@ -10,20 +10,75 @@ import Input from '../../Components/Input/Input';
 import DatetimePicker from '../../Components/DatetimePicker/DatetimePicker';
 import FileUpload from '../../Components/FileUpload/FileUpload';
 import Autocomplete from '../../Components/Autocomplete/Autocomplete';
+import { createWork, getWork, editWork } from '../../features/works/worksThunk';
+import moment from 'moment';
+import {
+  getResolutionTypes,
+  getStatusTypes,
+} from '../../features/statuses/filtersDataThunk';
 import './createWork.css';
 
 const CreateWork = ({ isEdit }) => {
   const navigate = useNavigate();
-  const { templateId } = useParams();
+  const { templateId, workId } = useParams();
   const dispatch = useDispatch();
-  const { template, getTemplateLoading, createWorkLoading } = useAppSelector(
+  const { template, getTemplateLoading } = useAppSelector(
     (state) => state.dataState
   );
+  const { createWorkLoading, editWorkLoading } = useAppSelector(
+    (state) => state.worksState
+  );
+  const { statusTypesLoading, resolutionTypesLoading } = useAppSelector(
+    (state) => state.filtersDataState
+  );
   const [state, setState] = useState([]);
+  const [work, setWork] = useState(null);
 
   useEffect(() => {
+    const getEditWorkFieldsData = async () => {
+      const resolutionTypes = await dispatch(getResolutionTypes());
+      const statusTypes = await dispatch(getStatusTypes());
+
+      dispatch(getWork(workId)).then(({ payload }) => {
+        setState(
+          [
+            ...payload.works?.[0]?.fields.map((field) => ({
+              ...field,
+              field_value:
+                field?.name === 'Желаемая дата  приезда' && !!field?.field_value
+                  ? moment(new Date(field?.field_value)).format(
+                      'DD.MM.YYYY HH:mm'
+                    )
+                  : field?.field_value,
+              field_id: field?.id,
+            })),
+            {
+              field_id: payload?.status?.id,
+              data_type: 'list',
+              field_value: payload?.status?.name,
+              id: payload?.status?.id,
+              name: 'Статус',
+              values: statusTypes.payload,
+            },
+            {
+              field_id: payload?.resolution?.id,
+              data_type: 'list',
+              field_value: payload?.resolution?.name,
+              id: payload?.resolution?.id,
+              name: 'Резолюция',
+              values: resolutionTypes.payload,
+            },
+          ] || []
+        );
+        setWork(payload);
+      });
+    };
+
     dispatch(getTemplate(templateId));
-  }, [dispatch, templateId]);
+    if (isEdit) {
+      void getEditWorkFieldsData();
+    }
+  }, [dispatch, templateId, workId, isEdit]);
 
   const handleChange = (field_id, field_value) => {
     setState((prevState) => {
@@ -53,22 +108,43 @@ const CreateWork = ({ isEdit }) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const createWorkData = {
-      template_id: template.id,
-      works: state.map((field) => ({
-        ...field,
-        field_value:
-          typeof field.field_value === 'object'
-            ? field.field_value?.name || ''
-            : field.field_value,
-      })),
-    };
+    if (isEdit) {
+      const formData = new FormData();
 
-    dispatch(createWork(createWorkData)).then((res) => {
-      if (res?.meta?.requestStatus === 'fulfilled') {
-        navigate('/home');
-      }
-    });
+      formData.append('id', work?.id || null);
+      formData.append('bitrix_id', work?.bitrix_id || null);
+      formData.append('status', work?.status?.id || null);
+      formData.append('resolution', work?.resolution?.id || null);
+      formData.append('works', JSON.stringify(state));
+
+      dispatch(
+        editWork({
+          formData,
+          id: work?.id || null,
+        })
+      ).then((res) => {
+        if (res?.meta?.requestStatus === 'fulfilled') {
+          navigate('/home');
+        }
+      });
+    } else {
+      const createWorkData = {
+        template_id: template.id,
+        works: state.map((field) => ({
+          ...field,
+          field_value:
+            typeof field.field_value === 'object'
+              ? field.field_value?.name || ''
+              : field.field_value,
+        })),
+      };
+
+      dispatch(createWork(createWorkData)).then((res) => {
+        if (res?.meta?.requestStatus === 'fulfilled') {
+          navigate('/home');
+        }
+      });
+    }
   };
 
   return (
@@ -83,8 +159,12 @@ const CreateWork = ({ isEdit }) => {
         <div className="create-work-body">
           <form className="create-work-form" onSubmit={onSubmit}>
             <div className="create-work-form-fields">
-              {template?.fields
-                .filter((field) => !field.field.name.includes('Отчет') && !field.field.name.includes('Тип'))
+              {(isEdit ? state : template?.fields || [])
+                .filter(
+                  (field) =>
+                    !(field?.field || field).name.includes('Отчет') &&
+                    !(field?.field || field).name.includes('Тип')
+                )
                 .map((field, i) => {
                   if (
                     ['text', 'number', 'url', 'deal_type'].includes(
@@ -95,18 +175,19 @@ const CreateWork = ({ isEdit }) => {
                       <Input
                         key={field.bitrix_field_id}
                         type={DATA_TYPES[field.data_type]}
-                        name={field.field.name}
+                        name={(field?.field || field).name}
                         value={
                           state.find(
                             (stateField) =>
-                              stateField?.field_id === field.field?.id
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
                           )?.field_value || ''
                         }
-                        label={field.field.name}
-                        placeholder={field.field.name}
+                        label={(field?.field || field).name}
+                        placeholder={(field?.field || field).name}
                         onChange={(e) =>
                           handleChange(
-                            field.field.id,
+                            (field?.field || field).id,
                             field.data_type === 'int'
                               ? Number(Number(e.target.value).toFixed())
                               : e.target.value
@@ -119,18 +200,28 @@ const CreateWork = ({ isEdit }) => {
                       <Autocomplete
                         key={field.bitrix_field_id}
                         type={DATA_TYPES[field.data_type]}
-                        name={field.field.name}
+                        name={(field?.field || field).name}
                         value={
                           state.find(
                             (stateField) =>
-                              stateField?.field_id === field.field?.id
-                          )?.field_value?.name || ''
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
+                          )?.field_value?.name ||
+                          state.find(
+                            (stateField) =>
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
+                          )?.field_value ||
+                          ''
                         }
                         options={field?.values || []}
-                        label={field.field.name}
-                        placeholder={field.field.name}
+                        label={(field?.field || field).name}
+                        placeholder={(field?.field || field).name}
                         onChange={(e) =>
-                          handleChange(field.field.id, e.target.value)
+                          handleChange(
+                            (field?.field || field).id,
+                            e.target.value
+                          )
                         }
                       />
                     );
@@ -138,17 +229,21 @@ const CreateWork = ({ isEdit }) => {
                     return (
                       <DatetimePicker
                         key={field.bitrix_field_id}
-                        name={field.field.name}
-                        label={field.field.name}
-                        placeholder={field.field.name}
+                        name={(field?.field || field).name}
+                        label={(field?.field || field).name}
+                        placeholder={(field?.field || field).name}
                         value={
                           state.find(
                             (stateField) =>
-                              stateField?.field_id === field.field?.id
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
                           )?.field_value || ''
                         }
                         onChange={(e) =>
-                          handleChange(field.field.id, e.target.value)
+                          handleChange(
+                            (field?.field || field).id,
+                            e.target.value
+                          )
                         }
                       />
                     );
@@ -156,17 +251,21 @@ const CreateWork = ({ isEdit }) => {
                     return (
                       <FileUpload
                         key={field.bitrix_field_id}
-                        name={field.field.name}
-                        label={field.field.name}
-                        placeholder={field.field.name}
+                        name={(field?.field || field).name}
+                        label={(field?.field || field).name}
+                        placeholder={(field?.field || field).name}
                         value={
                           state.find(
                             (stateField) =>
-                              stateField?.field_id === field.field?.id
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
                           )?.field_value || ''
                         }
                         onChange={(e) =>
-                          handleChange(field.field.id, e.target.value)
+                          handleChange(
+                            (field?.field || field).id,
+                            e.target.value
+                          )
                         }
                       />
                     );
@@ -225,7 +324,13 @@ const CreateWork = ({ isEdit }) => {
             <div className="create-work-form-actions">
               <Button
                 type="submit"
-                loading={getTemplateLoading || createWorkLoading}
+                loading={
+                  createWorkLoading ||
+                  editWorkLoading ||
+                  getTemplateLoading ||
+                  resolutionTypesLoading ||
+                  statusTypesLoading
+                }
               >
                 {isEdit ? 'Сохранить' : 'Создать'}
               </Button>

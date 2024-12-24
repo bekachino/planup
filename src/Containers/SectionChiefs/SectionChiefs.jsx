@@ -35,7 +35,7 @@ const SectionChiefs = () => {
         <h2>Список начальников участка</h2>
         <button
           className="create-user-btn"
-          onClick={() => navigate('/create-section-chief')}
+          onClick={() => navigate('/admin/create-section-chief')}
         >
           Создать начальника участка
         </button>
@@ -71,7 +71,7 @@ const SectionChiefs = () => {
                 </div>
                 <div className="user-info">
                   <Link
-                    to={`/user/${sectionChief?.section_chief?.id || ''}`}
+                    to={`/admin/section-chief/${sectionChief?.section_chief?.id || ''}`}
                     className="user-full-name"
                   >
                     {sectionChief?.section_chief?.full_name || 'ㅤ'}

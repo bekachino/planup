@@ -50,9 +50,12 @@ const CreateSquare = ({ isEdit }) => {
         const foundLocation = locations.filter(
           (location) => location?.id === (res.payload.location?.[0] || null)
         );
-        const foundSi = serviceEngineers.find(
-          (si) => si.id === res.payload.service_engineer[0]
-        );
+        const foundSi = serviceEngineers
+          .filter((si) => res.payload.service_engineer.includes(si.id))
+          .map((si) => ({
+            id: si?.id,
+            name: si?.service_engineer?.full_name,
+          }));
         const foundNu = sectionChiefs.find(
           (si) => si.id === res.payload.section_chief
         );
@@ -64,11 +67,7 @@ const CreateSquare = ({ isEdit }) => {
           ...res.payload,
           location: foundLocation || [],
           region: foundRegion,
-          service_engineer:
-            {
-              id: foundSi?.service_engineer?.id,
-              name: foundSi?.service_engineer?.full_name,
-            } || null,
+          service_engineer: foundSi || [],
           section_chief:
             {
               id: foundNu?.section_chief?.id,
@@ -95,7 +94,6 @@ const CreateSquare = ({ isEdit }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (isEdit) {
-      console.log(state);
       dispatch(
         editSquare({
           ...state,
@@ -104,11 +102,11 @@ const CreateSquare = ({ isEdit }) => {
             (singleLocation) => singleLocation?.id
           ),
           section_chief: state.section_chief?.id || null,
-          service_engineer: [state.service_engineer?.id] || [],
+          service_engineer: state.service_engineer.map((si) => si?.id) || [],
         })
       ).then((res) => {
         if (res?.meta?.requestStatus === 'fulfilled') {
-          navigate('/squares');
+          navigate('/admin/squares');
         }
       });
     } else {
@@ -120,11 +118,11 @@ const CreateSquare = ({ isEdit }) => {
             (singleLocation) => singleLocation?.id
           ),
           section_chief: state.section_chief?.id || null,
-          service_engineer: [state.service_engineer?.id] || [],
+          service_engineer: state.service_engineer.map((si) => si?.id) || [],
         })
       ).then((res) => {
         if (res?.meta?.requestStatus === 'fulfilled') {
-          navigate('/squares');
+          navigate('/admin/squares');
         }
       });
     }
@@ -134,7 +132,7 @@ const CreateSquare = ({ isEdit }) => {
     <div className="create-template">
       <div className="create-template-paper">
         <div className="create-template-paper-header">
-          <button className="page-back" onClick={() => navigate('/squares')}>
+          <button className="page-back" onClick={() => navigate('/admin/squares')}>
             <ArrowPointerRight />
           </button>
           <h2>{isEdit ? 'Редактировать' : 'Создать'} квадрат</h2>
@@ -173,10 +171,11 @@ const CreateSquare = ({ isEdit }) => {
           </div>
           <div className="template-field-row">
             <Autocomplete
+              multiple
               label="Сервис инженер"
               placeholder="Выберите сервис инженера"
               name="service_engineer"
-              value={state?.service_engineer?.name}
+              value={state?.service_engineer || []}
               options={(serviceEngineers || []).map((si) => ({
                 id: si.id,
                 name: si.service_engineer?.full_name,

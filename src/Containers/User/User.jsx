@@ -31,7 +31,7 @@ const User = () => {
     <div className="single-user-page">
       <div className="user-info-body">
         <div className="users-header">
-          <button className="page-back" onClick={() => navigate('/users')}>
+          <button className="page-back" onClick={() => navigate('/admin/home')}>
             <ArrowPointerRight />
           </button>
           <h2>Информация о пользователе</h2>

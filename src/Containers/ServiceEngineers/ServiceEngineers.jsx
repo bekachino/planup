@@ -35,7 +35,7 @@ const ServiceEngineers = () => {
         <h2>Список сервис инженеров</h2>
         <button
           className="create-user-btn"
-          onClick={() => navigate('/create-service-engineer')}
+          onClick={() => navigate('/admin/create-service-engineer')}
         >
           Создать сервис инженера
         </button>
@@ -71,7 +71,7 @@ const ServiceEngineers = () => {
                 </div>
                 <div className="user-info">
                   <Link
-                    to={`/user/${serviceEngineer?.service_engineer?.id || ''}`}
+                    to={`/admin/service-engineer/${serviceEngineer?.service_engineer?.id || ''}`}
                     className="user-full-name"
                   >
                     {serviceEngineer?.service_engineer?.full_name || 'ㅤ'}

@@ -122,7 +122,10 @@ const Header = () => {
               <NewsIcon />
               Новости
             </button>
-            <button className="nav-burger-tooltip-btn">
+            <button
+              className="nav-burger-tooltip-btn"
+              onClick={() => navigate('/admin/home')}
+            >
               <UserIcon />
               Привет, Admin!
             </button>

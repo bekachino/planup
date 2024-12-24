@@ -68,7 +68,7 @@ const Work = () => {
             className="work-header-btn work-header-edit-btn"
             onClick={() =>
               navigate(
-                `/edit-work/${workFields?.find((workField) => workField.name === 'Шаблон')?.id}`
+                `/edit-work/${workFields?.find((workField) => workField.name === 'Номер наряда')?.field_value}/${workFields?.find((workField) => workField.name === 'Шаблон')?.id}`
               )
             }
           >

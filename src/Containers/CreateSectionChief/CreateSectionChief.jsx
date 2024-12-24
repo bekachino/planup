@@ -40,7 +40,7 @@ const CreateSectionChief = () => {
     );
 
     if (createSectionChief.fulfilled.match(createUserReq)) {
-      navigate('/section-chiefs');
+      navigate('/admin/section-chiefs');
       dispatch(
         addAlert({
           type: 'success',
@@ -55,7 +55,7 @@ const CreateSectionChief = () => {
       <div className="create-user-header">
         <button
           className="page-back"
-          onClick={() => navigate('/section-chiefs')}
+          onClick={() => navigate('/admin/section-chiefs')}
         >
           <ArrowPointerRight />
         </button>

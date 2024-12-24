@@ -14,7 +14,7 @@ export const signIn = createAsyncThunk(
         addAlert({
           type: 'error',
           message:
-            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+            ERROR_MESSAGES[400],
         })
       );
       return rejectWithValue(

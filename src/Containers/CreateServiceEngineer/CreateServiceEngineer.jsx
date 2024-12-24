@@ -50,7 +50,7 @@ const CreateServiceEngineer = () => {
     );
 
     if (createServiceEngineer.fulfilled.match(createUserReq)) {
-      navigate('/service-engineers');
+      navigate('/admin/service-engineers');
       dispatch(
         addAlert({
           type: 'success',
@@ -65,7 +65,7 @@ const CreateServiceEngineer = () => {
       <div className="create-user-header">
         <button
           className="page-back"
-          onClick={() => navigate('/service-engineers')}
+          onClick={() => navigate('/admin/service-engineers')}
         >
           <ArrowPointerRight />
         </button>

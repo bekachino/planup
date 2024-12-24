@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import mainLogo from '../../assets/skynet-logo.png';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { signIn } from '../../features/user/userThunk';
+import Alerts from '../../Components/Alerts/Alerts';
 import './signIn.css';
 
 const SignIn = () => {
@@ -27,6 +28,7 @@ const SignIn = () => {
 
   return (
     <div className="form-container sign-in">
+      <Alerts />
       <img src={mainLogo} alt="Skynet" />
       <form onSubmit={onSubmit}>
         <input

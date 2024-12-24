@@ -42,7 +42,7 @@ const CreateUser = () => {
     );
 
     if (createUser.fulfilled.match(createUserReq)) {
-      navigate('/users');
+      navigate('/admin/home');
       dispatch(
         addAlert({
           type: 'success',
@@ -55,7 +55,7 @@ const CreateUser = () => {
   return (
     <div className="create-user">
       <div className="create-user-header">
-        <button className="page-back" onClick={() => navigate('/users')}>
+        <button className="page-back" onClick={() => navigate('/admin/home')}>
           <ArrowPointerRight />
         </button>
         <h2>Создать пользователя</h2>

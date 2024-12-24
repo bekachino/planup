@@ -33,7 +33,7 @@ const Users = () => {
         <h2>Список пользователей</h2>
         <button
           className="create-user-btn"
-          onClick={() => navigate('/create-user')}
+          onClick={() => navigate('/admin/create-user')}
         >
           Создать пользователя
         </button>
@@ -60,7 +60,7 @@ const Users = () => {
                 </div>
                 <div className="user-info">
                   <Link
-                    to={`/user/${user?.id || ''}`}
+                    to={`/admin/user/${user?.id || ''}`}
                     className="user-full-name"
                   >
                     {user?.full_name || 'ㅤ'}

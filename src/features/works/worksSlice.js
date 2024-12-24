@@ -1,5 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getWork, getWorkFields, getWorks } from './worksThunk';
+import {
+  createWork,
+  getWork,
+  getWorkFields,
+  getWorks,
+  editWork,
+} from './worksThunk';
 
 const initialState = {
   works: [],
@@ -19,6 +25,7 @@ const initialState = {
   workLoading: false,
   workFieldsLoading: false,
   availFieldsLoading: false,
+  createWorkLoading: false,
 };
 
 const WorksSlice = createSlice({
@@ -129,6 +136,26 @@ const WorksSlice = createSlice({
     });
     builder.addCase(getWorkFields.rejected, (state) => {
       state.availFieldsLoading = false;
+    });
+    
+    builder.addCase(createWork.pending, (state) => {
+      state.createWorkLoading = true;
+    });
+    builder.addCase(createWork.fulfilled, (state) => {
+      state.createWorkLoading = false;
+    });
+    builder.addCase(createWork.rejected, (state) => {
+      state.createWorkLoading = false;
+    });
+    
+    builder.addCase(editWork.pending, (state) => {
+      state.editWorkLoading = true;
+    });
+    builder.addCase(editWork.fulfilled, (state) => {
+      state.editWorkLoading = false;
+    });
+    builder.addCase(editWork.rejected, (state) => {
+      state.editWorkLoading = false;
     });
   },
 });

@@ -296,7 +296,7 @@ export const editSquare = createAsyncThunk(
   'data/editSquare',
   async (square, { dispatch, rejectWithValue }) => {
     try {
-      await axiosApi.put('/accounts/squares/', square);
+      await axiosApi.put(`/accounts/squares/${square?.id}/`, square);
     } catch (e) {
       dispatch(
         addAlert({
@@ -403,26 +403,6 @@ export const createServiceEngineer = createAsyncThunk(
   async (serviceEngineer, { dispatch, rejectWithValue }) => {
     try {
       await axiosApi.post('/accounts/service_engineer/', serviceEngineer);
-    } catch (e) {
-      dispatch(
-        addAlert({
-          type: 'error',
-          message:
-            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
-        })
-      );
-      return rejectWithValue(
-        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
-      );
-    }
-  }
-);
-
-export const createWork = createAsyncThunk(
-  'data/createWork',
-  async (work, { dispatch, rejectWithValue }) => {
-    try {
-      await axiosApi.post(`/v2/order-create/${work?.template_id}/`, work);
     } catch (e) {
       dispatch(
         addAlert({

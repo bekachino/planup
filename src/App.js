@@ -49,6 +49,25 @@ const App = () => {
   const authRoutes = () => (
     <>
       <Route
+        path="home"
+        element={
+          <Suspense fallback={<></>}>
+            <Home />
+          </Suspense>
+        }
+      />
+      {
+        //user.role === 'admin' &&
+        <Route
+          path="admin/home"
+          element={
+            <Suspense fallback={<></>}>
+              <Users />
+            </Suspense>
+          }
+        />
+      }
+      <Route
         path="work/:workId"
         element={
           <Suspense fallback={<></>}>
@@ -65,10 +84,10 @@ const App = () => {
         }
       />
       <Route
-        path="home"
+        path="edit-work/:workId/:templateId"
         element={
           <Suspense fallback={<></>}>
-            <Home />
+            <CreateWork isEdit />
           </Suspense>
         }
       />
@@ -129,7 +148,7 @@ const App = () => {
         }
       />
       <Route
-        path="squares"
+        path="admin/squares"
         element={
           <Suspense fallback={<></>}>
             <Squares />
@@ -137,7 +156,7 @@ const App = () => {
         }
       />
       <Route
-        path="create-square"
+        path="admin/create-square"
         element={
           <Suspense fallback={<></>}>
             <CreateSquare />
@@ -145,7 +164,7 @@ const App = () => {
         }
       />
       <Route
-        path="edit-square/:squareId"
+        path="admin/edit-square/:squareId"
         element={
           <Suspense fallback={<></>}>
             <CreateSquare isEdit />
@@ -153,15 +172,7 @@ const App = () => {
         }
       />
       <Route
-        path="users"
-        element={
-          <Suspense fallback={<></>}>
-            <Users />
-          </Suspense>
-        }
-      />
-      <Route
-        path="user/:userId"
+        path="admin/user/:userId"
         element={
           <Suspense fallback={<></>}>
             <User />
@@ -169,7 +180,7 @@ const App = () => {
         }
       />
       <Route
-        path="create-user"
+        path="admin/create-user"
         element={
           <Suspense fallback={<></>}>
             <CreateUser />
@@ -177,7 +188,7 @@ const App = () => {
         }
       />
       <Route
-        path="section-chiefs"
+        path="admin/section-chiefs"
         element={
           <Suspense fallback={<></>}>
             <SectionChiefs />
@@ -185,7 +196,7 @@ const App = () => {
         }
       />
       <Route
-        path="service-engineers"
+        path="admin/service-engineers"
         element={
           <Suspense fallback={<></>}>
             <ServiceEngineers />
@@ -193,7 +204,7 @@ const App = () => {
         }
       />
       <Route
-        path="create-section-chief"
+        path="admin/create-section-chief"
         element={
           <Suspense fallback={<></>}>
             <CreateSectionChief />
@@ -201,7 +212,7 @@ const App = () => {
         }
       />
       <Route
-        path="create-service-engineer"
+        path="admin/create-service-engineer"
         element={
           <Suspense fallback={<></>}>
             <CreateServiceEngineer />
@@ -225,7 +236,7 @@ const App = () => {
   return (
     <div className="App">
       {!!user ? (
-        location.pathname === '/admin-home' ? (
+        location.pathname.includes('/admin') ? (
           <AdminHeader />
         ) : (
           <Header />

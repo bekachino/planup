@@ -30,7 +30,7 @@ export const FILTER_CATEGORIES = [
   },
   {
     name: 'statusTypes',
-    value: 'Состояние',
+    value: 'Статус',
   },
   {
     name: 'squareTypes',
