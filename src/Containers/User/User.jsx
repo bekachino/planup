@@ -44,7 +44,9 @@ const User = () => {
             </button>
             {tooltipOpen && (
               <div className="user-tooltip">
-                <button>
+                <button
+                  onClick={() => navigate(`/admin/edit-user/${user?.id}`)}
+                >
                   <RefreshDarkIcon />
                   Обновить
                 </button>

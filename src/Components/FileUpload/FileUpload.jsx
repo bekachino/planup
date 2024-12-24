@@ -76,7 +76,7 @@ const FileUpload = ({ key, name, value, onChange, label, ...rest }) => {
         <span className="file-upload-value">
           {!value && !progress && 'Файл не выбран'}
           {!value && !!progress && 'Файл загружается'}
-          {value && !progress && `${value?.name}`}
+          {value && !progress && `${value?.name || value}`}
           {!value && !!progress && (
             <span className="file-upload-range-wrapper">
               <span

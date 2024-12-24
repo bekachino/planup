@@ -1,10 +1,10 @@
-import React, { lazy, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { REGIONS, ROLES_ARRAY } from '../../constants';
 import { clearFormatPhoneNumber } from '../../utils';
-import { useAppDispatch } from '../../app/hooks';
-import { createUser } from '../../features/data/dataThunk';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { createUser, editUser, getUser } from '../../features/data/dataThunk';
 import { addAlert } from '../../features/data/dataSlice';
 import './createUser.css';
 
@@ -15,10 +15,31 @@ const Autocomplete = lazy(
 const FileUpload = lazy(() => import('../../Components/FileUpload/FileUpload'));
 const Button = lazy(() => import('../../Components/Button/Button'));
 
-const CreateUser = () => {
+const CreateUser = ({ isEdit }) => {
+  const { userId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { user, userLoading, createUserLoading } = useAppSelector(
+    (state) => state.dataState
+  );
   const [state, setState] = useState(null);
+
+  useEffect(() => {
+    if (isEdit && userId) dispatch(getUser(userId));
+  }, [isEdit, userId, dispatch]);
+
+  useEffect(() => {
+    if (isEdit) {
+      setState(() => ({
+        ...user,
+        role: ROLES_ARRAY.find((role) => role.id === user?.role),
+        region: REGIONS.find((region) => region.id === user?.region),
+        phone_number: !!user?.phone_number
+          ? `(${user?.phone_number.slice(-9, -6)}) ${user?.phone_number.slice(-6, -3)} ${user?.phone_number.slice(-3)}`
+          : '',
+      }));
+    }
+  }, [user, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,27 +49,38 @@ const CreateUser = () => {
     });
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    const createUserReq = await dispatch(
-      createUser({
-        ...state,
-        region: state?.region?.name,
-        role: state?.role?.id,
-        phone_number: !!state?.phone_number
-          ? clearFormatPhoneNumber(state.phone_number)
-          : null,
-      })
-    );
-
-    if (createUser.fulfilled.match(createUserReq)) {
-      navigate('/admin/home');
+    if (isEdit) {
       dispatch(
-        addAlert({
-          type: 'success',
-          message: 'Пользователь успешно создан!',
+        editUser({
+          ...state,
+          region: state?.region?.name,
+          role: state?.role?.id,
+          phone_number: !!state?.phone_number
+            ? clearFormatPhoneNumber(state.phone_number)
+            : null,
         })
-      );
+      ).then((res) => {
+        if (res?.meta?.requestStatus === 'fulfilled') {
+          navigate('/admin/home');
+        }
+      });
+    } else {
+      dispatch(
+        createUser({
+          ...state,
+          region: state?.region?.name,
+          role: state?.role?.id,
+          phone_number: !!state?.phone_number
+            ? clearFormatPhoneNumber(state.phone_number)
+            : null,
+        })
+      ).then((res) => {
+        if (res?.meta?.requestStatus === 'fulfilled') {
+          navigate('/admin/home');
+        }
+      });
     }
   };
 
@@ -58,7 +90,7 @@ const CreateUser = () => {
         <button className="page-back" onClick={() => navigate('/admin/home')}>
           <ArrowPointerRight />
         </button>
-        <h2>Создать пользователя</h2>
+        <h2>{isEdit ? 'Редактировать' : 'Создать'} пользователя</h2>
       </div>
       <div className="create-user-body">
         <form className="create-user-form" onSubmit={onSubmit}>
@@ -131,7 +163,9 @@ const CreateUser = () => {
             />
           </div>
           <div className="create-user-form-actions">
-            <Button type="submit">Создать</Button>
+            <Button type="submit" loading={userLoading || createUserLoading}>
+              {isEdit ? 'Сохранить' : 'Создать'}
+            </Button>
           </div>
         </form>
       </div>

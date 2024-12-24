@@ -188,6 +188,14 @@ const App = () => {
         }
       />
       <Route
+        path="admin/edit-user/:userId"
+        element={
+          <Suspense fallback={<></>}>
+            <CreateUser isEdit />
+          </Suspense>
+        }
+      />
+      <Route
         path="admin/section-chiefs"
         element={
           <Suspense fallback={<></>}>
