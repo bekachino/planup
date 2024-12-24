@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../app/hooks';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getTemplate } from '../../features/data/dataThunk';
+import { getTemplate, getUsers } from '../../features/data/dataThunk';
 import { ReactComponent as ArrowPointerRight } from '../../assets/arrow-pointer-right.svg';
 import Button from '../../Components/Button/Button';
 import { DATA_TYPES } from '../../constants';
@@ -10,19 +10,20 @@ import Input from '../../Components/Input/Input';
 import DatetimePicker from '../../Components/DatetimePicker/DatetimePicker';
 import FileUpload from '../../Components/FileUpload/FileUpload';
 import Autocomplete from '../../Components/Autocomplete/Autocomplete';
-import { createWork, getWork, editWork } from '../../features/works/worksThunk';
+import { createWork, editWork, getWork } from '../../features/works/worksThunk';
 import moment from 'moment';
 import {
   getResolutionTypes,
   getStatusTypes,
 } from '../../features/statuses/filtersDataThunk';
+import { nanoid } from 'nanoid';
 import './createWork.css';
 
 const CreateWork = ({ isEdit }) => {
   const navigate = useNavigate();
   const { templateId, workId } = useParams();
   const dispatch = useDispatch();
-  const { template, getTemplateLoading } = useAppSelector(
+  const { template, getTemplateLoading, usersLoading } = useAppSelector(
     (state) => state.dataState
   );
   const { createWorkLoading, editWorkLoading } = useAppSelector(
@@ -38,11 +39,12 @@ const CreateWork = ({ isEdit }) => {
     const getEditWorkFieldsData = async () => {
       const resolutionTypes = await dispatch(getResolutionTypes());
       const statusTypes = await dispatch(getStatusTypes());
+      const users = await dispatch(getUsers());
 
       dispatch(getWork(workId)).then(({ payload }) => {
         setState(
           [
-            ...payload.works?.[0]?.fields.map((field) => ({
+            ...(payload?.works || [])?.[0]?.fields.map((field) => ({
               ...field,
               field_value:
                 field?.name === 'Желаемая дата  приезда' && !!field?.field_value
@@ -53,20 +55,31 @@ const CreateWork = ({ isEdit }) => {
               field_id: field?.id,
             })),
             {
-              field_id: payload?.status?.id,
+              field_id: nanoid(),
               data_type: 'list',
-              field_value: payload?.status?.name,
+              field_value: payload?.status,
               id: payload?.status?.id,
               name: 'Статус',
-              values: statusTypes.payload,
+              values: statusTypes?.payload,
             },
             {
-              field_id: payload?.resolution?.id,
+              field_id: nanoid(),
               data_type: 'list',
               field_value: payload?.resolution?.name,
               id: payload?.resolution?.id,
               name: 'Резолюция',
-              values: resolutionTypes.payload,
+              values: resolutionTypes?.payload,
+            },
+            {
+              field_id: nanoid(),
+              data_type: 'list',
+              field_value: payload?.user_id?.name,
+              id: payload?.user_id?.id,
+              name: 'Исполнитель',
+              values: (users?.payload || []).map((user) => ({
+                ...user,
+                name: user?.full_name || '',
+              })),
             },
           ] || []
         );
@@ -91,6 +104,7 @@ const CreateWork = ({ isEdit }) => {
         updatedState[existingIndex] = {
           ...updatedState[existingIndex],
           field_value,
+          is_edited: true,
         };
         return updatedState;
       } else {
@@ -99,6 +113,7 @@ const CreateWork = ({ isEdit }) => {
           {
             field_id,
             field_value,
+            is_edited: true,
           },
         ];
       }
@@ -111,11 +126,49 @@ const CreateWork = ({ isEdit }) => {
     if (isEdit) {
       const formData = new FormData();
 
+      formData.append('is_web', true);
       formData.append('id', work?.id || null);
       formData.append('bitrix_id', work?.bitrix_id || null);
-      formData.append('status', work?.status?.id || null);
-      formData.append('resolution', work?.resolution?.id || null);
-      formData.append('works', JSON.stringify(state));
+      formData.append(
+        'resolution',
+        state.find((field) => field?.name === 'Резолюция')?.field_value?.id ||
+          work?.resolution?.id ||
+          null
+      );
+      formData.append(
+        'status',
+        state.find((field) => field?.name === 'Статус')?.field_value?.id ||
+          work?.status?.id ||
+          null
+      );
+      formData.append(
+        'user_id',
+        state.find((field) => field?.name === 'Исполнитель')?.field_value?.id ||
+          work?.user_id?.id ||
+          null
+      );
+
+      state
+        ?.filter((field) => field?.is_edited && field?.field_id)
+        ?.forEach((field, i) => {
+          if (
+            !!field?.field_value &&
+            !['Статус', 'Резолюция', 'Исполнитель'].includes(field?.name)
+          ) {
+            formData.append(
+              `works[${i}][field_value]`,
+              field?.data_type === 'url'
+                ? field?.field_value
+                : field?.field_value?.name || field?.field_value
+            );
+            if (field?.field_id) {
+              formData.append(`works[${i}][field_id]`, field?.field_id);
+            }
+            if (field?.work_id) {
+              formData.append(`works[${i}][work_id]`, field?.work_id);
+            }
+          }
+        });
 
       dispatch(
         editWork({
@@ -124,7 +177,7 @@ const CreateWork = ({ isEdit }) => {
         })
       ).then((res) => {
         if (res?.meta?.requestStatus === 'fulfilled') {
-          navigate('/home');
+          navigate(`/work/${workId}/`);
         }
       });
     } else {
@@ -151,7 +204,10 @@ const CreateWork = ({ isEdit }) => {
     <div className="create-work">
       <div className="create-work-inner">
         <div className="create-work-header">
-          <button className="page-back" onClick={() => navigate('/home')}>
+          <button
+            className="page-back"
+            onClick={() => navigate(`/work/${workId}/`)}
+          >
             <ArrowPointerRight />
           </button>
           <h2>{isEdit ? 'Изменить' : 'Создать'} наряд</h2>
@@ -162,8 +218,9 @@ const CreateWork = ({ isEdit }) => {
               {(isEdit ? state : template?.fields || [])
                 .filter(
                   (field) =>
-                    !(field?.field || field).name.includes('Отчет') &&
-                    !(field?.field || field).name.includes('Тип')
+                    !(field?.field || field)?.name?.includes('Отчет') &&
+                    !(field?.field || field)?.name?.includes('Резолюция ') &&
+                    !(field?.field || field)?.name?.includes('Тип')
                 )
                 .map((field, i) => {
                   if (
@@ -202,24 +259,14 @@ const CreateWork = ({ isEdit }) => {
                         type={DATA_TYPES[field.data_type]}
                         name={(field?.field || field).name}
                         value={
-                          state.find(
-                            (stateField) =>
-                              (stateField?.field_id || stateField?.id) ===
-                              (field?.field || field)?.id
-                          )?.field_value?.name ||
-                          state.find(
-                            (stateField) =>
-                              (stateField?.field_id || stateField?.id) ===
-                              (field?.field || field)?.id
-                          )?.field_value ||
-                          ''
+                          field?.field_value?.name || field?.field_value || ''
                         }
                         options={field?.values || []}
                         label={(field?.field || field).name}
                         placeholder={(field?.field || field).name}
                         onChange={(e) =>
                           handleChange(
-                            (field?.field || field).id,
+                            (field?.field || field).field_id,
                             e.target.value
                           )
                         }
@@ -329,7 +376,8 @@ const CreateWork = ({ isEdit }) => {
                   editWorkLoading ||
                   getTemplateLoading ||
                   resolutionTypesLoading ||
-                  statusTypesLoading
+                  statusTypesLoading ||
+                  usersLoading
                 }
               >
                 {isEdit ? 'Сохранить' : 'Создать'}

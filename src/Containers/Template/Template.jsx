@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { getTemplate } from '../../features/data/dataThunk';
 import { useAppSelector } from '../../app/hooks';
 import './template.css';
+import '../CreateTemplate/createTemplate.css';
 
 const Template = () => {
   const { templateId } = useParams();
@@ -22,7 +23,10 @@ const Template = () => {
     <div className="template">
       <div className="template-paper">
         <div className="create-template-paper-header">
-          <button className="page-back" onClick={() => navigate('/templates')} style={{ position: 'absolute' }}>
+          <button
+            className="page-back"
+            onClick={() => navigate('/templates')}
+          >
             <ArrowPointerRight />
           </button>
           <h2>{template?.name || 'Шаблон'}</h2>

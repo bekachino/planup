@@ -5,7 +5,6 @@ import { REGIONS, ROLES_ARRAY } from '../../constants';
 import { clearFormatPhoneNumber } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { createUser, editUser, getUser } from '../../features/data/dataThunk';
-import { addAlert } from '../../features/data/dataSlice';
 import './createUser.css';
 
 const Input = lazy(() => import('../../Components/Input/Input'));
@@ -19,7 +18,7 @@ const CreateUser = ({ isEdit }) => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, userLoading, createUserLoading } = useAppSelector(
+  const { user, userLoading, createUserLoading, editUserLoading } = useAppSelector(
     (state) => state.dataState
   );
   const [state, setState] = useState(null);
@@ -163,7 +162,7 @@ const CreateUser = ({ isEdit }) => {
             />
           </div>
           <div className="create-user-form-actions">
-            <Button type="submit" loading={userLoading || createUserLoading}>
+            <Button type="submit" loading={userLoading || createUserLoading || editUserLoading}>
               {isEdit ? 'Сохранить' : 'Создать'}
             </Button>
           </div>

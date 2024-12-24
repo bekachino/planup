@@ -140,7 +140,7 @@ export const DATA_TYPES = {
   int: 'number',
   datetime: 'datetime',
   file: 'file',
-  url: 'text',
+  url: 'file',
   list: 'list',
   deal_type: 'deal_type',
   crm_contact: 'crm_contact',

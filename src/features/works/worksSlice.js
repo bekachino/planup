@@ -101,7 +101,15 @@ const WorksSlice = createSlice({
           },
           {
             name: 'Статус',
-            field_value: res.status.name || null,
+            field_value: res?.status?.name || null,
+          } || null,
+          {
+            name: 'Резолюция',
+            field_value: res?.resolution?.name || null,
+          } || null,
+          {
+            name: 'Исполнитель',
+            field_value: res?.user_id?.name || null,
           } || null,
           ...(res.works[0]?.fields || []),
         ] || [];
@@ -137,7 +145,7 @@ const WorksSlice = createSlice({
     builder.addCase(getWorkFields.rejected, (state) => {
       state.availFieldsLoading = false;
     });
-    
+
     builder.addCase(createWork.pending, (state) => {
       state.createWorkLoading = true;
     });
@@ -147,7 +155,7 @@ const WorksSlice = createSlice({
     builder.addCase(createWork.rejected, (state) => {
       state.createWorkLoading = false;
     });
-    
+
     builder.addCase(editWork.pending, (state) => {
       state.editWorkLoading = true;
     });

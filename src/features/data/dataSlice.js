@@ -12,6 +12,7 @@ import {
   editResolution,
   editSquare,
   editTemplate,
+  editUser,
   getLocations,
   getResolution,
   getSectionChiefs,
@@ -37,6 +38,7 @@ const initialState = {
   userLoading: false,
   locationsLoading: false,
   serviceEngineersLoading: false,
+  sectionChiefsLoading: false,
   getTemplateLoading: false,
   getResolutionLoading: false,
   getSquareLoading: false,
@@ -48,7 +50,7 @@ const initialState = {
   createServiceEngineerLoading: false,
   editTemplateLoading: false,
   editResolutionLoading: false,
-  sectionChiefsLoading: false,
+  editUserLoading: false,
   editSquareLoading: false,
   deleteTemplateLoading: false,
   deleteResolutionLoading: false,
@@ -254,6 +256,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(createUser.rejected, (state) => {
       state.createUserLoading = false;
+    });
+
+    builder.addCase(editUser.pending, (state) => {
+      state.editUserLoading = true;
+    });
+    builder.addCase(editUser.fulfilled, (state) => {
+      state.editUserLoading = false;
+    });
+    builder.addCase(editUser.rejected, (state) => {
+      state.editUserLoading = false;
     });
 
     builder.addCase(getUsers.pending, (state) => {
