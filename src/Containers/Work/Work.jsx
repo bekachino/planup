@@ -5,7 +5,7 @@ import { ReactComponent as RemoveWhiteIcon } from '../../assets/remove-icon-whit
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as EditDarkIcon } from '../../assets/edit-dark.svg';
 import { getWork } from '../../features/works/worksThunk';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import moment from 'moment';
 import './work.css';
@@ -126,11 +126,19 @@ const Work = () => {
           <div className="work-value-row" key={i}>
             <span className="work-row-name">{workField.name || '-'}</span>
             <span className="work-row-value">
-              {workField.name === 'Желаемая дата  приезда'
-                ? !!workField.field_value
-                  ? moment(workField.field_value).format('DD-MM-YYYY HH:mm')
-                  : '-'
-                : workField.field_value || '-'}
+              {workField.data_type === 'datetime' ? (
+                !!workField.field_value ? (
+                  moment(workField.field_value).format('DD-MM-YYYY HH:mm')
+                ) : (
+                  '-'
+                )
+              ) : workField?.data_type === 'url' ? (
+                <Link to={workField.field_value} target="_blank">
+                  {workField.field_value}
+                </Link>
+              ) : (
+                workField.field_value || '-'
+              )}
             </span>
           </div>
         ))}

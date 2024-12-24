@@ -62,6 +62,7 @@ const Home = () => {
                   ? `https://bitrix24.snt.kg/crm/deal/details/${workField.field_value}/`
                   : '/home'
             }
+            target={workField.name === 'Битрикс ID' ? '_blank' : '_self'}
           >
             {workField.field_value || '-'}
           </Link>
