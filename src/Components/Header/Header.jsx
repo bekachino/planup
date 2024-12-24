@@ -29,6 +29,7 @@ const Header = () => {
   const [showBurgerTooltip, setShowBurgerTooltip] = useState(false);
   const [createWorkModalOpen, setCreateWorkModalOpen] = useState(false);
   const { templateTypes } = useAppSelector((state) => state.filtersDataState);
+  const { user } = useAppSelector((state) => state.userState);
   const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
 
   useEffect(() => {
@@ -124,7 +125,9 @@ const Header = () => {
             </button>
             <button
               className="nav-burger-tooltip-btn"
-              onClick={() => navigate('/admin/home')}
+              onClick={() => {
+                if (user?.role === 'admin') navigate('/admin/home');
+              }}
             >
               <UserIcon />
               Привет, Admin!

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import mainLogo from '../../assets/skynet-logo.png';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { signIn } from '../../features/user/userThunk';
 import Alerts from '../../Components/Alerts/Alerts';
 import './signIn.css';
+import { getUsers } from '../../features/data/dataThunk';
 
 const SignIn = () => {
   const [state, setState] = useState({
@@ -20,7 +21,7 @@ const SignIn = () => {
       [name]: value,
     }));
   };
-
+  
   const onSubmit = async (e) => {
     e.preventDefault();
     await dispatch(signIn(state));
@@ -50,6 +51,7 @@ const SignIn = () => {
         <button
           type="submit"
           className={`form-submit-btn ${signInLoading ? 'loading' : ''}`}
+          disabled={signInLoading}
         >
           Войти
         </button>
