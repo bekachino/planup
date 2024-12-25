@@ -5,7 +5,9 @@ import {
   getWorkFields,
   getWorks,
   editWork,
+  deleteWork,
 } from './worksThunk';
+import { deleteUser } from '../data/dataThunk';
 
 const initialState = {
   works: [],
@@ -26,6 +28,7 @@ const initialState = {
   workFieldsLoading: false,
   availFieldsLoading: false,
   createWorkLoading: false,
+  workDeleteLoading: false,
 };
 
 const WorksSlice = createSlice({
@@ -164,6 +167,16 @@ const WorksSlice = createSlice({
     });
     builder.addCase(editWork.rejected, (state) => {
       state.editWorkLoading = false;
+    });
+
+    builder.addCase(deleteWork.pending, (state) => {
+      state.deleteWorkLoading = true;
+    });
+    builder.addCase(deleteWork.fulfilled, (state) => {
+      state.deleteWorkLoading = false;
+    });
+    builder.addCase(deleteWork.rejected, (state) => {
+      state.deleteWorkLoading = false;
     });
   },
 });

@@ -4,22 +4,24 @@ import { ReactComponent as MenuBurgerIcon } from '../../assets/burger-black.svg'
 import { ReactComponent as RemoveWhiteIcon } from '../../assets/remove-icon-white.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as EditDarkIcon } from '../../assets/edit-dark.svg';
-import { getWork } from '../../features/works/worksThunk';
+import { deleteWork, getWork } from '../../features/works/worksThunk';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import moment from 'moment';
+import Button from '../../Components/Button/Button';
+import Modal from '../../Components/Modal/Modal';
 import './work.css';
 
 const Work = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { workFields, workChildTemplates, workLoading } = useAppSelector(
-    (state) => state.worksState
-  );
+  const { workFields, workChildTemplates, workLoading, deleteWorkLoading } =
+    useAppSelector((state) => state.worksState);
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [currentWorkFields, setCurrentWorkFields] = useState([]);
   const [searchWord, setSearchWord] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     if (!!params?.workId) {
@@ -30,6 +32,16 @@ const Work = () => {
   useEffect(() => {
     setCurrentWorkFields(workFields || []);
   }, [workFields]);
+
+  const toggleModal = (value) => setModalIsOpen(value);
+
+  const onDelete = () => {
+    dispatch(deleteWork(params?.workId)).then((res) => {
+      if (res?.meta?.requestStatus === 'fulfilled') {
+        navigate('/home');
+      }
+    });
+  };
 
   const filteredWorkChildTemplates = useCallback(() => {
     return workChildTemplates.filter((childTemplate) =>
@@ -58,6 +70,33 @@ const Work = () => {
 
   return (
     <div className="work">
+      <Modal
+        open={modalIsOpen}
+        toggleModal={toggleModal}
+        style={{ minWidth: '600px' }}
+      >
+        <div
+          className="create-template-paper-header"
+          style={{ flexDirection: 'column' }}
+        >
+          <h2>Удалить наряд?</h2>
+          <span className="create-template-paper-header-desc">
+            Вы уверены что хотите удалить наряд?
+          </span>
+        </div>
+        <div className="delete-modal-btns">
+          <Button color="error" onClick={onDelete} loading={deleteWorkLoading}>
+            Удалить
+          </Button>
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={() => toggleModal(false)}
+          >
+            Отмена
+          </Button>
+        </div>
+      </Modal>
       <div className="work-header">
         <button className="work-header-btn" onClick={() => navigate('/home')}>
           <ArrowRightWhiteIcon />
@@ -74,7 +113,10 @@ const Work = () => {
           >
             <EditDarkIcon />
           </button>
-          <button className="work-header-btn work-header-delete-btn">
+          <button
+            className="work-header-btn work-header-delete-btn"
+            onClick={() => toggleModal(true)}
+          >
             <DeleteIcon />
           </button>
           {!!workFields.find(

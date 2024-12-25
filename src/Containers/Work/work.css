@@ -133,3 +133,26 @@
   padding: 10px 15px;
   flex-grow: 1;
 }
+
+.work .create-template-paper-header h2 {
+  font-size: 28px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.work .create-template-paper-header {
+  text-align: center;
+}
+
+.work .delete-modal-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 64px;
+}
+
+.work .delete-modal-btns button {
+  font-size: 22px;
+  line-height: 26px;
+  padding: 22px;
+}
