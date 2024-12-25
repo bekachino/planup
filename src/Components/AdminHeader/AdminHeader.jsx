@@ -64,8 +64,6 @@ const AdminHeader = () => {
       </div>
       <nav className="admin-header-bottom">
         <Link to="/admin/home">Пользователи</Link>
-        <Link to="/admin/home">Роли разрешения</Link>
-        <Link to="/admin/home">Разрешения</Link>
         <Link to="/admin/home">Локации</Link>
         <Link to="/admin/section-chiefs">Список НУ</Link>
         <Link to="/admin/service-engineers">Список СИ</Link>

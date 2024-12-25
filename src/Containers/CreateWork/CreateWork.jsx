@@ -95,6 +95,7 @@ const CreateWork = ({ isEdit }) => {
 
   const handleChange = (field_id, field_value) => {
     setState((prevState) => {
+      console.log(field_id, field_value);
       const existingIndex = prevState.findIndex(
         (field) => field.field_id === field_id
       );
@@ -200,6 +201,8 @@ const CreateWork = ({ isEdit }) => {
     }
   };
 
+  console.log(state);
+
   return (
     <div className="create-work">
       <div className="create-work-inner">
@@ -259,14 +262,24 @@ const CreateWork = ({ isEdit }) => {
                         type={DATA_TYPES[field.data_type]}
                         name={(field?.field || field).name}
                         value={
-                          field?.field_value?.name || field?.field_value || ''
+                          state.find(
+                            (stateField) =>
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
+                          )?.field_value?.name ||
+                          state.find(
+                            (stateField) =>
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
+                          )?.field_value ||
+                          ''
                         }
                         options={field?.values || []}
                         label={(field?.field || field).name}
                         placeholder={(field?.field || field).name}
                         onChange={(e) =>
                           handleChange(
-                            (field?.field || field).field_id,
+                            (field?.field || field).id,
                             e.target.value
                           )
                         }
@@ -366,6 +379,7 @@ const CreateWork = ({ isEdit }) => {
                       </>
                     );
                   }
+                  return <></>;
                 })}
             </div>
             <div className="create-work-form-actions">

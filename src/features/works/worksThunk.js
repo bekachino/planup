@@ -10,11 +10,12 @@ export const getWorks = createAsyncThunk(
       const user_id_query = `&user_id=${filtersData?.user_id || []}`;
       const resolution_id_query = `&resolution_id=${filtersData?.resolution_id || []}`;
       const template_id_query = `&template_id=${filtersData?.template_id || []}`;
+      const squares_id_query = `&squares_id=${filtersData?.squares_id || []}`;
       const created_at_query = `&created_at=${filtersData?.created_at || []}`;
       const closed_at_query = `&closed_at=${filtersData?.closed_at || []}`;
 
       const req = await axiosApi(
-        `/v2/order-list/?page=${currentPage || 1}${user_id_query}${resolution_id_query}${template_id_query}${created_at_query}${closed_at_query}`
+        `/v2/order-list/?page=${currentPage || 1}${user_id_query}${resolution_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}`
       );
       return await req.data;
     } catch (e) {

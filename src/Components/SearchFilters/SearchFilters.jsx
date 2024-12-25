@@ -176,10 +176,11 @@ const SearchFilters = ({ ...rest }) => {
       );
 
     const filtersData = {
-      user_id: state.userTypes.map((user) => user.id),
-      status_id: state.statusTypes.map((user) => user.id),
-      resolution_id: state.resolutionTypes.map((user) => user.id),
-      template_id: state.templateTypes.map((user) => user.id),
+      user_id: state.userTypes.map((item) => item.id),
+      status_id: state.statusTypes.map((item) => item.id),
+      resolution_id: state.resolutionTypes.map((item) => item.id),
+      template_id: state.templateTypes.map((item) => item.id),
+      squares_id: state.squareTypes.map((item) => item.id),
       created_at,
       closed_at,
     };

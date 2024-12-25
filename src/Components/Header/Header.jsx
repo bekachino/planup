@@ -88,10 +88,6 @@ const Header = () => {
           <InboxIcon />
           Резолюции
         </NavLink>
-        <NavLink to="/statuses">
-          <CheckIcon />
-          Статусы
-        </NavLink>
         <NavLink
           to="/works"
           onClick={(e) => {
