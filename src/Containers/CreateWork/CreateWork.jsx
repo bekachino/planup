@@ -270,6 +270,7 @@ const CreateWork = ({ isEdit }) => {
                       !(field?.field || field)?.name?.includes('Тип')
                     : !(field?.field || field)?.name?.includes('Отчет') &&
                       !(field?.field || field)?.name?.includes('Резолюция ') &&
+                      !field?.data_type?.includes('url') &&
                       !(field?.field || field)?.name?.includes('Тип')
                 )
                 .map((field, i) => {
