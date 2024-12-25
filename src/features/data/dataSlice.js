@@ -9,6 +9,7 @@ import {
   deleteResolution,
   deleteSquare,
   deleteTemplate,
+  deleteUser,
   editResolution,
   editSquare,
   editTemplate,
@@ -21,6 +22,7 @@ import {
   getTemplate,
   getUser,
   getUsers,
+  updatePassword,
 } from './dataThunk';
 
 const initialState = {
@@ -56,6 +58,7 @@ const initialState = {
   deleteResolutionLoading: false,
   deleteSquareLoading: false,
   updatePasswordLoading: false,
+  deleteUserLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -311,6 +314,26 @@ const DataSlice = createSlice({
     });
     builder.addCase(createServiceEngineer.rejected, (state) => {
       state.createServiceEngineerLoading = false;
+    });
+
+    builder.addCase(updatePassword.pending, (state) => {
+      state.updatePasswordLoading = true;
+    });
+    builder.addCase(updatePassword.fulfilled, (state) => {
+      state.updatePasswordLoading = false;
+    });
+    builder.addCase(updatePassword.rejected, (state) => {
+      state.updatePasswordLoading = false;
+    });
+
+    builder.addCase(deleteUser.pending, (state) => {
+      state.deleteUserLoading = true;
+    });
+    builder.addCase(deleteUser.fulfilled, (state) => {
+      state.deleteUserLoading = false;
+    });
+    builder.addCase(deleteUser.rejected, (state) => {
+      state.deleteUserLoading = false;
     });
   },
 });

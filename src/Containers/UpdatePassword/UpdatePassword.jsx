@@ -52,6 +52,7 @@ const UpdatePassword = ({ isEdit }) => {
         <form className="create-user-form" onSubmit={onSubmit}>
           <div className="create-user-form-fields">
             <Input
+              type='password'
               name="new_password"
               value={state?.new_password}
               onChange={handleChange}

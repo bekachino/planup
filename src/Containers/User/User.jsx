@@ -7,9 +7,11 @@ import { ReactComponent as LockDarkIcon } from '../../assets/lock-dark.svg';
 import { ReactComponent as DeleteDarkIcon } from '../../assets/delete-dark.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getUser } from '../../features/data/dataThunk';
+import { deleteUser, getUser } from '../../features/data/dataThunk';
 import defaultUserPng from '../../assets/default-user.png';
 import { ROLES } from '../../constants';
+import Button from '../../Components/Button/Button';
+import Modal from '../../Components/Modal/Modal';
 import '../CreateUser/createUser.css';
 import '../Users/users.css';
 import './user.css';
@@ -18,8 +20,11 @@ const User = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const dispatch = useAppDispatch();
-  const { user, userLoading } = useAppSelector((state) => state.dataState);
+  const { user, userLoading, deleteUserLoading } = useAppSelector(
+    (state) => state.dataState
+  );
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getUser(userId));
@@ -27,8 +32,45 @@ const User = () => {
 
   const toggleTooltip = (value) => setTooltipOpen(value);
 
+  const toggleModal = (value) => setModalIsOpen(value);
+
+  const onDelete = () => {
+    dispatch(deleteUser(userId)).then((res) => {
+      if (res?.meta?.requestStatus === 'fulfilled') {
+        navigate('/admin/home');
+      }
+    });
+  };
+
   return (
     <div className="single-user-page">
+      <Modal
+        open={modalIsOpen}
+        toggleModal={toggleModal}
+        style={{ minWidth: '600px' }}
+      >
+        <div
+          className="create-template-paper-header"
+          style={{ flexDirection: 'column' }}
+        >
+          <h2>Удалить пользователя?</h2>
+          <span className="create-template-paper-header-desc">
+            Вы уверены что хотите удалить пользователя?
+          </span>
+        </div>
+        <div className="delete-modal-btns">
+          <Button color="error" onClick={onDelete} loading={deleteUserLoading}>
+            Удалить
+          </Button>
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={() => toggleModal(false)}
+          >
+            Отмена
+          </Button>
+        </div>
+      </Modal>
       <div className="user-info-body">
         <div className="users-header">
           <button className="page-back" onClick={() => navigate('/admin/home')}>
@@ -58,7 +100,7 @@ const User = () => {
                   <LockDarkIcon />
                   Восстановление пароля
                 </button>
-                <button>
+                <button onClick={() => toggleModal(true)}>
                   <DeleteDarkIcon />
                   Удалить
                 </button>
