@@ -17,8 +17,9 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Button from '../Button/Button';
 import { addAlert } from '../../features/data/dataSlice';
 import { getTemplateTypes } from '../../features/statuses/filtersDataThunk';
-import './header.css';
 import { logout } from '../../features/user/usersSlice';
+import { uploadWorks } from '../../utils';
+import './header.css';
 
 const Header = () => {
   const location = useLocation();
@@ -28,6 +29,7 @@ const Header = () => {
   const [createWorkModalOpen, setCreateWorkModalOpen] = useState(false);
   const { templateTypes } = useAppSelector((state) => state.filtersDataState);
   const { user } = useAppSelector((state) => state.userState);
+  const { works, shownFields } = useAppSelector((state) => state.worksState);
   const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
 
   useEffect(() => {
@@ -105,7 +107,10 @@ const Header = () => {
             style={{ display: showBurgerTooltip ? 'flex' : 'none' }}
             onMouseDown={(e) => e.stopPropagation()}
           >
-            <button className="nav-burger-tooltip-btn">
+            <button
+              className="nav-burger-tooltip-btn"
+              onClick={() => uploadWorks(works, shownFields)}
+            >
               <ExcelIcon />
               Экспорт в Excel
             </button>
