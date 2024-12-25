@@ -18,6 +18,7 @@ const Resolutions = () => {
   const { deleteResolutionLoading } = useAppSelector(
     (state) => state.dataState
   );
+  const { user } = useAppSelector((state) => state.userState);
   const [resolutionForDelete, setResolutionForDelete] = useState(-1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -90,24 +91,30 @@ const Resolutions = () => {
             resolutionTypes.map((resolution) => (
               <div className="type-item" key={resolution.id}>
                 <span className="type-item-title">{resolution.name}</span>
-                <Button
-                  className="edit-type-btn"
-                  onClick={() => navigate(`/edit-resolution/${resolution?.id}`)}
-                >
-                  <RefreshIcon />
-                  Обновить
-                </Button>
-                <Button
-                  className="edit-type-btn delete-type-btn"
-                  color="error"
-                  onClick={() => {
-                    setResolutionForDelete(resolution?.id);
-                    setModalIsOpen(true);
-                  }}
-                >
-                  <DeleteIcon />
-                  Удалить
-                </Button>
+                {user?.role === 'admin' && (
+                  <>
+                    <Button
+                      className="edit-type-btn"
+                      onClick={() =>
+                        navigate(`/edit-resolution/${resolution?.id}`)
+                      }
+                    >
+                      <RefreshIcon />
+                      Обновить
+                    </Button>
+                    <Button
+                      className="edit-type-btn delete-type-btn"
+                      color="error"
+                      onClick={() => {
+                        setResolutionForDelete(resolution?.id);
+                        setModalIsOpen(true);
+                      }}
+                    >
+                      <DeleteIcon />
+                      Удалить
+                    </Button>
+                  </>
+                )}
               </div>
             ))}
         </div>

@@ -50,7 +50,11 @@ const User = () => {
                   <RefreshDarkIcon />
                   Обновить
                 </button>
-                <button>
+                <button
+                  onClick={() =>
+                    navigate(`/admin/user/update-password/${userId}/`)
+                  }
+                >
                   <LockDarkIcon />
                   Восстановление пароля
                 </button>

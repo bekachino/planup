@@ -15,6 +15,7 @@ const Templates = () => {
   const { templateTypes, templateTypesLoading } = useAppSelector(
     (state) => state.filtersDataState
   );
+  const { user } = useAppSelector((state) => state.userState);
   const { deleteTemplateLoading } = useAppSelector((state) => state.dataState);
   const [templateForDelete, setTemplateForDelete] = useState(-1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -37,8 +38,15 @@ const Templates = () => {
 
   return (
     <>
-      <Modal open={modalIsOpen} toggleModal={toggleModal} style={{minWidth: '600px'}}>
-        <div className="create-template-paper-header" style={{flexDirection: 'column'}}>
+      <Modal
+        open={modalIsOpen}
+        toggleModal={toggleModal}
+        style={{ minWidth: '600px' }}
+      >
+        <div
+          className="create-template-paper-header"
+          style={{ flexDirection: 'column' }}
+        >
           <h2>Удалить шаблон?</h2>
           <span className="create-template-paper-header-desc">
             Вы уверены что хотите удалить этот шаблон?
@@ -81,24 +89,28 @@ const Templates = () => {
             templateTypes.map((template) => (
               <div className="type-item" key={template.id}>
                 <Link to={`/templates/${template?.id}`}>{template.name}</Link>
-                <Button
-                  className="edit-type-btn"
-                  onClick={() => navigate(`/edit-template/${template?.id}`)}
-                >
-                  <RefreshIcon />
-                  Обновить
-                </Button>
-                <Button
-                  className="edit-type-btn delete-type-btn"
-                  color="error"
-                  onClick={() => {
-                    setTemplateForDelete(template?.id);
-                    setModalIsOpen(true);
-                  }}
-                >
-                  <DeleteIcon />
-                  Удалить
-                </Button>
+                {user?.role === 'admin' && (
+                  <>
+                    <Button
+                      className="edit-type-btn"
+                      onClick={() => navigate(`/edit-template/${template?.id}`)}
+                    >
+                      <RefreshIcon />
+                      Обновить
+                    </Button>
+                    <Button
+                      className="edit-type-btn delete-type-btn"
+                      color="error"
+                      onClick={() => {
+                        setTemplateForDelete(template?.id);
+                        setModalIsOpen(true);
+                      }}
+                    >
+                      <DeleteIcon />
+                      Удалить
+                    </Button>
+                  </>
+                )}
               </div>
             ))}
         </div>

@@ -7,6 +7,7 @@ import Header from './Components/Header/Header';
 import { useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import './App.css';
+import UpdatePassword from './Containers/UpdatePassword/UpdatePassword';
 
 const SignIn = lazy(() => import('./Containers/SignIn/SignIn'));
 const Work = lazy(() => import('./Containers/Work/Work'));
@@ -57,17 +58,114 @@ const App = () => {
           </Suspense>
         }
       />
-      {
-        //user.role === 'admin' &&
-        <Route
-          path="admin/home"
-          element={
-            <Suspense fallback={<></>}>
-              <Users />
-            </Suspense>
-          }
-        />
-      }
+      {user.role === 'admin' && (
+        <>
+          <Route
+            path="admin/home"
+            element={
+              <Suspense fallback={<></>}>
+                <Users />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/locations"
+            element={
+              <Suspense fallback={<></>}>
+                <Locations />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/squares"
+            element={
+              <Suspense fallback={<></>}>
+                <Squares />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/create-square"
+            element={
+              <Suspense fallback={<></>}>
+                <CreateSquare />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/edit-square/:squareId"
+            element={
+              <Suspense fallback={<></>}>
+                <CreateSquare isEdit />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/user/:userId"
+            element={
+              <Suspense fallback={<></>}>
+                <User />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/create-user"
+            element={
+              <Suspense fallback={<></>}>
+                <CreateUser />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/edit-user/:userId"
+            element={
+              <Suspense fallback={<></>}>
+                <CreateUser isEdit />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/section-chiefs"
+            element={
+              <Suspense fallback={<></>}>
+                <SectionChiefs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/service-engineers"
+            element={
+              <Suspense fallback={<></>}>
+                <ServiceEngineers />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/create-section-chief"
+            element={
+              <Suspense fallback={<></>}>
+                <CreateSectionChief />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/create-service-engineer"
+            element={
+              <Suspense fallback={<></>}>
+                <CreateServiceEngineer />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/user/update-password/:userId"
+            element={
+              <Suspense fallback={<></>}>
+                <UpdatePassword />
+              </Suspense>
+            }
+          />
+        </>
+      )}
       <Route
         path="work/:workId"
         element={
@@ -145,94 +243,6 @@ const App = () => {
         element={
           <Suspense fallback={<></>}>
             <Template />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/locations"
-        element={
-          <Suspense fallback={<></>}>
-            <Locations />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/squares"
-        element={
-          <Suspense fallback={<></>}>
-            <Squares />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/create-square"
-        element={
-          <Suspense fallback={<></>}>
-            <CreateSquare />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/edit-square/:squareId"
-        element={
-          <Suspense fallback={<></>}>
-            <CreateSquare isEdit />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/user/:userId"
-        element={
-          <Suspense fallback={<></>}>
-            <User />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/create-user"
-        element={
-          <Suspense fallback={<></>}>
-            <CreateUser />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/edit-user/:userId"
-        element={
-          <Suspense fallback={<></>}>
-            <CreateUser isEdit />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/section-chiefs"
-        element={
-          <Suspense fallback={<></>}>
-            <SectionChiefs />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/service-engineers"
-        element={
-          <Suspense fallback={<></>}>
-            <ServiceEngineers />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/create-section-chief"
-        element={
-          <Suspense fallback={<></>}>
-            <CreateSectionChief />
-          </Suspense>
-        }
-      />
-      <Route
-        path="admin/create-service-engineer"
-        element={
-          <Suspense fallback={<></>}>
-            <CreateServiceEngineer />
           </Suspense>
         }
       />

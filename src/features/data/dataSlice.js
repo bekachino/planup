@@ -55,6 +55,7 @@ const initialState = {
   deleteTemplateLoading: false,
   deleteResolutionLoading: false,
   deleteSquareLoading: false,
+  updatePasswordLoading: false,
 };
 
 const DataSlice = createSlice({

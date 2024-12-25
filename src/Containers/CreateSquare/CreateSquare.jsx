@@ -48,7 +48,8 @@ const CreateSquare = ({ isEdit }) => {
     )
       dispatch(getSquare(squareId)).then((res) => {
         const foundLocation = locations.filter(
-          (location) => location?.id === (res.payload.location?.[0] || null)
+          (location) =>
+            (res.payload?.location || []).includes(location?.id) || null
         );
         const foundSi = serviceEngineers
           .filter((si) => res.payload.service_engineer.includes(si.id))
@@ -132,7 +133,10 @@ const CreateSquare = ({ isEdit }) => {
     <div className="create-template">
       <div className="create-template-paper">
         <div className="create-template-paper-header">
-          <button className="page-back" onClick={() => navigate('/admin/squares')}>
+          <button
+            className="page-back"
+            onClick={() => navigate('/admin/squares')}
+          >
             <ArrowPointerRight />
           </button>
           <h2>{isEdit ? 'Редактировать' : 'Создать'} квадрат</h2>
