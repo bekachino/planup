@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createWork,
+  deleteWork,
+  editWork,
   getWork,
   getWorkFields,
   getWorks,
-  editWork,
-  deleteWork,
 } from './worksThunk';
-import { deleteUser } from '../data/dataThunk';
 
 const initialState = {
   works: [],

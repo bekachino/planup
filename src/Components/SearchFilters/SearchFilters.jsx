@@ -184,7 +184,11 @@ const SearchFilters = ({ ...rest }) => {
       created_at,
       closed_at,
     };
-    dispatch(getWorks({ filtersData }));
+    dispatch(
+      getWorks({
+        filtersData,
+      })
+    );
     dispatch(setFiltersData(filtersData));
   };
 

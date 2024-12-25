@@ -32,7 +32,8 @@ const Home = () => {
         filtersData,
       })
     );
-  }, [dispatch, currentPage, filtersData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, currentPage]);
 
   useEffect(() => {
     dispatch(getWorkFields());

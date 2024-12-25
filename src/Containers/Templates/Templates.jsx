@@ -22,7 +22,7 @@ const Templates = () => {
 
   useEffect(() => {
     dispatch(getTemplateTypes());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!deleteTemplateLoading) setTemplateForDelete(-1);

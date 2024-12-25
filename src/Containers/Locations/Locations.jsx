@@ -11,7 +11,7 @@ const Locations = () => {
 
   useEffect(() => {
     dispatch(getLocations());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="types">
