@@ -18,6 +18,7 @@ import {
 } from '../../features/statuses/filtersDataThunk';
 import { nanoid } from 'nanoid';
 import './createWork.css';
+import { clearFormatPhoneNumber } from '../../utils';
 
 const CreateWork = ({ isEdit }) => {
   const navigate = useNavigate();
@@ -44,7 +45,12 @@ const CreateWork = ({ isEdit }) => {
       dispatch(getWork(workId)).then(({ payload }) => {
         setState(
           [
-            ...(payload?.works || [])?.[0]?.fields.map((field) => ({
+            ...[
+              ...(payload?.works || [])?.[0]?.fields,
+              ...(payload?.works || [])?.[0]?.child_templates?.flatMap(
+                (child_template) => child_template?.fields
+              ),
+            ].map((field) => ({
               ...field,
               field_value:
                 field?.name === 'Желаемая дата  приезда' && !!field?.field_value
@@ -95,7 +101,6 @@ const CreateWork = ({ isEdit }) => {
 
   const handleChange = (field_id, field_value) => {
     setState((prevState) => {
-      console.log(field_id, field_value);
       const existingIndex = prevState.findIndex(
         (field) => field.field_id === field_id
       );
@@ -150,22 +155,62 @@ const CreateWork = ({ isEdit }) => {
       );
 
       state
+        .filter(
+          (field) =>
+            !['phone_number', 'phone_number_2'].includes(field?.field_id)
+        )
         ?.filter((field) => field?.is_edited && field?.field_id)
         ?.forEach((field, i) => {
           if (
             !!field?.field_value &&
             !['Статус', 'Резолюция', 'Исполнитель'].includes(field?.name)
           ) {
-            formData.append(
-              `works[${i}][field_value]`,
-              field?.data_type === 'url'
-                ? field?.field_value
-                : field?.field_value?.name || field?.field_value
-            );
-            if (field?.field_id) {
+            if (field?.field_id !== 'fio') {
+              formData.append(
+                `works[${i}][field_value]`,
+                field?.data_type === 'url'
+                  ? field?.field_value
+                  : field?.field_value?.name || field?.field_value
+              );
+            } else {
+              formData.append(
+                `works[${i}][field_value]`,
+                JSON.stringify({
+                  [state?.find((field) => field?.field_id === 'fio')
+                    ?.field_value || '']: [
+                    clearFormatPhoneNumber(
+                      state?.find((field) => field?.field_id === 'phone_number')
+                        ?.field_value
+                    ) || '',
+                    clearFormatPhoneNumber(
+                      state?.find(
+                        (field) => field?.field_id === 'phone_number_2'
+                      )?.field_value
+                    ) || '',
+                  ],
+                })
+              );
+              formData.append(
+                `works[${i}][field_id]`,
+                (
+                  work?.works[0]?.child_templates.flatMap(
+                    (child_template) => child_template?.fields || []
+                  ) || []
+                ).find((field) => field?.name === 'Контакт')?.id
+              );
+              formData.append(
+                `works[${i}][work_id]`,
+                (
+                  work?.works[0]?.child_templates.flatMap(
+                    (child_template) => child_template?.fields || []
+                  ) || []
+                ).find((field) => field?.name === 'Контакт')?.work_id
+              );
+            }
+            if (field?.field_id && field?.field_id !== 'fio') {
               formData.append(`works[${i}][field_id]`, field?.field_id);
             }
-            if (field?.work_id) {
+            if (field?.work_id && field?.field_id !== 'fio') {
               formData.append(`works[${i}][work_id]`, field?.work_id);
             }
           }
@@ -219,11 +264,13 @@ const CreateWork = ({ isEdit }) => {
           <form className="create-work-form" onSubmit={onSubmit}>
             <div className="create-work-form-fields">
               {(isEdit ? state : template?.fields || [])
-                .filter(
-                  (field) =>
-                    !(field?.field || field)?.name?.includes('Отчет') &&
-                    !(field?.field || field)?.name?.includes('Резолюция ') &&
-                    !(field?.field || field)?.name?.includes('Тип')
+                .filter((field) =>
+                  isEdit
+                    ? !(field?.field || field)?.name?.includes('Резолюция ') &&
+                      !(field?.field || field)?.name?.includes('Тип')
+                    : !(field?.field || field)?.name?.includes('Отчет') &&
+                      !(field?.field || field)?.name?.includes('Резолюция ') &&
+                      !(field?.field || field)?.name?.includes('Тип')
                 )
                 .map((field, i) => {
                   if (
