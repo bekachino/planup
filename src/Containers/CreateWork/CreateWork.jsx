@@ -47,7 +47,7 @@ const CreateWork = ({ isEdit }) => {
           [
             ...[
               ...(payload?.works || [])?.[0]?.fields,
-              ...(payload?.works || [])?.[0]?.child_templates?.flatMap(
+              ...((payload?.works || [])?.[0]?.child_templates || [])?.flatMap(
                 (child_template) => child_template?.fields
               ),
             ].map((field) => ({
@@ -69,7 +69,7 @@ const CreateWork = ({ isEdit }) => {
               values: statusTypes?.payload,
             },
             {
-              field_id: nanoid(),
+              field_id: `${nanoid()}123`,
               data_type: 'list',
               field_value: payload?.resolution?.name,
               id: payload?.resolution?.id,
@@ -313,12 +313,12 @@ const CreateWork = ({ isEdit }) => {
                           state.find(
                             (stateField) =>
                               (stateField?.field_id || stateField?.id) ===
-                              (field?.field || field)?.id
+                              (!['Резолюция', 'Статус', 'Исполнитель'].includes(field?.name) ? (field?.field || field)?.id : field?.field_id)
                           )?.field_value?.name ||
                           state.find(
                             (stateField) =>
                               (stateField?.field_id || stateField?.id) ===
-                              (field?.field || field)?.id
+                              (!['Резолюция', 'Статус', 'Исполнитель'].includes(field?.name) ? (field?.field || field)?.id : field?.field_id)
                           )?.field_value ||
                           ''
                         }
@@ -327,7 +327,11 @@ const CreateWork = ({ isEdit }) => {
                         placeholder={(field?.field || field).name}
                         onChange={(e) =>
                           handleChange(
-                            (field?.field || field).id,
+                            !['Резолюция', 'Статус', 'Исполнитель'].includes(
+                              field?.name
+                            )
+                              ? (field?.field || field).id
+                              : field?.field_id,
                             e.target.value
                           )
                         }
