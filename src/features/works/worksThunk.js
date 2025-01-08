@@ -15,7 +15,7 @@ export const getWorks = createAsyncThunk(
       const closed_at_query = `&closed_at=${filtersData?.closed_at || []}`;
 
       const req = await axiosApi(
-        `/v2/order-list/?page=${currentPage || 1}${user_id_query}${resolution_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}`
+        `/v2/order-list/?page_size=50&page=${currentPage || 1}${user_id_query}${resolution_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}`
       );
       return await req.data;
     } catch (e) {
