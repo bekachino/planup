@@ -58,6 +58,16 @@ const App = () => {
           </Suspense>
         }
       />
+      {['admin', 'chief'].includes(user?.role) && (
+        <Route
+          path="admin/squares"
+          element={
+            <Suspense fallback={<></>}>
+              <Squares />
+            </Suspense>
+          }
+        />
+      )}
       {user.role === 'admin' && (
         <>
           <Route
@@ -73,14 +83,6 @@ const App = () => {
             element={
               <Suspense fallback={<></>}>
                 <Locations />
-              </Suspense>
-            }
-          />
-          <Route
-            path="admin/squares"
-            element={
-              <Suspense fallback={<></>}>
-                <Squares />
               </Suspense>
             }
           />

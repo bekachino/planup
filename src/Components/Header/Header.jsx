@@ -19,9 +19,8 @@ import { addAlert } from '../../features/data/dataSlice';
 import { getTemplateTypes } from '../../features/statuses/filtersDataThunk';
 import { logout } from '../../features/user/usersSlice';
 import { uploadWorks } from '../../utils';
-import './header.css';
-import axios from 'axios';
 import axiosApi from '../../axiosApi';
+import './header.css';
 
 const Header = () => {
   const location = useLocation();
@@ -31,7 +30,7 @@ const Header = () => {
   const [createWorkModalOpen, setCreateWorkModalOpen] = useState(false);
   const { templateTypes } = useAppSelector((state) => state.filtersDataState);
   const { user } = useAppSelector((state) => state.userState);
-  const { works, shownFields } = useAppSelector((state) => state.worksState);
+  const { shownFields } = useAppSelector((state) => state.worksState);
   const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
 
   useEffect(() => {
@@ -70,37 +69,38 @@ const Header = () => {
   const onUploadWorks = async () => {
     const req = await axiosApi('/v2/order-list/?page_size=9999999&page=1');
     const res = await req.data;
-    const worksForUpload = (res?.results || []).map((work) => [
-      {
-        id: work.id || null,
-        name: 'Номер наряда' || null,
-        field_value: work.id || null,
-      },
-      {
-        id: work.bitrix_id || null,
-        name: 'Битрикс ID' || null,
-        field_value: work.bitrix_id || null,
-      },
-      {
-        id: work.status.id || null,
-        name: 'Статус' || null,
-        field_value: work.status.name || null,
-      },
-      {
-        id: work.works[0]?.template.id || null,
-        name: 'Шаблон',
-        field_value: work.works[0]?.template.name || null,
-      },
-      {
-        name: 'Дата создания',
-        field_value: work.created_at || null,
-      } || null,
-      {
-        name: 'Дата закрытия',
-        field_value: work.closed_at || null,
-      } || null,
-      ...(work.works[0]?.fields || []),
-    ]) || [];
+    const worksForUpload =
+      (res?.results || []).map((work) => [
+        {
+          id: work.id || null,
+          name: 'Номер наряда' || null,
+          field_value: work.id || null,
+        },
+        {
+          id: work.bitrix_id || null,
+          name: 'Битрикс ID' || null,
+          field_value: work.bitrix_id || null,
+        },
+        {
+          id: work.status.id || null,
+          name: 'Статус' || null,
+          field_value: work.status.name || null,
+        },
+        {
+          id: work.works[0]?.template.id || null,
+          name: 'Шаблон',
+          field_value: work.works[0]?.template.name || null,
+        },
+        {
+          name: 'Дата создания',
+          field_value: work.created_at || null,
+        } || null,
+        {
+          name: 'Дата закрытия',
+          field_value: work.closed_at || null,
+        } || null,
+        ...(work.works[0]?.fields || []),
+      ]) || [];
     uploadWorks(worksForUpload || [], shownFields);
   };
 
@@ -123,6 +123,12 @@ const Header = () => {
           <InboxIcon />
           Резолюции
         </NavLink>
+        {['chief'].includes(user?.role) && (
+          <NavLink to="/admin/squares">
+            <InboxIcon />
+            Квадраты
+          </NavLink>
+        )}
         <NavLink
           to="/works"
           onClick={(e) => {
@@ -146,10 +152,7 @@ const Header = () => {
             style={{ display: showBurgerTooltip ? 'flex' : 'none' }}
             onMouseDown={(e) => e.stopPropagation()}
           >
-            <button
-              className="nav-burger-tooltip-btn"
-              onClick={onUploadWorks}
-            >
+            <button className="nav-burger-tooltip-btn" onClick={onUploadWorks}>
               <ExcelIcon />
               Экспорт в Excel
             </button>

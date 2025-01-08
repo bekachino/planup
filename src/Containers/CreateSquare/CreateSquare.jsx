@@ -119,7 +119,7 @@ const CreateSquare = ({ isEdit }) => {
             (singleLocation) => singleLocation?.id
           ),
           section_chief: state.section_chief?.id || null,
-          service_engineer: state.service_engineer.map((si) => si?.id) || [],
+          service_engineer: state.service_engineer?.map((si) => si?.id) || [],
         })
       ).then((res) => {
         if (res?.meta?.requestStatus === 'fulfilled') {

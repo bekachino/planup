@@ -10,11 +10,11 @@ import {
 import { FILTER_CATEGORIES } from '../../constants';
 import Button from '../Button/Button';
 import DatetimePicker from '../DatetimePicker/DatetimePicker';
-import { nanoid } from 'nanoid';
-import './searchFilters.css';
 import { getWorks } from '../../features/works/worksThunk';
-import moment from 'moment';
 import { setFiltersData } from '../../features/statuses/filtersDataSlice';
+import { nanoid } from 'nanoid';
+import moment from 'moment';
+import './searchFilters.css';
 
 const SearchFilters = ({ ...rest }) => {
   const searchFiltersCategoriesRef = useRef(null);
@@ -187,9 +187,11 @@ const SearchFilters = ({ ...rest }) => {
     dispatch(
       getWorks({
         filtersData,
+        searchWord,
       })
     );
     dispatch(setFiltersData(filtersData));
+    setShowCategories(false);
   };
 
   const onReset = async () => {
