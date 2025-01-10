@@ -6,6 +6,8 @@ import { clearFormatPhoneNumber } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { createUser, editUser, getUser } from '../../features/data/dataThunk';
 import './createUser.css';
+import Checkbox from '../../Components/Checkbox/Checkbox';
+import { nanoid } from 'nanoid';
 
 const Input = lazy(() => import('../../Components/Input/Input'));
 const Autocomplete = lazy(
@@ -18,9 +20,8 @@ const CreateUser = ({ isEdit }) => {
   const { userId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, userLoading, createUserLoading, editUserLoading } = useAppSelector(
-    (state) => state.dataState
-  );
+  const { user, userLoading, createUserLoading, editUserLoading } =
+    useAppSelector((state) => state.dataState);
   const [state, setState] = useState(null);
 
   useEffect(() => {
@@ -38,8 +39,8 @@ const CreateUser = ({ isEdit }) => {
           : '',
       }));
     }
-  }, [user, dispatch]);
-
+  }, [user, dispatch, isEdit]);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState({
@@ -160,9 +161,25 @@ const CreateUser = ({ isEdit }) => {
               onChange={handleChange}
               label="Фото"
             />
+            <Checkbox
+              id={nanoid()}
+              label="Склад"
+              checked={state?.storage}
+              onChange={(e) =>
+                handleChange({
+                  target: {
+                    name: 'storage',
+                    value: e.target.checked,
+                  },
+                })
+              }
+            />
           </div>
           <div className="create-user-form-actions">
-            <Button type="submit" loading={userLoading || createUserLoading || editUserLoading}>
+            <Button
+              type="submit"
+              loading={userLoading || createUserLoading || editUserLoading}
+            >
               {isEdit ? 'Сохранить' : 'Создать'}
             </Button>
           </div>
