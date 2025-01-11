@@ -16,9 +16,9 @@ import {
   getResolutionTypes,
   getStatusTypes,
 } from '../../features/statuses/filtersDataThunk';
+import { clearFormatPhoneNumber } from '../../utils';
 import { nanoid } from 'nanoid';
 import './createWork.css';
-import { clearFormatPhoneNumber } from '../../utils';
 
 const CreateWork = ({ isEdit }) => {
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ const CreateWork = ({ isEdit }) => {
     (state) => state.filtersDataState
   );
   const [state, setState] = useState([]);
+  const [oldState, setOldState] = useState([]);
   const [work, setWork] = useState(null);
 
   useEffect(() => {
@@ -43,52 +44,56 @@ const CreateWork = ({ isEdit }) => {
       const users = await dispatch(getUsers());
 
       dispatch(getWork(workId)).then(({ payload }) => {
-        setState(
-          [
-            ...[
-              ...(payload?.works || [])?.[0]?.fields,
-              ...((payload?.works || [])?.[0]?.child_templates || [])?.flatMap(
-                (child_template) => child_template?.fields
-              ),
-            ].map((field) => ({
-              ...field,
-              field_value:
-                field?.name === 'Желаемая дата  приезда' && !!field?.field_value
-                  ? moment(new Date(field?.field_value)).format(
-                      'DD.MM.YYYY HH:mm'
-                    )
-                  : field?.field_value,
-              field_id: field?.id,
+        const fieldsList = [
+          ...[
+            ...(payload?.works || [])?.[0]?.fields,
+            ...((payload?.works || [])?.[0]?.child_templates || [])?.flatMap(
+              (child_template) =>
+                (child_template?.fields || []).map((child_template) => ({
+                  ...child_template,
+                  is_child_template: true,
+                }))
+            ),
+          ].map((field) => ({
+            ...field,
+            field_value:
+              field?.name === 'Желаемая дата  приезда' && !!field?.field_value
+                ? moment(new Date(field?.field_value)).format(
+                    'DD.MM.YYYY HH:mm'
+                  )
+                : field?.field_value,
+            field_id: field?.id,
+          })),
+          {
+            field_id: nanoid(),
+            data_type: 'list',
+            field_value: payload?.status,
+            id: payload?.status?.id,
+            name: 'Статус',
+            values: statusTypes?.payload,
+          },
+          {
+            field_id: `${nanoid()}123`,
+            data_type: 'list',
+            field_value: payload?.resolution?.name,
+            id: payload?.resolution?.id,
+            name: 'Резолюция',
+            values: resolutionTypes?.payload,
+          },
+          {
+            field_id: nanoid(),
+            data_type: 'list',
+            field_value: payload?.user_id?.name,
+            id: payload?.user_id?.id,
+            name: 'Исполнитель',
+            values: (users?.payload || []).map((user) => ({
+              ...user,
+              name: user?.full_name || '',
             })),
-            {
-              field_id: nanoid(),
-              data_type: 'list',
-              field_value: payload?.status,
-              id: payload?.status?.id,
-              name: 'Статус',
-              values: statusTypes?.payload,
-            },
-            {
-              field_id: `${nanoid()}123`,
-              data_type: 'list',
-              field_value: payload?.resolution?.name,
-              id: payload?.resolution?.id,
-              name: 'Резолюция',
-              values: resolutionTypes?.payload,
-            },
-            {
-              field_id: nanoid(),
-              data_type: 'list',
-              field_value: payload?.user_id?.name,
-              id: payload?.user_id?.id,
-              name: 'Исполнитель',
-              values: (users?.payload || []).map((user) => ({
-                ...user,
-                name: user?.full_name || '',
-              })),
-            },
-          ] || []
-        );
+          },
+        ];
+        setState(fieldsList);
+        setOldState(fieldsList);
         setWork(payload);
       });
     };
@@ -131,10 +136,23 @@ const CreateWork = ({ isEdit }) => {
 
     if (isEdit) {
       const formData = new FormData();
+      const editedChildTemplates =
+        state
+          .filter((field) => field?.is_edited && field?.is_child_template)
+          .map((field) => field?.name) || [];
+      const editedTemplateNames = work?.works?.[0]?.child_templates
+        .filter(
+          (child_template) =>
+            !!child_template?.fields.find((field) =>
+              editedChildTemplates?.includes(field?.name)
+            )
+        )
+        ?.map((child_template) => child_template?.template?.name || '');
 
       formData.append('is_web', true);
       formData.append('id', work?.id || null);
       formData.append('bitrix_id', work?.bitrix_id || null);
+      formData.append('type_work', JSON.stringify(editedTemplateNames));
       formData.append(
         'resolution',
         state.find((field) => field?.name === 'Резолюция')?.field_value?.id ||
@@ -246,8 +264,6 @@ const CreateWork = ({ isEdit }) => {
     }
   };
 
-  console.log(state);
-
   return (
     <div className="create-work">
       <div className="create-work-inner">
@@ -301,6 +317,13 @@ const CreateWork = ({ isEdit }) => {
                               : e.target.value
                           )
                         }
+                        required={
+                          !!oldState.find(
+                            (stateField) =>
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
+                          )?.field_value
+                        }
                       />
                     );
                   } else if (DATA_TYPES[field.data_type] === 'list') {
@@ -313,12 +336,20 @@ const CreateWork = ({ isEdit }) => {
                           state.find(
                             (stateField) =>
                               (stateField?.field_id || stateField?.id) ===
-                              (!['Резолюция', 'Статус', 'Исполнитель'].includes(field?.name) ? (field?.field || field)?.id : field?.field_id)
+                              (!['Резолюция', 'Статус', 'Исполнитель'].includes(
+                                field?.name
+                              )
+                                ? (field?.field || field)?.id
+                                : field?.field_id)
                           )?.field_value?.name ||
                           state.find(
                             (stateField) =>
                               (stateField?.field_id || stateField?.id) ===
-                              (!['Резолюция', 'Статус', 'Исполнитель'].includes(field?.name) ? (field?.field || field)?.id : field?.field_id)
+                              (!['Резолюция', 'Статус', 'Исполнитель'].includes(
+                                field?.name
+                              )
+                                ? (field?.field || field)?.id
+                                : field?.field_id)
                           )?.field_value ||
                           ''
                         }
@@ -334,6 +365,17 @@ const CreateWork = ({ isEdit }) => {
                               : field?.field_id,
                             e.target.value
                           )
+                        }
+                        required={
+                          !!oldState.find(
+                            (stateField) =>
+                              (stateField?.field_id || stateField?.id) ===
+                              (!['Резолюция', 'Статус', 'Исполнитель'].includes(
+                                field?.name
+                              )
+                                ? (field?.field || field)?.id
+                                : field?.field_id)
+                          )?.field_value?.name
                         }
                       />
                     );
@@ -356,6 +398,13 @@ const CreateWork = ({ isEdit }) => {
                             (field?.field || field).id,
                             e.target.value
                           )
+                        }
+                        required={
+                          !!oldState.find(
+                            (stateField) =>
+                              (stateField?.field_id || stateField?.id) ===
+                              (field?.field || field)?.id
+                          )?.field_value
                         }
                       />
                     );
@@ -395,6 +444,11 @@ const CreateWork = ({ isEdit }) => {
                           label="ФИО"
                           placeholder="Введите ФИО"
                           onChange={(e) => handleChange('fio', e.target.value)}
+                          required={
+                            !!oldState.find(
+                              (stateField) => stateField?.field_id === 'fio'
+                            )?.field_value
+                          }
                         />
                         <Input
                           key={i}
@@ -411,6 +465,12 @@ const CreateWork = ({ isEdit }) => {
                           onChange={(e) =>
                             handleChange('phone_number', e.target.value)
                           }
+                          required={
+                            !!oldState.find(
+                              (stateField) =>
+                                stateField?.field_id === 'phone_number'
+                            )?.field_value
+                          }
                         />
                         <Input
                           key={i + 1}
@@ -426,6 +486,12 @@ const CreateWork = ({ isEdit }) => {
                           placeholder="Доп. номер телефона"
                           onChange={(e) =>
                             handleChange('phone_number_2', e.target.value)
+                          }
+                          required={
+                            !!oldState.find(
+                              (stateField) =>
+                                stateField?.field_id === 'phone_number_2'
+                            )?.field_value
                           }
                         />
                       </>

@@ -1,13 +1,14 @@
 import moment from 'moment';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './Containers/Home/Home';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
-import { useAppSelector } from './app/hooks';
+import { useAppDispatch, useAppSelector } from './app/hooks';
 import 'moment/locale/ru';
 import './App.css';
 import UpdatePassword from './Containers/UpdatePassword/UpdatePassword';
+import { resetAlerts } from './features/data/dataSlice';
 
 const SignIn = lazy(() => import('./Containers/SignIn/SignIn'));
 const Work = lazy(() => import('./Containers/Work/Work'));
@@ -46,7 +47,12 @@ moment.locale('ru');
 
 const App = () => {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.userState);
+  
+  useEffect(() => {
+    if (user) dispatch(resetAlerts());
+  }, [user]);
 
   const authRoutes = () => (
     <>

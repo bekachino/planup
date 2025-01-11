@@ -79,6 +79,9 @@ const DataSlice = createSlice({
     removeAlert: (state, { payload }) => {
       state.alerts.find((alert) => alert.id === payload).show = false;
     },
+    resetAlerts: (state) => {
+      state.alerts = [];
+    },
     clearResolution: (state) => {
       state.resolution = null;
     },
@@ -344,4 +347,5 @@ export const {
   removeAlert,
   clearResolution,
   handleSearchValueChange,
+  resetAlerts,
 } = DataSlice.actions;

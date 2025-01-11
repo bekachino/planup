@@ -40,7 +40,7 @@ const CreateUser = ({ isEdit }) => {
       }));
     }
   }, [user, dispatch, isEdit]);
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState({
@@ -110,14 +110,16 @@ const CreateUser = ({ isEdit }) => {
               label="ФИО"
               required
             />
-            <Input
-              type="password"
-              name="password"
-              value={state?.password}
-              onChange={handleChange}
-              label="Пароль"
-              required
-            />
+            {isEdit && (
+              <Input
+                type="password"
+                name="password"
+                value={state?.password}
+                onChange={handleChange}
+                label="Пароль"
+                required
+              />
+            )}
             <Input
               name="one_c_code"
               value={state?.one_c_code}

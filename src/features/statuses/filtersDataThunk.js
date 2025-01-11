@@ -10,12 +10,6 @@ export const getExecuterTypes = createAsyncThunk(
       const req = await axiosApi('v2/resolution/');
       return (await req.data) || [];
     } catch (e) {
-      dispatch(
-        addAlert({
-          type: 'error',
-          message: 'Ошибка при получении исполнителей',
-        })
-      );
       return rejectWithValue('Ошибка при получении исполнителей');
     }
   }
@@ -46,12 +40,6 @@ export const getStatusTypes = createAsyncThunk(
       const req = await axiosApi('v2/status/');
       return (await req.data) || [];
     } catch (e) {
-      dispatch(
-        addAlert({
-          type: 'error',
-          message: 'Ошибка при получении статусов',
-        })
-      );
       return rejectWithValue('Ошибка при получении статусов');
     }
   }
@@ -100,12 +88,6 @@ export const getStages = createAsyncThunk(
       const req = await axiosApi('v2/stage/');
       return (await req.data) || [];
     } catch (e) {
-      dispatch(
-        addAlert({
-          type: 'error',
-          message: 'Ошибка при получении типов работы',
-        })
-      );
       return rejectWithValue('Ошибка при получении типов работы');
     }
   }
@@ -118,12 +100,6 @@ export const getCategories = createAsyncThunk(
       const req = await axiosApi('v2/category/');
       return (await req.data) || [];
     } catch (e) {
-      dispatch(
-        addAlert({
-          type: 'error',
-          message: 'Ошибка при получении типов категориев',
-        })
-      );
       return rejectWithValue('Ошибка при получении категориев');
     }
   }
@@ -154,12 +130,6 @@ export const getSquareTypes = createAsyncThunk(
       const req = await axiosApi('accounts/squares/');
       return (await req.data) || [];
     } catch (e) {
-      dispatch(
-        addAlert({
-          type: 'error',
-          message: 'Ошибка при получении квадратов',
-        })
-      );
       return rejectWithValue('Ошибка при получении квадратов');
     }
   }
@@ -172,13 +142,6 @@ export const getUserTypes = createAsyncThunk(
       const req = await axiosApi(`/accounts/users/`);
       return (await req.data) || [];
     } catch (e) {
-      dispatch(
-        addAlert({
-          type: 'error',
-          message:
-            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
-        })
-      );
       return rejectWithValue(
         ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
       );
