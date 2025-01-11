@@ -5,7 +5,7 @@ import { ERROR_MESSAGES } from '../../constants';
 
 export const getExecuterTypes = createAsyncThunk(
   'user/getExecuterTypes',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/resolution/');
       return (await req.data) || [];
@@ -35,7 +35,7 @@ export const getResolutionTypes = createAsyncThunk(
 
 export const getStatusTypes = createAsyncThunk(
   'user/getStatusTypes',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/status/');
       return (await req.data) || [];
@@ -83,7 +83,7 @@ export const getTemplateFields = createAsyncThunk(
 
 export const getStages = createAsyncThunk(
   'user/getStages',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/stage/');
       return (await req.data) || [];
@@ -95,7 +95,7 @@ export const getStages = createAsyncThunk(
 
 export const getCategories = createAsyncThunk(
   'user/getCategories',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const req = await axiosApi('v2/category/');
       return (await req.data) || [];
@@ -125,7 +125,7 @@ export const getSquares = createAsyncThunk(
 
 export const getSquareTypes = createAsyncThunk(
   'user/getSquareTypes',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const req = await axiosApi('accounts/squares/');
       return (await req.data) || [];
@@ -137,7 +137,7 @@ export const getSquareTypes = createAsyncThunk(
 
 export const getUserTypes = createAsyncThunk(
   'data/getUserTypes',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const req = await axiosApi(`/accounts/users/`);
       return (await req.data) || [];
