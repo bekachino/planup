@@ -115,30 +115,36 @@ const Header = () => {
         <SearchFilters placeholder="Поиск" />
       )}
       <nav>
-        <NavLink to="/templates">
-          <FileIcon />
-          Шаблоны
-        </NavLink>
-        <NavLink to="/resolutions">
-          <InboxIcon />
-          Резолюции
-        </NavLink>
-        {['chief'].includes(user?.role) && (
-          <NavLink to="/admin/squares">
-            <InboxIcon />
-            Квадраты
-          </NavLink>
+        {['admin'].includes(user?.role) && (
+          <>
+            <NavLink to="/templates">
+              <FileIcon />
+              Шаблоны
+            </NavLink>
+            <NavLink to="/resolutions">
+              <InboxIcon />
+              Резолюции
+            </NavLink>
+          </>
         )}
-        <NavLink
-          to="/works"
-          onClick={(e) => {
-            e.preventDefault();
-            toggleCreateWorkModal(true);
-          }}
-        >
-          <LucidIcon />
-          Создать наряд
-        </NavLink>
+        {['chief', 'admin'].includes(user?.role) && (
+          <>
+            <NavLink to="/admin/squares">
+              <InboxIcon />
+              Квадраты
+            </NavLink>
+            <NavLink
+              to="/works"
+              onClick={(e) => {
+                e.preventDefault();
+                toggleCreateWorkModal(true);
+              }}
+            >
+              <LucidIcon />
+              Создать наряд
+            </NavLink>
+          </>
+        )}
         <div className="nav-burger-btn-wrapper">
           <button
             className={`nav-burger-btn ${showBurgerTooltip && 'nav-burger-tooltip-shown'}`}
@@ -167,7 +173,7 @@ const Header = () => {
               }}
             >
               <UserIcon />
-              Привет, Admin!
+              Привет, {user?.fullName || ''}!
             </button>
             <button
               className="nav-burger-tooltip-btn"

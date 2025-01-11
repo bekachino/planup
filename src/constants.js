@@ -100,6 +100,7 @@ export const ROLES = {
   engineer: 'Сервисный инженер',
   admin: 'Администратор',
   office: 'Офисник',
+  captain: 'Капитан сервис инженеров'
 };
 
 export const ROLES_ARRAY = [
@@ -118,6 +119,10 @@ export const ROLES_ARRAY = [
   {
     id: 'office',
     value: 'Офисник',
+  },
+  {
+    id: 'captain',
+    value: 'Капитан сервис инженеров',
   },
 ];
 

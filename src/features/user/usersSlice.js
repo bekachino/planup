@@ -22,6 +22,7 @@ const UsersSlice = createSlice({
       state.signInLoading = false;
       state.user = {
         name: res.username,
+        fullName: res.full_name,
         role: res.role,
         token: res.access,
       };
