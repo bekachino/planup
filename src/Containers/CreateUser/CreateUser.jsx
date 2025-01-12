@@ -110,7 +110,7 @@ const CreateUser = ({ isEdit }) => {
               label="ФИО"
               required
             />
-            {isEdit && (
+            {!isEdit && (
               <Input
                 type="password"
                 name="password"
