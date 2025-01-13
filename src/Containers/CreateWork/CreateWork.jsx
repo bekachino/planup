@@ -136,23 +136,26 @@ const CreateWork = ({ isEdit }) => {
 
     if (isEdit) {
       const formData = new FormData();
-      const editedChildTemplates =
-        state
-          .filter((field) => field?.is_edited && field?.is_child_template)
-          .map((field) => field?.name) || [];
-      const editedTemplateNames = work?.works?.[0]?.child_templates
-        .filter(
-          (child_template) =>
-            !!child_template?.fields.find((field) =>
-              editedChildTemplates?.includes(field?.name)
-            )
-        )
-        ?.map((child_template) => child_template?.template?.name || '');
+
+      if (!!work?.works?.[0]?.child_templates) {
+        const editedChildTemplates =
+          state
+            .filter((field) => field?.is_edited && field?.is_child_template)
+            .map((field) => field?.name) || [];
+        const editedTemplateNames = work?.works?.[0]?.child_templates
+          ?.filter(
+            (child_template) =>
+              !!child_template?.fields.find((field) =>
+                editedChildTemplates?.includes(field?.name)
+              )
+          )
+          ?.map((child_template) => child_template?.template?.name || '');
+        formData.append('type_work', JSON.stringify(editedTemplateNames));
+      } else formData.append('type_work', JSON.stringify([]));
 
       formData.append('is_web', true);
       formData.append('id', work?.id || null);
       formData.append('bitrix_id', work?.bitrix_id || null);
-      formData.append('type_work', JSON.stringify(editedTemplateNames));
       formData.append(
         'resolution',
         state.find((field) => field?.name === 'Резолюция')?.field_value?.id ||

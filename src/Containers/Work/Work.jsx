@@ -7,7 +7,6 @@ import { ReactComponent as EditDarkIcon } from '../../assets/edit-dark.svg';
 import { deleteWork, getWork } from '../../features/works/worksThunk';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import moment from 'moment';
 import Button from '../../Components/Button/Button';
 import Modal from '../../Components/Modal/Modal';
 import './work.css';
@@ -168,13 +167,7 @@ const Work = () => {
           <div className="work-value-row" key={i}>
             <span className="work-row-name">{workField.name || '-'}</span>
             <span className="work-row-value">
-              {workField.data_type === 'datetime' ? (
-                !!workField.field_value ? (
-                  moment(workField.field_value).format('DD-MM-YYYY HH:mm')
-                ) : (
-                  '-'
-                )
-              ) : workField?.data_type === 'url' ? (
+              {workField?.data_type === 'url' ? (
                 <Link to={workField.field_value} target="_blank">
                   {workField.field_value}
                 </Link>

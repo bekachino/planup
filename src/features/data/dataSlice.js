@@ -77,7 +77,8 @@ const DataSlice = createSlice({
       });
     },
     removeAlert: (state, { payload }) => {
-      state.alerts.find((alert) => alert.id === payload).show = false;
+      if (!!state.alerts.find((alert) => alert.id === payload).show)
+        state.alerts.find((alert) => alert.id === payload).show = false;
     },
     resetAlerts: (state) => {
       state.alerts = [];

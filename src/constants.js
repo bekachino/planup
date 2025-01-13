@@ -127,7 +127,6 @@ export const ROLES_ARRAY = [
 ];
 
 export const DATE_FIELDS = [
-  'Желаемая дата  приезда',
   'Дата создания',
   'Дата закрытия',
 ];
