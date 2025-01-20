@@ -7,8 +7,8 @@ import { ReactComponent as DeleteDarkIcon } from '../../assets/delete-dark.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  deleteSectionChief,
-  getSectionChief,
+  deleteServiceEngineer,
+  getServiceEngineer,
 } from '../../features/data/dataThunk';
 import defaultUserPng from '../../assets/default-user.png';
 import { ROLES } from '../../constants';
@@ -18,17 +18,20 @@ import '../CreateUser/createUser.css';
 import '../Users/users.css';
 import '../User/user.css';
 
-const SectionChief = () => {
+const ServiceEngineer = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const dispatch = useAppDispatch();
-  const { sectionChief, sectionChiefLoading, deleteSectionChiefLoading } =
-    useAppSelector((state) => state.dataState);
+  const {
+    serviceEngineer,
+    serviceEngineerLoading,
+    deleteServiceEngineerLoading,
+  } = useAppSelector((state) => state.dataState);
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getSectionChief(userId));
+    dispatch(getServiceEngineer(userId));
   }, [dispatch, userId]);
 
   const toggleTooltip = (value) => setTooltipOpen(value);
@@ -36,9 +39,9 @@ const SectionChief = () => {
   const toggleModal = (value) => setModalIsOpen(value);
 
   const onDelete = () => {
-    dispatch(deleteSectionChief(userId)).then((res) => {
+    dispatch(deleteServiceEngineer(userId)).then((res) => {
       if (res?.meta?.requestStatus === 'fulfilled') {
-        navigate('/admin/section-chiefs');
+        navigate('/admin/service-engineers');
       }
     });
   };
@@ -54,16 +57,16 @@ const SectionChief = () => {
           className="create-template-paper-header"
           style={{ flexDirection: 'column' }}
         >
-          <h2>Удалить начальника участка?</h2>
+          <h2>Удалить сервис инженера?</h2>
           <span className="create-template-paper-header-desc">
-            Вы уверены что хотите удалить начальника участка?
+            Вы уверены что хотите удалить сервис инженера?
           </span>
         </div>
         <div className="delete-modal-btns">
           <Button
             color="error"
             onClick={onDelete}
-            loading={deleteSectionChiefLoading}
+            loading={deleteServiceEngineerLoading}
           >
             Удалить
           </Button>
@@ -81,7 +84,7 @@ const SectionChief = () => {
           <button className="page-back" onClick={() => navigate('/admin/home')}>
             <ArrowPointerRight />
           </button>
-          <h2>Информация о начальнике участка</h2>
+          <h2>Информация о СИ</h2>
           <div className="user-tooltip-wrapper">
             <button
               className="user-tooltip-toggle"
@@ -93,7 +96,7 @@ const SectionChief = () => {
               <div className="user-tooltip">
                 <button
                   onClick={() =>
-                    navigate(`/admin/edit-section-chief/${sectionChief?.id}`)
+                    navigate(`/admin/edit-section-chief/${serviceEngineer?.id}`)
                   }
                 >
                   <RefreshDarkIcon />
@@ -108,58 +111,62 @@ const SectionChief = () => {
           </div>
         </div>
         <div
-          className={`users-body users-list-${sectionChiefLoading ? 'loading' : ''}`}
+          className={`users-body users-list-${serviceEngineerLoading ? 'loading' : ''}`}
         >
-          {!sectionChiefLoading && (
+          {!serviceEngineerLoading && (
             <>
               <div className="user-avatar">
                 <img
                   src={
-                    !!sectionChief?.photo ? sectionChief.photo : defaultUserPng
+                    !!serviceEngineer?.photo
+                      ? serviceEngineer.photo
+                      : defaultUserPng
                   }
-                  alt={sectionChief?.full_name || 'Пользователь'}
+                  alt={serviceEngineer?.full_name || 'Пользователь'}
                 />
               </div>
               <div className="user-info-row">
                 <div className="user-info-role">ФИО</div>
                 <div className="user-info-name">
-                  {sectionChief?.full_name || 'ㅤ'}
+                  {serviceEngineer?.full_name || 'ㅤ'}
                 </div>
               </div>
               <div className="user-info-row">
                 <div className="user-info-role">Имя пользователя</div>
                 <div className="user-info-name">
-                  {sectionChief?.username || 'ㅤ'}
+                  {serviceEngineer?.username || 'ㅤ'}
                 </div>
               </div>
               <div className="user-info-row">
                 <div className="user-info-role">Номер телефона</div>
                 <div className="user-info-name">
-                  {sectionChief?.phone_number || 'ㅤ'}
+                  {serviceEngineer?.phone_number || 'ㅤ'}
                 </div>
               </div>
               <div className="user-info-row">
                 <div className="user-info-role">Код 1С</div>
                 <div className="user-info-name">
-                  {sectionChief?.one_c_code || 'ㅤ'}
+                  {serviceEngineer?.one_c_code || 'ㅤ'}
                 </div>
               </div>
               <div className="user-info-row">
                 <div className="user-info-role">Битрикс ID</div>
                 <div className="user-info-name">
-                  {sectionChief?.bitrix_id || 'ㅤ'}
+                  {serviceEngineer?.bitrix_id || 'ㅤ'}
                 </div>
               </div>
               <div className="user-info-row">
                 <div className="user-info-role">Регион</div>
                 <div className="user-info-name">
-                  {sectionChief?.region || 'ㅤ'}
+                  {serviceEngineer?.region || 'ㅤ'}
                 </div>
               </div>
               <div className="user-info-row">
                 <div className="user-info-role">Роль</div>
                 <div className="user-info-name">
-                  {!!sectionChief?.role ? ROLES[sectionChief?.role] : 'ㅤ'}
+                  {!!serviceEngineer?.role
+                    ? ROLES[serviceEngineer?.role]
+                    : 'ㅤ'}
                 </div>
               </div>
             </>
@@ -170,4 +177,4 @@ const SectionChief = () => {
   );
 };
 
-export default SectionChief;
+export default ServiceEngineer;

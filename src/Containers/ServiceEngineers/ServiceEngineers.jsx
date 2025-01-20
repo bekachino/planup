@@ -23,8 +23,8 @@ const ServiceEngineers = () => {
     if (!!serviceEngineersListRef?.current) {
       setUsersListHeight(
         window.innerHeight -
-        serviceEngineersListRef.current?.getBoundingClientRect().top -
-        20
+          serviceEngineersListRef.current?.getBoundingClientRect().top -
+          20
       );
     }
   }, [serviceEngineers]);
@@ -71,7 +71,7 @@ const ServiceEngineers = () => {
                 </div>
                 <div className="user-info">
                   <Link
-                    to={`/admin/service-engineer/${serviceEngineer?.service_engineer?.id || ''}`}
+                    to={`/admin/service-engineer/${serviceEngineer?.id || ''}`}
                     className="user-full-name"
                   >
                     {serviceEngineer?.service_engineer?.full_name || 'ㅤ'}

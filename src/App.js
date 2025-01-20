@@ -32,6 +32,9 @@ const CreateUser = lazy(() => import('./Containers/CreateUser/CreateUser'));
 const ServiceEngineers = lazy(
   () => import('./Containers/ServiceEngineers/ServiceEngineers')
 );
+const ServiceEngineer = lazy(
+  () => import('./Containers/ServiceEngineer/ServiceEngineer')
+);
 const SectionChiefs = lazy(
   () => import('./Containers/SectionChiefs/SectionChiefs')
 );
@@ -156,6 +159,14 @@ const App = () => {
             element={
               <Suspense fallback={<></>}>
                 <ServiceEngineers />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/service-engineer/:userId"
+            element={
+              <Suspense fallback={<></>}>
+                <ServiceEngineer />
               </Suspense>
             }
           />

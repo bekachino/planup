@@ -8,6 +8,7 @@ import {
   createUser,
   deleteResolution,
   deleteSectionChief,
+  deleteServiceEngineer,
   deleteSquare,
   deleteTemplate,
   deleteUser,
@@ -19,6 +20,7 @@ import {
   getResolution,
   getSectionChief,
   getSectionChiefs,
+  getServiceEngineer,
   getServiceEngineers,
   getSquare,
   getTemplate,
@@ -36,12 +38,14 @@ const initialState = {
   users: [],
   user: null,
   sectionChief: null,
+  serviceEngineer: null,
   template: null,
   resolution: null,
   square: null,
   usersLoading: false,
   userLoading: false,
   sectionChiefLoading: false,
+  serviceEngineerLoading: false,
   locationsLoading: false,
   serviceEngineersLoading: false,
   sectionChiefsLoading: false,
@@ -64,6 +68,7 @@ const initialState = {
   updatePasswordLoading: false,
   deleteUserLoading: false,
   deleteSectionChiefLoading: false,
+  deleteServiceEngineerLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -227,6 +232,31 @@ const DataSlice = createSlice({
     );
     builder.addCase(getServiceEngineers.rejected, (state) => {
       state.serviceEngineersLoading = false;
+    });
+
+    builder.addCase(getServiceEngineer.pending, (state) => {
+      state.serviceEngineerLoading = true;
+      state.sectionChief = null;
+    });
+    builder.addCase(getServiceEngineer.fulfilled, (state, { payload: res }) => {
+      state.serviceEngineerLoading = false;
+      state.serviceEngineer = {
+        ...res?.service_engineer,
+        id: res?.id,
+      };
+    });
+    builder.addCase(getServiceEngineer.rejected, (state) => {
+      state.serviceEngineerLoading = false;
+    });
+
+    builder.addCase(deleteServiceEngineer.pending, (state) => {
+      state.deleteServiceEngineerLoading = true;
+    });
+    builder.addCase(deleteServiceEngineer.fulfilled, (state) => {
+      state.deleteServiceEngineerLoading = false;
+    });
+    builder.addCase(deleteServiceEngineer.rejected, (state) => {
+      state.deleteServiceEngineerLoading = false;
     });
 
     builder.addCase(getSectionChiefs.pending, (state) => {

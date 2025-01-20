@@ -251,6 +251,47 @@ export const getServiceEngineers = createAsyncThunk(
   }
 );
 
+export const getServiceEngineer = createAsyncThunk(
+  'data/getServiceEngineer',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/accounts/service_engineer/${id}/`);
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const deleteServiceEngineer = createAsyncThunk(
+  'data/deleteServiceEngineer',
+  async (userId, { dispatch, rejectWithValue }) => {
+    try {
+      await axiosApi.delete(`/accounts/service_engineer/${userId}/`);
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
 export const getSectionChiefs = createAsyncThunk(
   'data/getSectionChiefs',
   async (_, { dispatch, rejectWithValue }) => {
