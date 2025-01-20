@@ -71,7 +71,7 @@ const SectionChiefs = () => {
                 </div>
                 <div className="user-info">
                   <Link
-                    to={`/admin/section-chief/${sectionChief?.section_chief?.id || ''}`}
+                    to={`/admin/section-chief/${sectionChief?.id || ''}`}
                     className="user-full-name"
                   >
                     {sectionChief?.section_chief?.full_name || 'ㅤ'}

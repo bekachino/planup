@@ -7,6 +7,7 @@ import {
   createTemplate,
   createUser,
   deleteResolution,
+  deleteSectionChief,
   deleteSquare,
   deleteTemplate,
   deleteUser,
@@ -16,6 +17,7 @@ import {
   editUser,
   getLocations,
   getResolution,
+  getSectionChief,
   getSectionChiefs,
   getServiceEngineers,
   getSquare,
@@ -33,11 +35,13 @@ const initialState = {
   sectionChiefs: [],
   users: [],
   user: null,
+  sectionChief: null,
   template: null,
   resolution: null,
   square: null,
   usersLoading: false,
   userLoading: false,
+  sectionChiefLoading: false,
   locationsLoading: false,
   serviceEngineersLoading: false,
   sectionChiefsLoading: false,
@@ -59,6 +63,7 @@ const initialState = {
   deleteSquareLoading: false,
   updatePasswordLoading: false,
   deleteUserLoading: false,
+  deleteSectionChiefLoading: false,
 };
 
 const DataSlice = createSlice({
@@ -77,7 +82,7 @@ const DataSlice = createSlice({
       });
     },
     removeAlert: (state, { payload }) => {
-      if (!!state.alerts.find((alert) => alert.id === payload).show)
+      if (!!state.alerts.find((alert) => alert.id === payload)?.show)
         state.alerts.find((alert) => alert.id === payload).show = false;
     },
     resetAlerts: (state) => {
@@ -234,6 +239,31 @@ const DataSlice = createSlice({
     });
     builder.addCase(getSectionChiefs.rejected, (state) => {
       state.sectionChiefsLoading = false;
+    });
+
+    builder.addCase(getSectionChief.pending, (state) => {
+      state.sectionChiefLoading = true;
+      state.sectionChief = null;
+    });
+    builder.addCase(getSectionChief.fulfilled, (state, { payload: res }) => {
+      state.sectionChiefLoading = false;
+      state.sectionChief = {
+        ...res?.section_chief,
+        id: res?.id,
+      };
+    });
+    builder.addCase(getSectionChief.rejected, (state) => {
+      state.sectionChiefLoading = false;
+    });
+
+    builder.addCase(deleteSectionChief.pending, (state) => {
+      state.deleteSectionChiefLoading = true;
+    });
+    builder.addCase(deleteSectionChief.fulfilled, (state) => {
+      state.deleteSectionChiefLoading = false;
+    });
+    builder.addCase(deleteSectionChief.rejected, (state) => {
+      state.deleteSectionChiefLoading = false;
     });
 
     builder.addCase(createSquare.pending, (state) => {

@@ -5,10 +5,10 @@ import { lazy, Suspense, useEffect } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import 'moment/locale/ru';
-import './App.css';
 import UpdatePassword from './Containers/UpdatePassword/UpdatePassword';
 import { resetAlerts } from './features/data/dataSlice';
+import 'moment/locale/ru';
+import './App.css';
 
 const SignIn = lazy(() => import('./Containers/SignIn/SignIn'));
 const Work = lazy(() => import('./Containers/Work/Work'));
@@ -35,6 +35,9 @@ const ServiceEngineers = lazy(
 const SectionChiefs = lazy(
   () => import('./Containers/SectionChiefs/SectionChiefs')
 );
+const SectionChief = lazy(
+  () => import('./Containers/SectionChief/SectionChief')
+);
 const CreateSectionChief = lazy(
   () => import('./Containers/CreateSectionChief/CreateSectionChief')
 );
@@ -49,7 +52,7 @@ const App = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.userState);
-  
+
   useEffect(() => {
     if (user) dispatch(resetAlerts());
   }, [user]);
@@ -137,6 +140,14 @@ const App = () => {
             element={
               <Suspense fallback={<></>}>
                 <SectionChiefs />
+              </Suspense>
+            }
+          />
+          <Route
+            path="admin/section-chief/:userId"
+            element={
+              <Suspense fallback={<></>}>
+                <SectionChief />
               </Suspense>
             }
           />

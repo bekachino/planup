@@ -253,10 +253,51 @@ export const getServiceEngineers = createAsyncThunk(
 
 export const getSectionChiefs = createAsyncThunk(
   'data/getSectionChiefs',
-  async (id, { dispatch, rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const req = await axiosApi(`/accounts/section_chiefs/`);
       return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const getSectionChief = createAsyncThunk(
+  'data/getSectionChief',
+  async (id, { dispatch, rejectWithValue }) => {
+    try {
+      const req = await axiosApi(`/accounts/section_chiefs/${id}/`);
+      return (await req.data) || [];
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
+export const deleteSectionChief = createAsyncThunk(
+  'data/deleteSectionChief',
+  async (userId, { dispatch, rejectWithValue }) => {
+    try {
+      await axiosApi.delete(`/accounts/section_chiefs/${userId}/`);
     } catch (e) {
       dispatch(
         addAlert({
