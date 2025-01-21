@@ -206,7 +206,12 @@ const Header = () => {
             placeholder="Выберите шаблон"
             name="createWorkTemplate"
             value={createWorkTemplate?.name}
-            options={templateTypes}
+            options={templateTypes.filter(
+              (option) =>
+                !option?.name.includes('Подключение') &&
+                !option?.name.includes('Демонтаж') &&
+                !option?.parent
+            )}
             onChange={handleWorkTemplateChange}
             required
           />
