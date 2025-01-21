@@ -13,6 +13,7 @@ import {
   deleteTemplate,
   deleteUser,
   editResolution,
+  editSectionChief,
   editSquare,
   editTemplate,
   editUser,
@@ -67,6 +68,7 @@ const initialState = {
   deleteSquareLoading: false,
   updatePasswordLoading: false,
   deleteUserLoading: false,
+  editSectionChiefLoading: false,
   deleteSectionChiefLoading: false,
   deleteServiceEngineerLoading: false,
 };
@@ -368,6 +370,16 @@ const DataSlice = createSlice({
     });
     builder.addCase(createSectionChief.rejected, (state) => {
       state.createSectionChiefLoading = false;
+    });
+
+    builder.addCase(editSectionChief.pending, (state) => {
+      state.editSectionChiefLoading = true;
+    });
+    builder.addCase(editSectionChief.fulfilled, (state) => {
+      state.editSectionChiefLoading = false;
+    });
+    builder.addCase(editSectionChief.rejected, (state) => {
+      state.editSectionChiefLoading = false;
     });
 
     builder.addCase(createServiceEngineer.pending, (state) => {

@@ -334,6 +334,35 @@ export const getSectionChief = createAsyncThunk(
   }
 );
 
+export const editSectionChief = createAsyncThunk(
+  'data/editSectionChief',
+  async (sectionChief, { dispatch, rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+
+      Object.keys(sectionChief).forEach((key) =>
+        formData.append(key, sectionChief[key])
+      );
+
+      await axiosApi.put(
+        `/accounts/section_chiefs/${sectionChief?.section_chief_id}/`,
+        formData
+      );
+    } catch (e) {
+      dispatch(
+        addAlert({
+          type: 'error',
+          message:
+            ERROR_MESSAGES[e?.code !== 'ERR_NETWORK' ? e.response.status : 500],
+        })
+      );
+      return rejectWithValue(
+        ERROR_MESSAGES[e.response.status] || ERROR_MESSAGES[500]
+      );
+    }
+  }
+);
+
 export const deleteSectionChief = createAsyncThunk(
   'data/deleteSectionChief',
   async (userId, { dispatch, rejectWithValue }) => {
