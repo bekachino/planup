@@ -47,9 +47,6 @@ const CreateSectionChief = lazy(
 const CreateServiceEngineer = lazy(
   () => import('./Containers/CreateServiceEngineer/CreateServiceEngineer')
 );
-const EditSectionChief = lazy(
-  () => import('./Containers/EditSectionChief/EditSectionChief')
-);
 const Locations = lazy(() => import('./Containers/Locations/Locations'));
 
 moment.locale('ru');
@@ -61,7 +58,7 @@ const App = () => {
 
   useEffect(() => {
     if (user) dispatch(resetAlerts());
-  }, [user]);
+  }, [user ,dispatch]);
 
   const authRoutes = () => (
     <>
@@ -181,14 +178,14 @@ const App = () => {
               </Suspense>
             }
           />
-          <Route
-            path="admin/edit-section-chief/:userId"
-            element={
-              <Suspense fallback={<></>}>
-                <EditSectionChief />
-              </Suspense>
-            }
-          />
+          {/*<Route*/}
+          {/*  path="admin/edit-section-chief/:userId"*/}
+          {/*  element={*/}
+          {/*    <Suspense fallback={<></>}>*/}
+          {/*      <EditSectionChief />*/}
+          {/*    </Suspense>*/}
+          {/*  }*/}
+          {/*/>*/}
           <Route
             path="admin/create-service-engineer"
             element={
