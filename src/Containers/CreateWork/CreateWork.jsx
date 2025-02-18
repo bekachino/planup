@@ -44,14 +44,16 @@ const CreateWork = ({ isEdit }) => {
       const users = await dispatch(getUsers());
 
       dispatch(getWork(workId)).then(({ payload }) => {
+        if (!payload?.works) return;
         const fieldsList = [
           ...[
             ...(payload?.works || [])?.[0]?.fields,
             ...((payload?.works || [])?.[0]?.child_templates || [])?.flatMap(
               (child_template) =>
-                (child_template?.fields || []).map((child_template) => ({
-                  ...child_template,
+                (child_template?.fields || []).map((child_template_field) => ({
+                  ...child_template_field,
                   is_child_template: true,
+                  child_template_name: child_template?.template?.name || '',
                 }))
             ),
           ].map((field) => ({
@@ -62,7 +64,12 @@ const CreateWork = ({ isEdit }) => {
                     'DD.MM.YYYY HH:mm'
                   )
                 : field?.field_value,
-            field_id: field?.id,
+            field_id: !!field?.is_child_template
+              ? `${field?.id} - ${field?.child_template_name}`
+              : field?.id,
+            id: !!field?.is_child_template
+              ? `${field?.id} - ${field?.child_template_name}`
+              : field?.id,
           })),
           {
             field_id: nanoid(),
@@ -229,7 +236,12 @@ const CreateWork = ({ isEdit }) => {
               );
             }
             if (field?.field_id && field?.field_id !== 'fio') {
-              formData.append(`works[${i}][field_id]`, field?.field_id);
+              formData.append(
+                `works[${i}][field_id]`,
+                !!field?.is_child_template
+                  ? Number(field.field_id.split(' - ')[0])
+                  : field.field_id
+              );
             }
             if (field?.work_id && field?.field_id !== 'fio') {
               formData.append(`works[${i}][work_id]`, field?.work_id);
@@ -357,7 +369,7 @@ const CreateWork = ({ isEdit }) => {
                           ''
                         }
                         options={field?.values || []}
-                        label={(field?.field || field).name}
+                        label={`${(field?.field || field).name}${field?.is_child_template ? ` → ${field?.child_template_name}` : ''}`}
                         placeholder={(field?.field || field).name}
                         onChange={(e) =>
                           handleChange(

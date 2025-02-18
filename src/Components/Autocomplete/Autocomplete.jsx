@@ -19,7 +19,7 @@ const Autocomplete = ({
   const [selectOptionsHeight, setSelectOptionsHeight] = useState(0);
   const [showOptions, setShowOptions] = useState(false);
   const [focusedOption, setFocusedOption] = useState(-1);
-
+  
   useEffect(() => {
     !multiple && setInputValue(value || '');
   }, [value, multiple]);
@@ -75,7 +75,7 @@ const Autocomplete = ({
           option?.value?.toLowerCase() ||
           option?.label?.toLowerCase() ||
           ''
-        ).includes(inputValue?.toLowerCase())
+        ).includes((inputValue?.name || inputValue)?.toLowerCase())
       ),
     [inputValue, value, options, multiple]
   );
@@ -135,7 +135,7 @@ const Autocomplete = ({
       setFocusedOption(0);
     }
   };
-
+  
   return (
     <div
       key={key}
@@ -146,7 +146,7 @@ const Autocomplete = ({
     >
       <Input
         autoComplete="off"
-        value={inputValue}
+        value={(inputValue?.name || inputValue)}
         values={multiple ? value : []}
         label={label}
         placeholder={placeholder}
