@@ -57,6 +57,7 @@ const CreateTemplate = ({ isEdit }) => {
           category: res.payload?.category?.[0] || null,
           parent: res.payload?.parent?.[0] || null,
           stage: res.payload?.stage?.[0] || null,
+          paid: res.payload?.paid || false,
           fields:
             res.payload?.fields?.map((field) => ({
               field: {
@@ -164,6 +165,7 @@ const CreateTemplate = ({ isEdit }) => {
           ...state,
           parent: state?.parent?.id,
           stage: state?.stage?.id,
+          paid: state?.paid || false,
           category: Number(state?.category?.id || 0),
           fields: state.fields.map((field, i) => ({
             ...field,
@@ -182,7 +184,10 @@ const CreateTemplate = ({ isEdit }) => {
   return (
     <div className="create-template">
       <div className="create-template-paper">
-        <div className="create-template-paper-header" style={{flexDirection: 'row'}}>
+        <div
+          className="create-template-paper-header"
+          style={{ flexDirection: 'row' }}
+        >
           <button className="page-back" onClick={() => navigate('/templates')}>
             <ArrowPointerRight />
           </button>
@@ -227,6 +232,22 @@ const CreateTemplate = ({ isEdit }) => {
               value={state?.category?.name}
               options={categories}
               onChange={onChange}
+            />
+          </div>
+          <div className="template-field-row">
+            <Checkbox
+              label="Платный выезд"
+              name="paid"
+              checked={state?.paid}
+              onChange={(e) =>
+                onChange({
+                  target: {
+                    name: 'paid',
+                    value: e.target.checked,
+                  },
+                })
+              }
+              id={nanoid()}
             />
           </div>
           {state.fields?.map((field) => (

@@ -4,7 +4,7 @@ import { ReactComponent as StoppedIcon } from './assets/stopped.svg';
 import { ReactComponent as OnWayIcon } from './assets/on-way.svg';
 import { ReactComponent as FinishedIcon } from './assets/finished.svg';
 
-export const API_URL = 'http://10.1.2.51:8000/api';
+export const API_URL = 'http://185.39.79.71:8000/api';
 
 export const ERROR_MESSAGES = {
   400: 'Неверные данные',
@@ -100,7 +100,7 @@ export const ROLES = {
   engineer: 'Сервисный инженер',
   admin: 'Администратор',
   office: 'Офисник',
-  captain: 'Капитан сервис инженеров'
+  captain: 'Капитан сервис инженеров',
 };
 
 export const ROLES_ARRAY = [
@@ -126,10 +126,7 @@ export const ROLES_ARRAY = [
   },
 ];
 
-export const DATE_FIELDS = [
-  'Дата создания',
-  'Дата закрытия',
-];
+export const DATE_FIELDS = ['Дата создания', 'Дата закрытия'];
 export const REQUIRED_WORKS_LIST_FIELDS = [
   'Номер наряда',
   'Битрикс ID',
