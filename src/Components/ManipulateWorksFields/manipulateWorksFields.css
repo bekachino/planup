@@ -11,7 +11,9 @@
   margin: 0;
 }
 
-.manipulate-works-fields-modal .create-template-paper-header .manipulate-works-fields-modal-desc {
+.manipulate-works-fields-modal
+  .create-template-paper-header
+  .manipulate-works-fields-modal-desc {
   display: inline-block;
   width: 100%;
   font-size: 20px;

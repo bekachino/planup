@@ -13,8 +13,7 @@ export const signIn = createAsyncThunk(
       dispatch(
         addAlert({
           type: 'error',
-          message:
-            ERROR_MESSAGES[400],
+          message: ERROR_MESSAGES[400],
         })
       );
       return rejectWithValue(

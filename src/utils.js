@@ -16,7 +16,7 @@ export const formatPhoneNumber = (value) => {
 export const clearFormatPhoneNumber = (value) => {
   if (!value) return '';
   return `+996${value.replace(/[\s()-]/g, '')}`;
-}
+};
 
 export const uploadWorks = (works, shownFields = []) => {
   const workbook = XLSX.utils.book_new();

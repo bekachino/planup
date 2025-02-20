@@ -58,7 +58,7 @@ const App = () => {
 
   useEffect(() => {
     if (user) dispatch(resetAlerts());
-  }, [user ,dispatch]);
+  }, [user, dispatch]);
 
   const authRoutes = () => (
     <>

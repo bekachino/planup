@@ -23,10 +23,7 @@ const Template = () => {
     <div className="template">
       <div className="template-paper">
         <div className="create-template-paper-header">
-          <button
-            className="page-back"
-            onClick={() => navigate('/templates')}
-          >
+          <button className="page-back" onClick={() => navigate('/templates')}>
             <ArrowPointerRight />
           </button>
           <h2>{template?.name || 'Шаблон'}</h2>

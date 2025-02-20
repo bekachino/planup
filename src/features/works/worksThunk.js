@@ -5,7 +5,10 @@ import { ERROR_MESSAGES } from '../../constants';
 
 export const getWorks = createAsyncThunk(
   'data/getWorks',
-  async ({ filtersData = {}, currentPage, searchWord = '' }, { dispatch, rejectWithValue }) => {
+  async (
+    { filtersData = {}, currentPage, searchWord = '' },
+    { dispatch, rejectWithValue }
+  ) => {
     try {
       const user_id_query = `&user_id=${filtersData?.user_id || []}`;
       const resolution_id_query = `&resolution_id=${filtersData?.resolution_id || []}`;

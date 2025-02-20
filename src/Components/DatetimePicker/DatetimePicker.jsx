@@ -25,7 +25,7 @@ const DatetimePicker = ({
   const [currentDate, setCurrentDate] = useState(moment());
   const [showCalendar, setShowCalendar] = useState(false);
   const calendar = [];
-  
+
   const startDay = currentDate.clone().startOf('month').startOf('week');
   const endDay = currentDate.clone().endOf('month').endOf('week');
   const day = startDay.clone();

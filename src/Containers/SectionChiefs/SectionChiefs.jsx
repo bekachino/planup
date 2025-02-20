@@ -23,8 +23,8 @@ const SectionChiefs = () => {
     if (!!sectionChiefsListRef?.current) {
       setUsersListHeight(
         window.innerHeight -
-        sectionChiefsListRef.current?.getBoundingClientRect().top -
-        20
+          sectionChiefsListRef.current?.getBoundingClientRect().top -
+          20
       );
     }
   }, [sectionChiefs]);

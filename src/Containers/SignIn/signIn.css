@@ -84,16 +84,16 @@
     width: 180px;
     height: 180px;
   }
-  
+
   .form-container input {
     font-size: 16px;
     padding: 11px 16px 11px;
   }
-  
+
   .form-submit-btn {
     font-size: 16px;
   }
-  
+
   .form-container-helper {
     font-size: 16px;
   }
@@ -106,17 +106,17 @@
     padding: 0 10px;
     box-sizing: border-box;
   }
-  
+
   .form-container img {
     width: 150px;
     height: 150px;
   }
-  
+
   .form-container input {
     font-size: 16px;
     padding: 11px 16px 11px;
   }
-  
+
   .form-submit-btn {
     font-size: 16px;
   }
@@ -124,6 +124,6 @@
 
 @keyframes spin {
   to {
-    rotate: 360deg
+    rotate: 360deg;
   }
 }

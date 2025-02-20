@@ -48,18 +48,21 @@ const UpdatePassword = ({ isEdit }) => {
         </button>
         <h2>Смена пароля</h2>
       </div>
-      <div className="create-user-body" style={{ maxWidth: '600px', margin: '100px auto' }}>
+      <div
+        className="create-user-body"
+        style={{ maxWidth: '600px', margin: '100px auto' }}
+      >
         <form className="create-user-form" onSubmit={onSubmit}>
           <div className="create-user-form-fields">
             <Input
-              type='password'
+              type="password"
               name="new_password"
               value={state?.new_password}
               onChange={handleChange}
               label="Новый пароль"
               placeholder="Придумайте новый пароль"
               required
-              style={{maxWidth: 'unset', width: '100%'}}
+              style={{ maxWidth: 'unset', width: '100%' }}
             />
           </div>
           <div className="create-user-form-actions">
