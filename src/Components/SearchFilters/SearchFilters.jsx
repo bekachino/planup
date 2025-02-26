@@ -289,8 +289,15 @@ const SearchFilters = ({ ...rest }) => {
             : ''
         }`}
       >
-        {filtersData[currentCategory]?.length ? (
-          (filtersData[currentCategory] || []).map((type) => (
+        {(currentCategory !== 'workTypes' &&
+          filtersData[currentCategory]?.length) ||
+        currentCategory === 'workTypes' ? (
+          (currentCategory === 'workTypes'
+            ? filtersData['templateTypes']?.filter((type) => !!type?.parent)
+            : currentCategory === 'templateTypes'
+              ? filtersData[currentCategory].filter((type) => !type?.parent)
+              : filtersData[currentCategory] || []
+          ).map((type) => (
             <label
               key={type.id}
               className={`${!!searchCategory && searchCategory.name === type.name ? 'filters-category-is-found' : ''}`}
@@ -298,7 +305,11 @@ const SearchFilters = ({ ...rest }) => {
               <input
                 type="checkbox"
                 checked={
-                  !!state[currentCategory]?.find((item) => item.id === type.id)
+                  !!state[
+                    currentCategory === 'workTypes'
+                      ? 'templateTypes'
+                      : currentCategory
+                  ]?.find((item) => item.id === type.id)
                 }
                 onChange={() =>
                   onChange({
@@ -387,13 +398,13 @@ const SearchFilters = ({ ...rest }) => {
                   onMouseEnter={(_) => {
                     setCurrentCategory(category.name);
                     setSearchFiltersCategoriesOptionPosition(
-                      () => i * (100 / 8) - 4
+                      () => i * (100 / 9) - 4
                     );
                     setShowCategoriesOptions(true);
                   }}
                   onFocus={() => {
                     setSearchFiltersCategoriesOptionPosition(
-                      () => i * (100 / 8) - 4
+                      () => i * (100 / 9) - 4
                     );
                     setCurrentCategory(category.name);
                   }}
