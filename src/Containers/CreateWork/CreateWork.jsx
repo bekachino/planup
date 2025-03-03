@@ -60,7 +60,7 @@ const CreateWork = ({ isEdit }) => {
             ...field,
             field_value:
               field?.name === 'Желаемая дата  приезда' && !!field?.field_value
-                ? moment(new Date(field?.field_value)).format(
+                ? moment(field?.field_value, 'DD.MM.YYYY HH:mm').format(
                     'DD.MM.YYYY HH:mm'
                   )
                 : field?.field_value,
@@ -369,7 +369,9 @@ const CreateWork = ({ isEdit }) => {
                           ''
                         }
                         options={field?.values || []}
-                        label={`${(field?.field || field).name}${field?.is_child_template ? ` → ${field?.child_template_name}` : ''}`}
+                        label={`${
+                          (field?.field || field).name
+                        }${field?.is_child_template ? ` → ${field?.child_template_name}` : ''}`}
                         placeholder={(field?.field || field).name}
                         onChange={(e) =>
                           handleChange(
