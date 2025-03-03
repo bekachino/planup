@@ -4,7 +4,7 @@ import { ReactComponent as StoppedIcon } from './assets/stopped.svg';
 import { ReactComponent as OnWayIcon } from './assets/on-way.svg';
 import { ReactComponent as FinishedIcon } from './assets/finished.svg';
 
-export const API_URL = 'http://185.39.79.71:8000/api';
+export const API_URL = 'https://pp.skynet.kg:8000/api';
 
 export const ERROR_MESSAGES = {
   400: 'Неверные данные',
