@@ -9,6 +9,11 @@
   gap: 12px;
 }
 
+.home-wrapper-inner {
+  display: flex;
+  align-items: flex-end;
+}
+
 .home-table-add-field-btn {
   margin-left: auto;
   font-size: 18px;

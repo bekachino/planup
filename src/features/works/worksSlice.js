@@ -11,6 +11,7 @@ import {
 const initialState = {
   works: [],
   total_pages: 1,
+  total_records: 0,
   workFields: [],
   workChildTemplates: [],
   availFields: [],
@@ -46,7 +47,9 @@ const WorksSlice = createSlice({
     });
     builder.addCase(getWorks.fulfilled, (state, { payload: res }) => {
       state.worksLoading = false;
+      console.log(res);
       state.total_pages = res?.total_pages || 1;
+      state.total_records = res?.total_records || 0;
       state.works =
         (res?.results || []).map((work) => [
           {

@@ -14,7 +14,7 @@ import './home.css';
 const Home = () => {
   const dispatch = useAppDispatch();
   const dutiesTableRef = useRef(null);
-  const { works, worksLoading, shownFields, availFieldsLoading, total_pages } =
+  const { works, worksLoading, shownFields, availFieldsLoading, total_pages, total_records } =
     useAppSelector((state) => state.worksState);
   const { filtersData } = useAppSelector((state) => state.filtersDataState);
   const [dutiesTableHeight, setDutiesTableHeight] = useState(0);
@@ -163,14 +163,17 @@ const Home = () => {
         toggleModal={toggleModal}
       />
       <div className="home-wrapper">
-        <Button
-          className="home-table-add-field-btn"
-          color="secondary"
-          onClick={() => toggleModal(true)}
-        >
-          <AddIcon />
-          Добавить поле
-        </Button>
+        <div className='home-wrapper-inner'>
+          <strong>Всего нарядов: {total_records}</strong>
+          <Button
+            className="home-table-add-field-btn"
+            color="secondary"
+            onClick={() => toggleModal(true)}
+          >
+            <AddIcon />
+            Добавить поле
+          </Button>
+        </div>
         <div
           className="home-table-wrapper"
           style={{

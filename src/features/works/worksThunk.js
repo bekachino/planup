@@ -17,10 +17,11 @@ export const getWorks = createAsyncThunk(
       const squares_id_query = `&squares_id=${filtersData?.squares_id || []}`;
       const created_at_query = `&created_at=${filtersData?.created_at || []}`;
       const closed_at_query = `&closed_at=${filtersData?.closed_at || []}`;
+      const date_of_arrival_start_query = `&date_of_arrival=${filtersData?.date_of_arrival || []}`;
       const search_word_query = `&order_id=${searchWord || ''}`;
-
+      
       const req = await axiosApi(
-        `/v2/order-list/?page_size=50&page=${currentPage || 1}${user_id_query}${resolution_id_query}${status_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}${search_word_query}`
+        `/v2/order-list/?page_size=50&page=${currentPage || 1}${user_id_query}${resolution_id_query}${status_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}${date_of_arrival_start_query}${search_word_query}`
       );
       return await req.data;
     } catch (e) {

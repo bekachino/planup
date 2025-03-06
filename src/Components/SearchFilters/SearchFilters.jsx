@@ -157,6 +157,7 @@ const SearchFilters = ({ ...rest }) => {
   const onSubmit = () => {
     const created_at = [];
     const closed_at = [];
+    const date_of_arrival = [];
 
     if (state?.start_date)
       created_at.push(
@@ -174,7 +175,15 @@ const SearchFilters = ({ ...rest }) => {
       closed_at.push(
         moment(state?.finished_end_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
       );
-
+    if (state?.desired_start_date)
+      date_of_arrival.push(
+        moment(state?.desired_start_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
+      );
+    if (state?.desired_end_date)
+      date_of_arrival.push(
+        moment(state?.desired_end_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
+      );
+    
     const filtersData = {
       user_id: state.userTypes.map((item) => item.id),
       status_id: state.statusTypes.map((item) => item.id),
@@ -183,6 +192,7 @@ const SearchFilters = ({ ...rest }) => {
       squares_id: state.squareTypes.map((item) => item.id),
       created_at,
       closed_at,
+      date_of_arrival
     };
     dispatch(
       getWorks({
@@ -210,7 +220,7 @@ const SearchFilters = ({ ...rest }) => {
         name="finished_start_date"
         placeholder="От"
         disableLabel
-        value={!!state ? state?.finished_start_date : null}
+        value={!!state ? state?.finished_start_date : ''}
         onChange={onChange}
         noTime
         id={nanoid()}
@@ -220,7 +230,7 @@ const SearchFilters = ({ ...rest }) => {
         name="finished_end_date"
         placeholder="До"
         disableLabel
-        value={!!state ? state?.finished_end_date : null}
+        value={!!state ? state?.finished_end_date : ''}
         onChange={onChange}
         noTime
         id={nanoid()}
@@ -234,7 +244,7 @@ const SearchFilters = ({ ...rest }) => {
         name="start_date"
         placeholder="От"
         disableLabel
-        value={!!state ? state?.start_date : null}
+        value={!!state ? state?.start_date : ''}
         onChange={onChange}
         noTime
         id={nanoid()}
@@ -244,7 +254,7 @@ const SearchFilters = ({ ...rest }) => {
         name="end_date"
         placeholder="До"
         disableLabel
-        value={!!state ? state?.end_date : null}
+        value={!!state ? state?.end_date : ''}
         onChange={onChange}
         noTime
         id={nanoid()}
@@ -258,7 +268,7 @@ const SearchFilters = ({ ...rest }) => {
         name="desired_start_date"
         placeholder="От"
         disableLabel
-        value={!!state ? state?.desired_start_date : null}
+        value={!!state ? state?.desired_start_date : ''}
         onChange={onChange}
         noTime
         id={nanoid()}
@@ -268,7 +278,7 @@ const SearchFilters = ({ ...rest }) => {
         name="desired_end_date"
         placeholder="До"
         disableLabel
-        value={!!state ? state?.desired_end_date : null}
+        value={!!state ? state?.desired_end_date : ''}
         onChange={onChange}
         noTime
         id={nanoid()}
