@@ -56,7 +56,16 @@
   position: absolute;
   top: 100%;
   right: 0;
-  padding: 22px 15px;
+  padding: 0 15px 22px 15px;
+  background-color: var(--white);
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.work-header-tooltip-search-wrapper {
+  position: sticky;
+  top: 0;
+  padding-top: 22px;
   background-color: var(--white);
 }
 

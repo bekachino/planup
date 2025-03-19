@@ -131,12 +131,14 @@ const Work = () => {
         </div>
         {tooltipOpen && (
           <div className="work-header-tooltip">
-            <input
-              className="work-header-tooltip-search"
-              placeholder="Выберите вид работ"
-              value={searchWord}
-              onChange={handleSearchWordChange}
-            />
+            <div className="work-header-tooltip-search-wrapper">
+              <input
+                className="work-header-tooltip-search"
+                placeholder="Выберите вид работ"
+                value={searchWord}
+                onChange={handleSearchWordChange}
+              />
+            </div>
             <div className="work-header-tooltip-values">
               <button
                 className="work-header-tooltip-value"
@@ -148,6 +150,13 @@ const Work = () => {
                 <button
                   className="work-header-tooltip-value"
                   key={i}
+                  style={{
+                    backgroundColor: !!childTemplate.fields.filter(
+                      (field) => !!field.use_template
+                    ).length
+                      ? '#08b80833'
+                      : 'var(--white)',
+                  }}
                   onClick={() =>
                     onChildTemplateChange(childTemplate.template.id)
                   }
