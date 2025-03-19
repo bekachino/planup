@@ -18,8 +18,7 @@ import Button from '../Button/Button';
 import { addAlert } from '../../features/data/dataSlice';
 import { getTemplateTypes } from '../../features/statuses/filtersDataThunk';
 import { logout } from '../../features/user/usersSlice';
-import { uploadWorks } from '../../utils';
-import axiosApi from '../../axiosApi';
+import useUploadWorks from './hooks';
 import './header.css';
 
 const Header = () => {
@@ -30,8 +29,8 @@ const Header = () => {
   const [createWorkModalOpen, setCreateWorkModalOpen] = useState(false);
   const { templateTypes } = useAppSelector((state) => state.filtersDataState);
   const { user } = useAppSelector((state) => state.userState);
-  const { shownFields } = useAppSelector((state) => state.worksState);
   const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
+  const { fetchAndUploadWorks, uploadLoading } = useUploadWorks();
 
   useEffect(() => {
     document.addEventListener('mousedown', () => setShowBurgerTooltip(false));
@@ -64,44 +63,6 @@ const Header = () => {
     }
     toggleCreateWorkModal(false);
     navigate(`/create-work/${createWorkTemplate?.id}`);
-  };
-
-  const onUploadWorks = async () => {
-    const req = await axiosApi('/v2/order-list/?page_size=9999999&page=1');
-    const res = await req.data;
-    const worksForUpload =
-      (res?.results || []).map((work) => [
-        {
-          id: work.id || null,
-          name: 'Номер наряда' || null,
-          field_value: work.id || null,
-        },
-        {
-          id: work.bitrix_id || null,
-          name: 'Битрикс ID' || null,
-          field_value: work.bitrix_id || null,
-        },
-        {
-          id: work.status.id || null,
-          name: 'Статус' || null,
-          field_value: work.status.name || null,
-        },
-        {
-          id: work.works[0]?.template.id || null,
-          name: 'Шаблон',
-          field_value: work.works[0]?.template.name || null,
-        },
-        {
-          name: 'Дата создания',
-          field_value: work.created_at || null,
-        } || null,
-        {
-          name: 'Дата закрытия',
-          field_value: work.closed_at || null,
-        } || null,
-        ...(work.works[0]?.fields || []),
-      ]) || [];
-    uploadWorks(worksForUpload || [], shownFields);
   };
 
   return (
@@ -158,7 +119,11 @@ const Header = () => {
             style={{ display: showBurgerTooltip ? 'flex' : 'none' }}
             onMouseDown={(e) => e.stopPropagation()}
           >
-            <button className="nav-burger-tooltip-btn" onClick={onUploadWorks}>
+            <button
+              className="nav-burger-tooltip-btn"
+              onClick={fetchAndUploadWorks}
+              disabled={uploadLoading}
+            >
               <ExcelIcon />
               Экспорт в Excel
             </button>

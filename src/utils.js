@@ -25,18 +25,25 @@ export const uploadWorks = (works, shownFields = []) => {
 
   let rowIndex = 1;
 
-  const filteredFieldTitles = (works[0] || [])
-    .filter((workField) => shownFields.includes(workField?.name))
-    .map((workField) => workField.name);
-
-  XLSX.utils.sheet_add_aoa(worksheet, [filteredFieldTitles], { origin: `A1` });
+  XLSX.utils.sheet_add_aoa(worksheet, [shownFields], { origin: `A1` });
 
   works.forEach((work) => {
     rowIndex += 1;
 
-    const filteredFields = (work || []).filter((workField) =>
-      shownFields.includes(workField?.name)
-    );
+    const filteredFields = [];
+
+    shownFields.forEach((field) => {
+      const foundWorkField = (work || []).find(
+        (workField) => workField.name === field
+      );
+
+      if (foundWorkField) filteredFields.push(foundWorkField);
+      else
+        filteredFields.push({
+          name: field,
+          field_value: '',
+        });
+    });
 
     XLSX.utils.sheet_add_aoa(
       worksheet,
