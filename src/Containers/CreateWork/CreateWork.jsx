@@ -60,10 +60,10 @@ const CreateWork = ({ isEdit }) => {
             ...field,
             field_value:
               field?.name === 'Желаемая дата  приезда' && !!field?.field_value
-                ? moment(field?.field_value, 'DD.MM.YYYY HH:mm').format(
+                ? moment(field?.field_value).format(
                     'DD.MM.YYYY HH:mm'
                   )
-                : field?.field_value,
+                : field?.field_value || '',
             field_id: !!field?.is_child_template
               ? `${field?.id} - ${field?.child_template_name}`
               : field?.id,

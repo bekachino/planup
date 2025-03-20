@@ -160,14 +160,27 @@ const Autocomplete = ({
               },
             });
             setFocusedOption(0);
-            setShowOptions(true);
+            //setShowOptions(true);
           }
         }}
         required={required}
         onFocus={() => {
-          setTimeout(() => setShowOptions(true), 100);
+          //setTimeout(() => setShowOptions(true), 100);
+          if (!multiple) {
+            onChange({
+              target: {
+                name,
+                value: null,
+              },
+            });
+            setFocusedOption(0);
+            //setShowOptions(true);
+          }
         }}
-        onClick={() => setShowOptions(true)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowOptions(true)
+        }}
         isSelectInput
         onValueRemove={onSelectedOptionRemove}
         onKeyDown={handleKeyDown}
