@@ -13,6 +13,7 @@ export const ERROR_MESSAGES = {
   404: 'Не найдено',
   405: 'Неверный запрос',
   500: 'Ошибка сервера',
+  502: 'Сервер недоступен',
 };
 
 export const FILTER_CATEGORIES = [
