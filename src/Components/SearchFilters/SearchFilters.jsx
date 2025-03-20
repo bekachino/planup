@@ -20,6 +20,7 @@ const SearchFilters = ({ ...rest }) => {
   const searchFiltersCategoriesRef = useRef(null);
   const dispatch = useAppDispatch();
   const filtersData = useAppSelector((state) => state.filtersDataState);
+  const filters = useAppSelector((state) => state.filtersDataState.filtersData);
   const {
     statusTypesLoading,
     resolutionTypesLoading,
@@ -120,6 +121,11 @@ const SearchFilters = ({ ...rest }) => {
     }
   }, [searchWord, filtersData]);
 
+  useEffect(() => {
+    const filters = getFiltersData();
+    dispatch(setFiltersData(filters));
+  }, [state]);
+
   const onChange = (e) => {
     const { name, value } = e.target;
 
@@ -154,7 +160,7 @@ const SearchFilters = ({ ...rest }) => {
     }));
   };
 
-  const onSubmit = () => {
+  const getFiltersData = () => {
     const created_at = [];
     const closed_at = [];
     const date_of_arrival = [];
@@ -183,8 +189,8 @@ const SearchFilters = ({ ...rest }) => {
       date_of_arrival.push(
         moment(state?.desired_end_date, 'DD.MM.YYYY').format('YYYY-MM-DD')
       );
-    
-    const filtersData = {
+
+    return {
       user_id: state.userTypes.map((item) => item.id),
       status_id: state.statusTypes.map((item) => item.id),
       resolution_id: state.resolutionTypes.map((item) => item.id),
@@ -192,15 +198,17 @@ const SearchFilters = ({ ...rest }) => {
       squares_id: state.squareTypes.map((item) => item.id),
       created_at,
       closed_at,
-      date_of_arrival
+      date_of_arrival,
     };
+  };
+
+  const onSubmit = () => {
     dispatch(
       getWorks({
-        filtersData,
+        filtersData: filters,
         searchWord,
       })
     );
-    dispatch(setFiltersData(filtersData));
     setShowCategories(false);
   };
 
@@ -213,7 +221,7 @@ const SearchFilters = ({ ...rest }) => {
       squareTypes: [],
     });
   };
-
+  
   const finishedDatePeriodOption = () => (
     <div className="search-filters-categories-options-inner search-filters-date-period">
       <DatetimePicker

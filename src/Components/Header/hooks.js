@@ -5,6 +5,7 @@ import { uploadWorks } from '../../utils';
 
 const useUploadWorks = () => {
   const { shownFields } = useAppSelector((state) => state.worksState);
+  const filters = useAppSelector((state) => state.filtersDataState.filtersData);
   const [data, setData] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
 
@@ -16,7 +17,18 @@ const useUploadWorks = () => {
   const fetchAndUploadWorks = async () => {
     try {
       setUploadLoading(true);
-      const req = await axiosApi('/v2/order-list/?page_size=999999&page=1');
+      const user_id_query = `&user_id=${filters?.user_id || []}`;
+      const resolution_id_query = `&resolution_id=${filters?.resolution_id || []}`;
+      const template_id_query = `&template_id=${filters?.template_id || []}`;
+      const status_id_query = `&status_id=${filters?.status_id || []}`;
+      const squares_id_query = `&squares_id=${filters?.squares_id || []}`;
+      const created_at_query = `&created_at=${filters?.created_at || []}`;
+      const closed_at_query = `&closed_at=${filters?.closed_at || []}`;
+      const date_of_arrival_start_query = `&date_of_arrival=${filters?.date_of_arrival || []}`;
+      
+      const req = await axiosApi(
+        `/v2/order-list/?page_size=999999&page=1${user_id_query}${resolution_id_query}${status_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}${date_of_arrival_start_query}`
+      );
       const res = await req.data;
       const worksForUpload =
         (res?.results || []).map((work) => [

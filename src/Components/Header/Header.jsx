@@ -25,12 +25,12 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { fetchAndUploadWorks, uploadLoading } = useUploadWorks();
   const [showBurgerTooltip, setShowBurgerTooltip] = useState(false);
   const [createWorkModalOpen, setCreateWorkModalOpen] = useState(false);
+  const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
   const { templateTypes } = useAppSelector((state) => state.filtersDataState);
   const { user } = useAppSelector((state) => state.userState);
-  const [createWorkTemplate, setCreateWorkTemplate] = useState(null);
-  const { fetchAndUploadWorks, uploadLoading } = useUploadWorks();
 
   useEffect(() => {
     document.addEventListener('mousedown', () => setShowBurgerTooltip(false));
