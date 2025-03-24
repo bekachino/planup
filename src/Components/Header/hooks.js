@@ -60,6 +60,10 @@ const useUploadWorks = () => {
             name: 'Дата закрытия',
             field_value: work.closed_at || null,
           },
+          {
+            name: 'Квадрат',
+            field_value: work.squares_id?.name || null,
+          } || null,
           ...(work.works?.[0]?.fields || []),
         ]) || [];
       setData(worksForUpload);

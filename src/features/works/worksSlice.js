@@ -22,6 +22,7 @@ const initialState = {
     'Статус',
     'Дата создания',
     'Дата закрытия',
+    'Квадрат',
   ],
   worksLoading: false,
   workLoading: false,
@@ -80,6 +81,10 @@ const WorksSlice = createSlice({
             name: 'Дата закрытия',
             field_value: work.closed_at || null,
           } || null,
+          {
+            name: 'Квадрат',
+            field_value: work.squares_id?.name || null,
+          } || null,
           ...(work.works[0]?.fields || []),
         ]) || [];
     });
@@ -131,9 +136,19 @@ const WorksSlice = createSlice({
     builder.addCase(getWorkFields.fulfilled, (state, { payload: res }) => {
       state.availFieldsLoading = false;
 
-      const filteredList = (res || [])
+      const filteredList = (
+        [
+          ...res,
+          {
+            name: 'Квадрат',
+          },
+        ] || []
+      )
         .filter(
-          (field) => !['Номер наряда', 'Шаблон', 'Статус'].includes(field.name)
+          (field) =>
+            !['Номер наряда', 'Шаблон', 'Статус', 'Квадрат'].includes(
+              field.name
+            )
         )
         .map((field) => field.name);
 
@@ -144,6 +159,7 @@ const WorksSlice = createSlice({
         'Статус',
         'Дата создания',
         'Дата закрытия',
+        'Квадрат',
         ...filteredList,
       ];
     });

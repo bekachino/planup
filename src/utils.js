@@ -28,6 +28,7 @@ export const uploadWorks = (works, shownFields = []) => {
   XLSX.utils.sheet_add_aoa(worksheet, [shownFields], { origin: `A1` });
 
   works.forEach((work) => {
+    console.log(work);
     rowIndex += 1;
 
     const filteredFields = [];

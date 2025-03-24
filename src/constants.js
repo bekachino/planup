@@ -139,6 +139,7 @@ export const REQUIRED_WORKS_LIST_FIELDS = [
   'Статус',
   'Дата создания',
   'Дата закрытия',
+  'Квадрат',
 ];
 
 export const DATA_TYPES = {
