@@ -23,6 +23,7 @@ const initialState = {
     'Дата создания',
     'Дата закрытия',
     'Квадрат',
+    'Исполнитель',
   ],
   worksLoading: false,
   workLoading: false,
@@ -85,6 +86,10 @@ const WorksSlice = createSlice({
             name: 'Квадрат',
             field_value: work.squares_id?.name || null,
           } || null,
+          {
+            name: 'Исполнитель',
+            field_value: work.user_id?.name || null,
+          } || null,
           ...(work.works[0]?.fields || []),
         ]) || [];
     });
@@ -120,6 +125,10 @@ const WorksSlice = createSlice({
           {
             name: 'Исполнитель',
             field_value: res?.user_id?.name || null,
+          } || null,
+          {
+            name: 'Квадрат',
+            field_value: res?.squares_id?.name || null,
           } || null,
           ...(res.works[0]?.fields || []),
         ] || [];
@@ -160,6 +169,7 @@ const WorksSlice = createSlice({
         'Дата создания',
         'Дата закрытия',
         'Квадрат',
+        'Исполнитель',
         ...filteredList,
       ];
     });
