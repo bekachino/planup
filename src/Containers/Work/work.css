@@ -99,7 +99,7 @@
 }
 
 .work-header-tooltip-value:hover {
-  background-color: var(--white-grey);
+  background-color: var(--white-grey) !important;
   cursor: pointer;
 }
 

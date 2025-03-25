@@ -25,7 +25,7 @@ const useUploadWorks = () => {
       const created_at_query = `&created_at=${filters?.created_at || []}`;
       const closed_at_query = `&closed_at=${filters?.closed_at || []}`;
       const date_of_arrival_start_query = `&date_of_arrival=${filters?.date_of_arrival || []}`;
-      
+
       const req = await axiosApi(
         `/v2/order-list/?page_size=999999&page=1${user_id_query}${resolution_id_query}${status_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}${date_of_arrival_start_query}`
       );
@@ -67,6 +67,33 @@ const useUploadWorks = () => {
           {
             name: 'Исполнитель',
             field_value: work.user_id?.name || null,
+          } || null,
+          {
+            name: 'Виды работ',
+            field_value:
+              (() => {
+                const childTemplates =
+                  work.works.map(
+                    (workField) => workField?.child_templates
+                  )?.[0] || [];
+                const workTypes = {
+                  [work?.id]: [],
+                };
+                childTemplates.forEach((childTemplate) => {
+                  childTemplate?.fields?.forEach((field) => {
+                    if (
+                      !!field?.use_template &&
+                      !workTypes[work?.id].includes(
+                        childTemplate?.template?.name
+                      )
+                    )
+                      workTypes[work?.id].push(
+                        childTemplate?.template?.name || ''
+                      );
+                  });
+                });
+                return workTypes[work?.id] || [];
+              })() || null,
           } || null,
           ...(work.works?.[0]?.fields || []),
         ]) || [];

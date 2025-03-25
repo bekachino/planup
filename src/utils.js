@@ -25,13 +25,19 @@ export const uploadWorks = (works, shownFields = []) => {
 
   let rowIndex = 1;
 
-  XLSX.utils.sheet_add_aoa(worksheet, [shownFields], { origin: `A1` });
+  XLSX.utils.sheet_add_aoa(worksheet, [[...shownFields, 'Виды работ']], {
+    origin: `A1`,
+  });
 
   works.forEach((work) => {
-    console.log(work);
     rowIndex += 1;
 
     const filteredFields = [];
+    const finishedWorkNames = work
+      .find((workField) => workField.name === 'Виды работ')
+      ?.field_value.map((fieldValueWork) => ({
+        field_value: fieldValueWork,
+      }));
 
     shownFields.forEach((field) => {
       const foundWorkField = (work || []).find(
@@ -49,7 +55,7 @@ export const uploadWorks = (works, shownFields = []) => {
     XLSX.utils.sheet_add_aoa(
       worksheet,
       [
-        filteredFields.map((workField) =>
+        [...filteredFields, ...finishedWorkNames].map((workField) =>
           ['Дата создания', 'Дата закрытия'].includes(workField?.name)
             ? !!workField?.field_value
               ? moment(workField?.field_value).format('DD-MM-YYYY HH:mm')
@@ -60,6 +66,18 @@ export const uploadWorks = (works, shownFields = []) => {
       { origin: `A${rowIndex}` }
     );
   });
+  
+  worksheet['!cols'] = [
+    { wch: 10 },
+    { wch: 10 },
+    { wch: 25 },
+    { wch: 10 },
+    { wch: 20 },
+    { wch: 20 },
+    { wch: 15 },
+    { wch: 25 },
+    { wch: 20 },
+  ];
 
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Наряды');
   XLSX.writeFile(workbook, 'Наряды.xlsx');
