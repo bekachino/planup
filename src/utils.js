@@ -18,11 +18,9 @@ export const clearFormatPhoneNumber = (value) => {
   return `+996${value.replace(/[\s()-]/g, '')}`;
 };
 
-export const uploadWorks = (works, shownFields = []) => {
+export const uploadWorks = (works, shownFields = [], templateNames = []) => {
   const workbook = XLSX.utils.book_new();
-
   const worksheet = XLSX.utils.json_to_sheet([]);
-
   let rowIndex = 1;
 
   XLSX.utils.sheet_add_aoa(worksheet, [[...shownFields, 'Виды работ']], {
@@ -33,11 +31,12 @@ export const uploadWorks = (works, shownFields = []) => {
     rowIndex += 1;
 
     const filteredFields = [];
-    const finishedWorkNames = work
+    const workNames = work
       .find((workField) => workField.name === 'Виды работ')
-      ?.field_value.map((fieldValueWork) => ({
-        field_value: fieldValueWork,
-      }));
+      ?.field_value.map((fieldValueWork) => fieldValueWork);
+    const filteredWorkNames = templateNames.map((name) =>
+      workNames.includes(name) ? { field_value: name } : null
+    );
 
     shownFields.forEach((field) => {
       const foundWorkField = (work || []).find(
@@ -51,11 +50,13 @@ export const uploadWorks = (works, shownFields = []) => {
           field_value: '',
         });
     });
-
+    
+    console.log(filteredWorkNames);
+    
     XLSX.utils.sheet_add_aoa(
       worksheet,
       [
-        [...filteredFields, ...finishedWorkNames].map((workField) =>
+        [...filteredFields, ...filteredWorkNames].map((workField) =>
           ['Дата создания', 'Дата закрытия'].includes(workField?.name)
             ? !!workField?.field_value
               ? moment(workField?.field_value).format('DD-MM-YYYY HH:mm')
@@ -66,7 +67,7 @@ export const uploadWorks = (works, shownFields = []) => {
       { origin: `A${rowIndex}` }
     );
   });
-  
+
   worksheet['!cols'] = [
     { wch: 10 },
     { wch: 10 },

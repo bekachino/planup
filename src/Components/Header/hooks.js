@@ -7,10 +7,12 @@ const useUploadWorks = () => {
   const { shownFields } = useAppSelector((state) => state.worksState);
   const filters = useAppSelector((state) => state.filtersDataState.filtersData);
   const [data, setData] = useState([]);
+  const [templateNames, setTemplateNames] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
 
   useEffect(() => {
-    if (data.length) uploadWorks(data, shownFields);
+    if (data.length)
+      uploadWorks(data, shownFields, templateNames);
     setUploadLoading(false);
   }, [data, shownFields]);
 
@@ -30,6 +32,8 @@ const useUploadWorks = () => {
         `/v2/order-list/?page_size=999999&page=1${user_id_query}${resolution_id_query}${status_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}${date_of_arrival_start_query}`
       );
       const res = await req.data;
+      const initialTemplateNames = [];
+
       const worksForUpload =
         (res?.results || []).map((work) => [
           {
@@ -86,10 +90,20 @@ const useUploadWorks = () => {
                       !workTypes[work?.id].includes(
                         childTemplate?.template?.name
                       )
-                    )
+                    ) {
                       workTypes[work?.id].push(
                         childTemplate?.template?.name || ''
                       );
+                    }
+                    if (
+                      !!field?.use_template && !initialTemplateNames.includes(
+                        childTemplate?.template?.name || ''
+                      )
+                    ) {
+                      initialTemplateNames.push(
+                        childTemplate?.template?.name || ''
+                      );
+                    }
                   });
                 });
                 return workTypes[work?.id] || [];
@@ -98,6 +112,7 @@ const useUploadWorks = () => {
           ...(work.works?.[0]?.fields || []),
         ]) || [];
       setData(worksForUpload);
+      setTemplateNames(initialTemplateNames);
     } catch (error) {
       console.error('Ошибка загрузки работ:', error);
     }
