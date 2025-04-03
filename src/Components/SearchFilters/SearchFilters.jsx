@@ -44,7 +44,7 @@ const SearchFilters = ({ ...rest }) => {
   });
   const [searchWord, setSearchWord] = useState('');
   const [searchCategory, setSearchCategory] = useState(null);
-  
+
   const filtersValues = useCallback(() => {
     return [
       ...(state['userTypes'] || []),
@@ -221,7 +221,16 @@ const SearchFilters = ({ ...rest }) => {
       squareTypes: [],
     });
   };
-  
+
+  const selectAllSquareTypes = () => {
+    const selectedAll =
+      state[currentCategory]?.length === filtersData[currentCategory]?.length;
+    setState((prevState) => ({
+      ...prevState,
+      squareTypes: selectedAll ? [] : filtersData.squareTypes,
+    }));
+  };
+
   const finishedDatePeriodOption = () => (
     <div className="search-filters-categories-options-inner search-filters-date-period">
       <DatetimePicker
@@ -307,6 +316,19 @@ const SearchFilters = ({ ...rest }) => {
             : ''
         }`}
       >
+        {currentCategory === 'squareTypes' && (
+          <label style={{ marginBottom: '10px' }}>
+            <input
+              type="checkbox"
+              checked={
+                state[currentCategory]?.length ===
+                filtersData[currentCategory]?.length
+              }
+              onChange={selectAllSquareTypes}
+            />
+            <span>Выбрать всё</span>
+          </label>
+        )}
         {(currentCategory !== 'workTypes' &&
           filtersData[currentCategory]?.length) ||
         currentCategory === 'workTypes' ? (
