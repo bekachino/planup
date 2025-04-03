@@ -42,7 +42,9 @@ const SearchFilters = ({ ...rest }) => {
     statusTypes: [],
     squareTypes: [],
   });
-
+  const [searchWord, setSearchWord] = useState('');
+  const [searchCategory, setSearchCategory] = useState(null);
+  
   const filtersValues = useCallback(() => {
     return [
       ...(state['userTypes'] || []),
@@ -52,8 +54,6 @@ const SearchFilters = ({ ...rest }) => {
       ...(state['squareTypes'] || []),
     ];
   }, [state]);
-  const [searchWord, setSearchWord] = useState('');
-  const [searchCategory, setSearchCategory] = useState(null);
 
   useEffect(() => {
     dispatch(getTemplateTypes());
@@ -116,7 +116,6 @@ const SearchFilters = ({ ...rest }) => {
         setSearchCategory(null);
       }
     } else {
-      setShowCategoriesOptions(false);
       setSearchCategory(null);
     }
   }, [searchWord, filtersData]);
@@ -158,6 +157,7 @@ const SearchFilters = ({ ...rest }) => {
       ...prevState,
       [name]: [...prevState[name], value],
     }));
+    setSearchWord('');
   };
 
   const getFiltersData = () => {

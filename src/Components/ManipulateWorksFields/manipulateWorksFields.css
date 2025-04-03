@@ -1,6 +1,9 @@
 .manipulate-works-fields-modal {
+  display: flex;
+  flex-direction: column;
   width: 80%;
   max-width: 1200px;
+  min-height: 80vh;
 }
 
 .manipulate-works-fields-modal .create-template-paper-header h2 {
@@ -24,7 +27,10 @@
 }
 
 .manipulate-works-fields-body {
+  display: flex;
+  flex-direction: column;
   margin-top: 20px;
+  flex-grow: 1;
 }
 
 .manipulate-works-fields-list {
@@ -39,6 +45,7 @@
 .manipulate-works-fields-actions {
   display: flex;
   gap: 20px;
+  margin-top: auto;
 }
 
 .manipulate-works-fields-actions button {

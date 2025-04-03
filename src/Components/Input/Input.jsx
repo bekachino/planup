@@ -14,6 +14,7 @@ const Input = ({
   onChange,
   textarea,
   style,
+  inputStyle,
   ...rest
 }) => {
   return (
@@ -39,6 +40,7 @@ const Input = ({
               id={`${label || 'custom'}-textarea`}
               className={`input ${className}`}
               placeholder={placeholder || label}
+              style={inputStyle}
               {...rest}
             />
           ) : (
@@ -47,6 +49,7 @@ const Input = ({
               id={`${label || 'custom'}-input`}
               className={`input ${className}`}
               placeholder={placeholder || label}
+              style={inputStyle}
               onChange={(e) =>
                 onChange({
                   target: {
