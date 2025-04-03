@@ -11,8 +11,7 @@ const useUploadWorks = () => {
   const [uploadLoading, setUploadLoading] = useState(false);
 
   useEffect(() => {
-    if (data.length)
-      uploadWorks(data, shownFields, templateNames);
+    if (data.length) uploadWorks(data, shownFields, templateNames);
     setUploadLoading(false);
   }, [data, shownFields]);
 
@@ -96,7 +95,8 @@ const useUploadWorks = () => {
                       );
                     }
                     if (
-                      !!field?.use_template && !initialTemplateNames.includes(
+                      !!field?.use_template &&
+                      !initialTemplateNames.includes(
                         childTemplate?.template?.name || ''
                       )
                     ) {

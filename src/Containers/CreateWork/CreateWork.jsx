@@ -60,9 +60,7 @@ const CreateWork = ({ isEdit }) => {
             ...field,
             field_value:
               field?.name === 'Желаемая дата  приезда' && !!field?.field_value
-                ? moment(field?.field_value).format(
-                    'DD.MM.YYYY HH:mm'
-                  )
+                ? moment(field?.field_value).format('DD.MM.YYYY HH:mm')
                 : field?.field_value || '',
             field_id: !!field?.is_child_template
               ? `${field?.id} - ${field?.child_template_name}`
@@ -147,7 +145,8 @@ const CreateWork = ({ isEdit }) => {
       if (!!work?.works?.[0]?.child_templates) {
         const editedChildTemplates = state
           .filter((field) => field.is_edited)
-          .map((field) => field?.child_template_name).filter(field => !!field);
+          .map((field) => field?.child_template_name)
+          .filter((field) => !!field);
         formData.append('type_work', JSON.stringify(editedChildTemplates));
       } else formData.append('type_work', JSON.stringify([]));
 

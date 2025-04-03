@@ -179,7 +179,7 @@ const Autocomplete = ({
         }}
         onClick={(e) => {
           e.stopPropagation();
-          setShowOptions(true)
+          setShowOptions(true);
         }}
         isSelectInput
         onValueRemove={onSelectedOptionRemove}
