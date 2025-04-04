@@ -51,8 +51,6 @@ export const uploadWorks = (works, shownFields = [], templateNames = []) => {
         });
     });
 
-    console.log(filteredWorkNames);
-
     XLSX.utils.sheet_add_aoa(
       worksheet,
       [

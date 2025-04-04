@@ -36,7 +36,9 @@ const CreateWork = ({ isEdit }) => {
   const [state, setState] = useState([]);
   const [oldState, setOldState] = useState([]);
   const [work, setWork] = useState(null);
-
+  
+  console.log(state);
+  
   useEffect(() => {
     const getEditWorkFieldsData = async () => {
       const resolutionTypes = await dispatch(getResolutionTypes());
@@ -312,7 +314,9 @@ const CreateWork = ({ isEdit }) => {
                               (field?.field || field)?.id
                           )?.field_value || ''
                         }
-                        label={(field?.field || field).name}
+                        label={`${
+                          (field?.field || field).name
+                        }${field?.is_child_template ? ` → ${field?.child_template_name}` : ''}`}
                         placeholder={(field?.field || field).name}
                         onChange={(e) =>
                           handleChange(
