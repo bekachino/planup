@@ -10,7 +10,6 @@ import Button from '../Button/Button';
 import './datetimePicker.css';
 
 const DatetimePicker = ({
-  key,
   id,
   name,
   value,
@@ -209,9 +208,10 @@ const DatetimePicker = ({
   );
 
   return (
-    <div className={`date-time-picker ${id}`} ref={datePickerRef} key={key}>
+    <div className='date-time-picker' ref={datePickerRef}>
       <Input
         className="date-time-picker-input"
+        name={name}
         value={value}
         placeholder={placeholder}
         onFocus={() => setShowCalendar(true)}
@@ -220,7 +220,7 @@ const DatetimePicker = ({
       />
       <div className="date-time-picker-icon" />
       <div
-        className={`date-time-calendar ${id}`}
+        className='date-time-calendar'
         style={{
           display: showCalendar ? 'block' : 'none',
           top: datePickerIsOnTopHalf ? 'calc(100% + 6px)' : 'unset',

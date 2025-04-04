@@ -12,7 +12,6 @@ import Button from '../Button/Button';
 import DatetimePicker from '../DatetimePicker/DatetimePicker';
 import { getWorks } from '../../features/works/worksThunk';
 import { setFiltersData } from '../../features/statuses/filtersDataSlice';
-import { nanoid } from 'nanoid';
 import moment from 'moment';
 import './searchFilters.css';
 
@@ -237,20 +236,20 @@ const SearchFilters = ({ ...rest }) => {
         name="finished_start_date"
         placeholder="От"
         disableLabel
-        value={!!state ? state?.finished_start_date : ''}
+        value={!!state ? state?.finished_start_date || '' : ''}
         onChange={onChange}
         noTime
-        id={nanoid()}
+        id="finished_start_date"
       />
       -
       <DatetimePicker
         name="finished_end_date"
         placeholder="До"
         disableLabel
-        value={!!state ? state?.finished_end_date : ''}
+        value={!!state ? state?.finished_end_date || '' : ''}
         onChange={onChange}
         noTime
-        id={nanoid()}
+        id="finished_end_date"
       />
     </div>
   );
@@ -261,20 +260,20 @@ const SearchFilters = ({ ...rest }) => {
         name="start_date"
         placeholder="От"
         disableLabel
-        value={!!state ? state?.start_date : ''}
+        value={!!state ? state?.start_date || '' : ''}
         onChange={onChange}
         noTime
-        id={nanoid()}
+        id="start_date"
       />
       -
       <DatetimePicker
         name="end_date"
         placeholder="До"
         disableLabel
-        value={!!state ? state?.end_date : ''}
+        value={!!state ? state?.end_date || '' : ''}
         onChange={onChange}
         noTime
-        id={nanoid()}
+        id="end_date"
       />
     </div>
   );
@@ -285,20 +284,20 @@ const SearchFilters = ({ ...rest }) => {
         name="desired_start_date"
         placeholder="От"
         disableLabel
-        value={!!state ? state?.desired_start_date : ''}
+        value={!!state ? state?.desired_start_date || '' : ''}
         onChange={onChange}
         noTime
-        id={nanoid()}
+        id="desired_start_date"
       />
       -
       <DatetimePicker
         name="desired_end_date"
         placeholder="До"
         disableLabel
-        value={!!state ? state?.desired_end_date : ''}
+        value={!!state ? state?.desired_end_date || '' : ''}
         onChange={onChange}
         noTime
-        id={nanoid()}
+        id="desired_end_date"
       />
     </div>
   );
