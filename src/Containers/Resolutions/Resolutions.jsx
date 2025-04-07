@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {getResolutionTypes} from '../../features/statuses/filtersDataThunk';
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getResolutionTypes } from '../../features/statuses/filtersDataThunk';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
 import Modal from '../../Components/Modal/Modal';
-import {deleteResolution} from '../../features/data/dataThunk';
+import { deleteResolution } from '../../features/data/dataThunk';
 import '../Templates/templates.css';
-import ListItem from "../../Components/ListItem/ListItem";
+import ListItem from '../../Components/ListItem/ListItem';
 
 const Resolutions = () => {
   const navigate = useNavigate();
@@ -87,7 +87,14 @@ const Resolutions = () => {
           )}
           {!resolutionTypesLoading &&
             resolutionTypes.map((resolution) => (
-                <ListItem key={resolution.id} item={resolution} setModalIsOpen={setModalIsOpen} editPath={`/edit-resolution/${resolution?.id}`} setItemForDelete={setResolutionForDelete} type={"resolution"}/>
+              <ListItem
+                key={resolution.id}
+                item={resolution}
+                setModalIsOpen={setModalIsOpen}
+                editPath={`/edit-resolution/${resolution?.id}`}
+                setItemForDelete={setResolutionForDelete}
+                type={'resolution'}
+              />
             ))}
         </div>
       </div>

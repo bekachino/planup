@@ -208,7 +208,7 @@ const DatetimePicker = ({
   );
 
   return (
-    <div className='date-time-picker' ref={datePickerRef}>
+    <div className="date-time-picker" ref={datePickerRef}>
       <Input
         className="date-time-picker-input"
         name={name}
@@ -220,7 +220,7 @@ const DatetimePicker = ({
       />
       <div className="date-time-picker-icon" />
       <div
-        className='date-time-calendar'
+        className="date-time-calendar"
         style={{
           display: showCalendar ? 'block' : 'none',
           top: datePickerIsOnTopHalf ? 'calc(100% + 6px)' : 'unset',

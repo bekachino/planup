@@ -8,7 +8,7 @@ import { DATE_FIELDS, STATUS_ICONS, WORK_STATUSES } from '../../constants';
 import ManipulateWorksFields from '../../Components/ManipulateWorksFields/ManipulateWorksFields';
 import moment from 'moment';
 import './home.css';
-import Pagination from "../../Components/Pagination/Pagination";
+import Pagination from '../../Components/Pagination/Pagination';
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -172,7 +172,7 @@ const Home = () => {
             </tbody>
           </table>
         </div>
-        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
       </div>
     </div>
   );

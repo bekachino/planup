@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {getTemplateTypes} from '../../features/statuses/filtersDataThunk';
-import {useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getTemplateTypes } from '../../features/statuses/filtersDataThunk';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
-import {deleteTemplate} from '../../features/data/dataThunk';
+import { deleteTemplate } from '../../features/data/dataThunk';
 import Modal from '../../Components/Modal/Modal';
 import './templates.css';
-import ListItem from "../../Components/ListItem/ListItem";
+import ListItem from '../../Components/ListItem/ListItem';
 
 const Templates = () => {
   const navigate = useNavigate();
@@ -85,7 +85,14 @@ const Templates = () => {
           )}
           {!templateTypesLoading &&
             templateTypes.map((template) => (
-                <ListItem key={template.id} item={template} setItemForDelete={setTemplateForDelete} type={"template"} editPath={`/edit-template/${template?.id}`} setModalIsOpen={setModalIsOpen}/>
+              <ListItem
+                key={template.id}
+                item={template}
+                setItemForDelete={setTemplateForDelete}
+                type={'template'}
+                editPath={`/edit-template/${template?.id}`}
+                setModalIsOpen={setModalIsOpen}
+              />
             ))}
         </div>
       </div>

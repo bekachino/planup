@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {getSectionChiefs} from '../../features/data/dataThunk';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getSectionChiefs } from '../../features/data/dataThunk';
 import '../Users/users.css';
-import User from "../../Components/User/User";
+import User from '../../Components/User/User';
 
 const SectionChiefs = () => {
   const navigate = useNavigate();
@@ -54,7 +54,11 @@ const SectionChiefs = () => {
           )}
           {!!sectionChiefs?.length &&
             sectionChiefs.map((sectionChief) => (
-                <User user={sectionChief} type={"section-chief"} key={sectionChief?.id}></User>
+              <User
+                user={sectionChief}
+                type={'section-chief'}
+                key={sectionChief?.id}
+              ></User>
             ))}
         </div>
       </div>

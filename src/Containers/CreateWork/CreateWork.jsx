@@ -36,9 +36,9 @@ const CreateWork = ({ isEdit }) => {
   const [state, setState] = useState([]);
   const [oldState, setOldState] = useState([]);
   const [work, setWork] = useState(null);
-  
+
   console.log(state);
-  
+
   useEffect(() => {
     const getEditWorkFieldsData = async () => {
       const resolutionTypes = await dispatch(getResolutionTypes());

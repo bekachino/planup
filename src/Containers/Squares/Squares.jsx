@@ -6,7 +6,7 @@ import Button from '../../Components/Button/Button';
 import Modal from '../../Components/Modal/Modal';
 import { deleteSquare } from '../../features/data/dataThunk';
 import '../Templates/templates.css';
-import ListItem from "../../Components/ListItem/ListItem";
+import ListItem from '../../Components/ListItem/ListItem';
 
 const Resolutions = () => {
   const navigate = useNavigate();
@@ -79,7 +79,14 @@ const Resolutions = () => {
             ))}
           {!squaresLoading &&
             (squares || []).map((square) => (
-                <ListItem key={square.id} item={square} setItemForDelete={setResolutionForDelete} type={"square"} editPath={`/admin/edit-square/${square?.id}`} setModalIsOpen={setModalIsOpen}/>
+              <ListItem
+                key={square.id}
+                item={square}
+                setItemForDelete={setResolutionForDelete}
+                type={'square'}
+                editPath={`/admin/edit-square/${square?.id}`}
+                setModalIsOpen={setModalIsOpen}
+              />
             ))}
         </div>
       </div>

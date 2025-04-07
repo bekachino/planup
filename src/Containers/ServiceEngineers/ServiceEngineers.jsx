@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {getServiceEngineers} from '../../features/data/dataThunk';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getServiceEngineers } from '../../features/data/dataThunk';
 import '../Users/users.css';
-import User from "../../Components/User/User";
+import User from '../../Components/User/User';
 
 const ServiceEngineers = () => {
   const navigate = useNavigate();
@@ -54,7 +54,11 @@ const ServiceEngineers = () => {
           )}
           {!!serviceEngineers?.length &&
             serviceEngineers.map((serviceEngineer) => (
-                <User user={serviceEngineer} type={"service-engineer"} key={serviceEngineer?.id}></User>
+              <User
+                user={serviceEngineer}
+                type={'service-engineer'}
+                key={serviceEngineer?.id}
+              ></User>
             ))}
         </div>
       </div>

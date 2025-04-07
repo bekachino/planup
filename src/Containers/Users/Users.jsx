@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import {getUsers} from '../../features/data/dataThunk';
+import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getUsers } from '../../features/data/dataThunk';
 import './users.css';
-import User from "../../Components/User/User";
+import User from '../../Components/User/User';
 
 const Users = () => {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const Users = () => {
           )}
           {!!users?.length &&
             users.map((user) => (
-                <User user={user} key={user?.id} type={"user"}></User>
+              <User user={user} key={user?.id} type={'user'}></User>
             ))}
         </div>
       </div>
