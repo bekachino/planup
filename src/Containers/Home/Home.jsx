@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../../Components/Button/Button';
 import { ReactComponent as AddIcon } from '../../assets/add-white.svg';
-import { ReactComponent as ArrowLeftIcon } from '../../assets/arrow-left.svg';
-import { ReactComponent as ArrowRightIcon } from '../../assets/arrow-right.svg';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getWorkFields, getWorks } from '../../features/works/worksThunk';
@@ -10,6 +8,7 @@ import { DATE_FIELDS, STATUS_ICONS, WORK_STATUSES } from '../../constants';
 import ManipulateWorksFields from '../../Components/ManipulateWorksFields/ManipulateWorksFields';
 import moment from 'moment';
 import './home.css';
+import Pagination from "../../Components/Pagination/Pagination";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +18,6 @@ const Home = () => {
     worksLoading,
     shownFields,
     availFieldsLoading,
-    total_pages,
     total_records,
   } = useAppSelector((state) => state.worksState);
   const { filtersData } = useAppSelector((state) => state.filtersDataState);
@@ -83,84 +81,6 @@ const Home = () => {
       }
     } else return '-';
   };
-
-  const Pagination = () => (
-    <div className="works-pagination">
-      <button
-        className="works-pagination-btn"
-        disabled={currentPage <= 1}
-        onClick={() => {
-          if (currentPage > 1) setCurrentPage((prevState) => prevState - 1);
-        }}
-      >
-        <ArrowLeftIcon />
-      </button>
-      {(() => {
-        const pagesList = Array.from(
-          { length: total_pages || 1 },
-          (_, i) => i + 1
-        );
-
-        if (pagesList.length < 10) {
-          return pagesList.map((pageNum) => (
-            <button
-              key={pageNum}
-              className={`works-pagination-page-num ${currentPage === pageNum ? 'active' : ''}`}
-              onClick={() => setCurrentPage(pageNum)}
-            >
-              {pageNum}
-            </button>
-          ));
-        }
-        return (
-          <>
-            <button
-              className={`works-pagination-page-num ${currentPage === 1 ? 'active' : ''}`}
-              onClick={() => setCurrentPage(1)}
-            >
-              1
-            </button>
-            {currentPage > 3 && '...'}
-            {pagesList.slice(1, -1).map((pageNum) =>
-              pageNum === currentPage ||
-              pageNum === currentPage - 1 ||
-              pageNum === currentPage + 1 ||
-              (currentPage === 1 && pageNum < 4) ||
-              (currentPage === pagesList.slice(-1)[0] &&
-                pageNum > pagesList.slice(-4)[0]) ? (
-                <button
-                  key={pageNum}
-                  className={`works-pagination-page-num ${currentPage === pageNum ? 'active' : ''}`}
-                  onClick={() => setCurrentPage(pageNum)}
-                >
-                  {pageNum}
-                </button>
-              ) : (
-                <></>
-              )
-            )}
-            {currentPage < pagesList.slice(-3)[0] && '...'}
-            <button
-              className={`works-pagination-page-num ${currentPage === pagesList.slice(-1)[0] ? 'active' : ''}`}
-              onClick={() => setCurrentPage(pagesList.slice(-1)[0])}
-            >
-              {pagesList.slice(-1)[0]}
-            </button>
-          </>
-        );
-      })()}
-      <button
-        className="works-pagination-btn"
-        disabled={currentPage >= total_pages}
-        onClick={() => {
-          if (currentPage < total_pages)
-            setCurrentPage((prevState) => prevState + 1);
-        }}
-      >
-        <ArrowRightIcon />
-      </button>
-    </div>
-  );
 
   return (
     <div className="home">
@@ -252,7 +172,7 @@ const Home = () => {
             </tbody>
           </table>
         </div>
-        <Pagination />
+        <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage}/>
       </div>
     </div>
   );

@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getResolutionTypes } from '../../features/statuses/filtersDataThunk';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {getResolutionTypes} from '../../features/statuses/filtersDataThunk';
+import {useNavigate} from 'react-router-dom';
 import Button from '../../Components/Button/Button';
-import { ReactComponent as RefreshIcon } from '../../assets/refresh.svg';
-import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import Modal from '../../Components/Modal/Modal';
-import { deleteResolution } from '../../features/data/dataThunk';
+import {deleteResolution} from '../../features/data/dataThunk';
 import '../Templates/templates.css';
+import ListItem from "../../Components/ListItem/ListItem";
 
 const Resolutions = () => {
   const navigate = useNavigate();
@@ -18,7 +17,6 @@ const Resolutions = () => {
   const { deleteResolutionLoading } = useAppSelector(
     (state) => state.dataState
   );
-  const { user } = useAppSelector((state) => state.userState);
   const [resolutionForDelete, setResolutionForDelete] = useState(-1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -89,33 +87,7 @@ const Resolutions = () => {
           )}
           {!resolutionTypesLoading &&
             resolutionTypes.map((resolution) => (
-              <div className="type-item" key={resolution.id}>
-                <span className="type-item-title">{resolution.name}</span>
-                {user?.role === 'admin' && (
-                  <>
-                    <Button
-                      className="edit-type-btn"
-                      onClick={() =>
-                        navigate(`/edit-resolution/${resolution?.id}`)
-                      }
-                    >
-                      <RefreshIcon />
-                      Обновить
-                    </Button>
-                    <Button
-                      className="edit-type-btn delete-type-btn"
-                      color="error"
-                      onClick={() => {
-                        setResolutionForDelete(resolution?.id);
-                        setModalIsOpen(true);
-                      }}
-                    >
-                      <DeleteIcon />
-                      Удалить
-                    </Button>
-                  </>
-                )}
-              </div>
+                <ListItem key={resolution.id} item={resolution} setModalIsOpen={setModalIsOpen} editPath={`/edit-resolution/${resolution?.id}`} setItemForDelete={setResolutionForDelete} type={"resolution"}/>
             ))}
         </div>
       </div>

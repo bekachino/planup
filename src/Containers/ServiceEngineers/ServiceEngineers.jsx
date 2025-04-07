@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getServiceEngineers } from '../../features/data/dataThunk';
-import defaultUserPng from '../../assets/default-user.png';
-import { ROLES } from '../../constants';
+import React, {useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {getServiceEngineers} from '../../features/data/dataThunk';
 import '../Users/users.css';
+import User from "../../Components/User/User";
 
 const ServiceEngineers = () => {
   const navigate = useNavigate();
@@ -54,36 +53,8 @@ const ServiceEngineers = () => {
             </h2>
           )}
           {!!serviceEngineers?.length &&
-            serviceEngineers.map((serviceEngineer, i) => (
-              <div className="user" key={i}>
-                <div className="user-avatar">
-                  <img
-                    src={
-                      !!serviceEngineer?.service_engineer?.photo
-                        ? serviceEngineer.service_engineer?.photo
-                        : defaultUserPng
-                    }
-                    alt={
-                      serviceEngineer?.service_engineer?.full_name ||
-                      'Начальник участка'
-                    }
-                  />
-                </div>
-                <div className="user-info">
-                  <Link
-                    to={`/admin/service-engineer/${serviceEngineer?.id || ''}`}
-                    className="user-full-name"
-                  >
-                    {serviceEngineer?.service_engineer?.full_name || 'ㅤ'}
-                  </Link>
-                  <span className="user-role">
-                    права роли -{' '}
-                    {!!serviceEngineer?.service_engineer?.role
-                      ? ROLES[serviceEngineer.service_engineer?.role]
-                      : ''}
-                  </span>
-                </div>
-              </div>
+            serviceEngineers.map((serviceEngineer) => (
+                <User user={serviceEngineer} type={"service-engineer"} key={serviceEngineer?.id}></User>
             ))}
         </div>
       </div>

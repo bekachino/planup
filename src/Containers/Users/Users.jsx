@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getUsers } from '../../features/data/dataThunk';
-import defaultUserPng from '../../assets/default-user.png';
-import { ROLES } from '../../constants';
+import React, {useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {getUsers} from '../../features/data/dataThunk';
 import './users.css';
+import User from "../../Components/User/User";
 
 const Users = () => {
   const navigate = useNavigate();
@@ -51,25 +50,7 @@ const Users = () => {
           )}
           {!!users?.length &&
             users.map((user) => (
-              <div className="user">
-                <div className="user-avatar">
-                  <img
-                    src={!!user?.photo ? user.photo : defaultUserPng}
-                    alt={user?.full_name || 'Пользователь'}
-                  />
-                </div>
-                <div className="user-info">
-                  <Link
-                    to={`/admin/user/${user?.id || ''}`}
-                    className="user-full-name"
-                  >
-                    {user?.full_name || 'ㅤ'}
-                  </Link>
-                  <span className="user-role">
-                    права роли - {!!user?.role ? ROLES[user?.role] : ''}
-                  </span>
-                </div>
-              </div>
+                <User user={user} key={user?.id} type={"user"}></User>
             ))}
         </div>
       </div>

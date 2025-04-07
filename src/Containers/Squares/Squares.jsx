@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getSquares } from '../../features/statuses/filtersDataThunk';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../Components/Button/Button';
-import { ReactComponent as RefreshIcon } from '../../assets/refresh.svg';
-import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import Modal from '../../Components/Modal/Modal';
 import { deleteSquare } from '../../features/data/dataThunk';
 import '../Templates/templates.css';
+import ListItem from "../../Components/ListItem/ListItem";
 
 const Resolutions = () => {
   const navigate = useNavigate();
@@ -80,27 +79,7 @@ const Resolutions = () => {
             ))}
           {!squaresLoading &&
             (squares || []).map((square) => (
-              <div className="type-item" key={square.id}>
-                {square.squares}
-                <Button
-                  className="edit-type-btn"
-                  onClick={() => navigate(`/admin/edit-square/${square?.id}`)}
-                >
-                  <RefreshIcon />
-                  Обновить
-                </Button>
-                <Button
-                  className="edit-type-btn delete-type-btn"
-                  color="error"
-                  onClick={() => {
-                    setResolutionForDelete(square?.id);
-                    setModalIsOpen(true);
-                  }}
-                >
-                  <DeleteIcon />
-                  Удалить
-                </Button>
-              </div>
+                <ListItem key={square.id} item={square} setItemForDelete={setResolutionForDelete} type={"square"} editPath={`/admin/edit-square/${square?.id}`} setModalIsOpen={setModalIsOpen}/>
             ))}
         </div>
       </div>

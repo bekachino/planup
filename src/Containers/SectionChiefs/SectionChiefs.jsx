@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getSectionChiefs } from '../../features/data/dataThunk';
-import defaultUserPng from '../../assets/default-user.png';
-import { ROLES } from '../../constants';
+import React, {useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {getSectionChiefs} from '../../features/data/dataThunk';
 import '../Users/users.css';
+import User from "../../Components/User/User";
 
 const SectionChiefs = () => {
   const navigate = useNavigate();
@@ -55,35 +54,7 @@ const SectionChiefs = () => {
           )}
           {!!sectionChiefs?.length &&
             sectionChiefs.map((sectionChief) => (
-              <div className="user">
-                <div className="user-avatar">
-                  <img
-                    src={
-                      !!sectionChief?.section_chief?.photo
-                        ? sectionChief.section_chief.photo
-                        : defaultUserPng
-                    }
-                    alt={
-                      sectionChief?.section_chief?.full_name ||
-                      'Начальник участка'
-                    }
-                  />
-                </div>
-                <div className="user-info">
-                  <Link
-                    to={`/admin/section-chief/${sectionChief?.id || ''}`}
-                    className="user-full-name"
-                  >
-                    {sectionChief?.section_chief?.full_name || 'ㅤ'}
-                  </Link>
-                  <span className="user-role">
-                    права роли -{' '}
-                    {!!sectionChief?.section_chief?.role
-                      ? ROLES[sectionChief?.section_chief?.role]
-                      : ''}
-                  </span>
-                </div>
-              </div>
+                <User user={sectionChief} type={"section-chief"} key={sectionChief?.id}></User>
             ))}
         </div>
       </div>

@@ -160,12 +160,10 @@ const Autocomplete = ({
               },
             });
             setFocusedOption(0);
-            //setShowOptions(true);
           }
         }}
         required={required}
         onFocus={() => {
-          //setTimeout(() => setShowOptions(true), 100);
           if (!multiple) {
             onChange({
               target: {
@@ -174,7 +172,6 @@ const Autocomplete = ({
               },
             });
             setFocusedOption(0);
-            //setShowOptions(true);
           }
         }}
         onClick={(e) => {
