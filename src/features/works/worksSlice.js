@@ -49,49 +49,56 @@ const WorksSlice = createSlice({
     });
     builder.addCase(getWorks.fulfilled, (state, { payload: res }) => {
       state.worksLoading = false;
-      console.log(res);
       state.total_pages = res?.total_pages || 1;
       state.total_records = res?.total_records || 0;
-      state.works =
-        (res?.results || []).map((work) => [
-          {
-            id: work.id || null,
-            name: 'Номер наряда' || null,
-            field_value: work.id || null,
-          },
-          {
-            id: work.bitrix_id || null,
-            name: 'Битрикс ID' || null,
-            field_value: work.bitrix_id || null,
-          },
-          {
-            id: work.status.id || null,
-            name: 'Статус' || null,
-            field_value: work.status.name || null,
-          },
-          {
-            id: work.works[0]?.template.id || null,
-            name: 'Шаблон',
-            field_value: work.works[0]?.template.name || null,
-          },
-          {
-            name: 'Дата создания',
-            field_value: work.created_at || null,
-          } || null,
-          {
-            name: 'Дата закрытия',
-            field_value: work.closed_at || null,
-          } || null,
-          {
-            name: 'Квадрат',
-            field_value: work.squares_id?.name || null,
-          } || null,
-          {
-            name: 'Исполнитель',
-            field_value: work.user_id?.name || null,
-          } || null,
-          ...(work.works[0]?.fields || []),
-        ]) || [];
+      
+      const worksData = (res?.results || []).map((work) => [
+        {
+          id: work.id || null,
+          name: 'Номер наряда' || null,
+          field_value: work.id || null,
+        },
+        {
+          id: work.bitrix_id || null,
+          name: 'Битрикс ID' || null,
+          field_value: work.bitrix_id || null,
+        },
+        {
+          id: work.status.id || null,
+          name: 'Статус' || null,
+          field_value: work.status.name || null,
+        },
+        {
+          id: work.works[0]?.template.id || null,
+          name: 'Шаблон',
+          field_value: work.works[0]?.template.name || null,
+        },
+        {
+          name: 'Дата создания',
+          field_value: work.created_at || null,
+        } || null,
+        {
+          name: 'Дата закрытия',
+          field_value: work.closed_at || null,
+        } || null,
+        {
+          name: 'Квадрат',
+          field_value: work.squares_id?.name || null,
+        } || null,
+        {
+          name: 'Исполнитель',
+          field_value: work.user_id?.name || null,
+        } || null,
+        ...(work.works[0]?.fields || []),
+      ]) || [];
+      
+      (res?.results || []).forEach((work, i) => {
+        (work.works[0]?.child_templates?.map(child_template => child_template?.fields) || []).map(childTemplates => {
+          childTemplates.map(field => worksData[i].push(field));
+        });
+      });
+      
+      state.works = worksData;
     });
     builder.addCase(getWorks.rejected, (state) => {
       state.worksLoading = false;
