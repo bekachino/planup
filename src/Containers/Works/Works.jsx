@@ -6,11 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getWorkFields, getWorks } from '../../features/works/worksThunk';
 import { DATE_FIELDS, STATUS_ICONS, WORK_STATUSES } from '../../constants';
 import ManipulateWorksFields from '../../Components/ManipulateWorksFields/ManipulateWorksFields';
-import moment from 'moment';
-import './home.css';
 import Pagination from '../../Components/Pagination/Pagination';
+import moment from 'moment';
+import './works.css';
 
-const Home = () => {
+const Works = () => {
   const dispatch = useAppDispatch();
   const dutiesTableRef = useRef(null);
   const {
@@ -178,4 +178,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Works;

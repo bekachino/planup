@@ -28,6 +28,7 @@ export const uploadWorks = (works, shownFields = [], templateNames = []) => {
   });
 
   works.forEach((work) => {
+    console.log(work);
     rowIndex += 1;
 
     const filteredFields = [];
@@ -37,7 +38,7 @@ export const uploadWorks = (works, shownFields = [], templateNames = []) => {
     const filteredWorkNames = templateNames.map((name) =>
       workNames.includes(name) ? { field_value: name } : null
     );
-
+    
     shownFields.forEach((field) => {
       const foundWorkField = (work || []).find(
         (workField) => workField.name === field

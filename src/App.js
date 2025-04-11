@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import Home from './Containers/Home/Home';
+import Works from './Containers/Works/Works';
 import { lazy, Suspense, useEffect } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
@@ -66,7 +66,7 @@ const App = () => {
         path="home"
         element={
           <Suspense fallback={<></>}>
-            <Home />
+            <Works />
           </Suspense>
         }
       />
