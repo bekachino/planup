@@ -1,0 +1,55 @@
+.works-analytics-container {
+  padding: 27px 55px;
+}
+
+.works-analytics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px 20px;
+  border-radius: 18px;
+  padding: 15px;
+}
+
+.works-analytics,
+.works-analytics-card {
+  box-shadow: 0 0 10px -7px #000000;
+}
+
+.works-analytics-card {
+  padding: 12px 18px;
+  width: calc(50% - 10px);
+  border-radius: 12px;
+}
+
+.works-analytics-card h2 {
+  text-align: center;
+}
+
+.works-analytics-card h2,
+.works-analytics-card h3,
+.works-analytics-card h4 {
+  margin: 0;
+  color: var(--text-2);
+}
+
+.work-analytics-today {
+  height: 200px;
+}
+
+.work-analytics-card-row {
+  display: flex;
+  gap: 8px;
+}
+
+.work-analytics-card-row-gap {
+  flex-grow: 1;
+  height: 20px;
+  background-image: radial-gradient(black 1px, transparent 1px);
+  background-size: 8px 8px;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+
+.work-analytics-card-row-value {
+  margin: 0;
+}

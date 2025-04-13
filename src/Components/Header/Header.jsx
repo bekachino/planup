@@ -72,7 +72,7 @@ const Header = () => {
           PlanUp
         </Link>
       </h1>
-      {['/home'].includes(location.pathname) && (
+      {['/works'].includes(location.pathname) && (
         <SearchFilters placeholder="Поиск" />
       )}
       <nav>

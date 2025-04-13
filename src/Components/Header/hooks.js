@@ -9,12 +9,7 @@ const useUploadWorks = () => {
   const [data, setData] = useState([]);
   const [templateNames, setTemplateNames] = useState([]);
   const [uploadLoading, setUploadLoading] = useState(false);
-  
-  useEffect(() => {
-    if (data.length) uploadWorks(data, shownFields, templateNames);
-    setUploadLoading(false);
-  }, [data, shownFields]);
-  
+
   const fetchAndUploadWorks = async () => {
     try {
       setUploadLoading(true);
@@ -26,13 +21,13 @@ const useUploadWorks = () => {
       const created_at_query = `&created_at=${filters?.created_at || []}`;
       const closed_at_query = `&closed_at=${filters?.closed_at || []}`;
       const date_of_arrival_start_query = `&date_of_arrival=${filters?.date_of_arrival || []}`;
-      
+
       const req = await axiosApi(
         `/v2/order-list/?page_size=999999&page=1${user_id_query}${resolution_id_query}${status_id_query}${template_id_query}${created_at_query}${closed_at_query}${squares_id_query}${date_of_arrival_start_query}`
       );
       const res = await req.data;
       const initialTemplateNames = [];
-      
+
       const worksForUpload =
         (res?.results || []).map((work) => [
           {
@@ -111,7 +106,7 @@ const useUploadWorks = () => {
           } || null,
           ...(work.works[0]?.fields || []),
         ]) || [];
-      
+
       (res?.results || []).forEach((work, i) => {
         (
           work.works[0]?.child_templates?.map(
@@ -123,11 +118,13 @@ const useUploadWorks = () => {
       });
       setData(worksForUpload);
       setTemplateNames(initialTemplateNames);
-    } catch (error) {
-      console.error('Ошибка загрузки работ:', error);
+      if (data.length) uploadWorks(data, shownFields, templateNames);
+      setUploadLoading(false);
+    } catch (e) {
+      console.error('Ошибка загрузки работ:', e);
     }
   };
-  
+
   return {
     fetchAndUploadWorks,
     uploadLoading,

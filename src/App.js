@@ -11,6 +11,7 @@ import 'moment/locale/ru';
 import './App.css';
 
 const SignIn = lazy(() => import('./Containers/SignIn/SignIn'));
+const Home = lazy(() => import('./Containers/Home/Home'));
 const Work = lazy(() => import('./Containers/Work/Work'));
 const CreateWork = lazy(() => import('./Containers/CreateWork/CreateWork'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
@@ -64,6 +65,14 @@ const App = () => {
     <>
       <Route
         path="home"
+        element={
+          <Suspense fallback={<></>}>
+            <Home />
+          </Suspense>
+        }
+      />
+      <Route
+        path="works"
         element={
           <Suspense fallback={<></>}>
             <Works />
