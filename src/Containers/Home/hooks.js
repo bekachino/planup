@@ -3,8 +3,8 @@ import axiosApi from '../../axiosApi';
 
 const useFetchWorksAnalytics = () => {
   const [worksAnalyticsLoading, setWorksAnalyticsLoading] = useState(false);
+  const [squares, setSquares] = useState([]);
   const [connectionsOpenToday, setConnectionsOpenToday] = useState(null);
-  const [tehOpenToday, setTehOpenToday] = useState(null);
   const [connectionsClosedToday, setConnectionsClosedToday] = useState(null);
   const [connectionsClosedYesterday, setConnectionsClosedYesterday] =
     useState(null);
@@ -12,6 +12,7 @@ const useFetchWorksAnalytics = () => {
     useState(null);
   const [connectionsClosedLastMonth, setConnectionsClosedLastMonth] =
     useState(null);
+  const [tehOpenToday, setTehOpenToday] = useState(null);
   const [tehClosedToday, setTehClosedToday] = useState(null);
   const [tehClosedYesterday, setTehClosedYesterday] = useState(null);
   const [tehClosedLastWeek, setTehClosedLastWeek] = useState(null);
@@ -21,6 +22,7 @@ const useFetchWorksAnalytics = () => {
     try {
       setWorksAnalyticsLoading(true);
 
+      const fetchSquares = await axiosApi('/accounts/squares/');
       const fetchConnectionsOpenToday = await axiosApi(
         '/v2/connection-open-order-count-today/'
       );
@@ -51,6 +53,14 @@ const useFetchWorksAnalytics = () => {
       const fetchTehClosedLastMonth = await axiosApi(
         '/v2/teh-closed-order-count-month/'
       );
+
+      setSquares(
+        fetchSquares.data?.map((square) => ({
+          region: square?.region || '',
+          name: square?.squares || '',
+        }))
+      );
+
       setConnectionsOpenToday(await fetchConnectionsOpenToday.data);
       setConnectionsClosedToday(await fetchConnectionsClosedToday.data);
       setConnectionsClosedYesterday(await fetchConnectionsClosedYesterday.data);
@@ -72,12 +82,13 @@ const useFetchWorksAnalytics = () => {
   return {
     fetchWorksAnalytics,
     worksAnalyticsLoading,
+    squares,
     connectionsOpenToday,
-    tehOpenToday,
     connectionsClosedToday,
     connectionsClosedYesterday,
     connectionsClosedLastWeek,
     connectionsClosedLastMonth,
+    tehOpenToday,
     tehClosedToday,
     tehClosedYesterday,
     tehClosedLastWeek,

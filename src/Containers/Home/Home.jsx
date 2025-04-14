@@ -16,12 +16,13 @@ const Home = () => {
   const {
     fetchWorksAnalytics,
     worksAnalyticsLoading,
+    squares,
     connectionsOpenToday,
-    tehOpenToday,
     connectionsClosedToday,
     connectionsClosedYesterday,
     connectionsClosedLastWeek,
     connectionsClosedLastMonth,
+    tehOpenToday,
     tehClosedToday,
     tehClosedYesterday,
     tehClosedLastWeek,
@@ -157,7 +158,7 @@ const Home = () => {
           <h4 className="work-analytics-card-title">Подключения по областям</h4>
           {regionNames.map((regionName) => (
             <div style={{ marginTop: '15px' }}>
-              <h3>{regionName}</h3>
+              <h3 style={{ marginBottom: '4px' }}>{regionName}</h3>
               {(() => {
                 const openConnectionsOfRegion =
                   connectionsOpenToday?.templates?.[regionName];
@@ -265,7 +266,7 @@ const Home = () => {
           <h4 className="work-analytics-card-title">Техподы по областям</h4>
           {regionNames.map((regionName) => (
             <div style={{ marginTop: '15px' }}>
-              <h3>{regionName}</h3>
+              <h3 style={{ marginBottom: '4px' }}>{regionName}</h3>
               {(() => {
                 const openConnectionsOfRegion =
                   tehOpenToday?.templates?.[regionName];
@@ -277,7 +278,7 @@ const Home = () => {
                 const sumOfClosedConnections = Object.values(
                   closedConnectionsOfRegion || {}
                 ).reduce((acc, num) => acc + num, 0);
-                
+
                 if (openConnectionsOfRegion || closedConnectionsOfRegion) {
                   return (
                     <div className="work-analytics-today">
@@ -321,7 +322,7 @@ const Home = () => {
                 const sumOfClosedConnections = Object.values(
                   closedConnectionsOfRegion || {}
                 ).reduce((acc, num) => acc + num, 0);
-                
+
                 return (
                   <div className="work-analytics-card-row">
                     <h4>Закрыто за вчера</h4>
@@ -338,7 +339,7 @@ const Home = () => {
                 const sumOfClosedConnections = Object.values(
                   closedConnectionsOfRegion || {}
                 ).reduce((acc, num) => acc + num, 0);
-                
+
                 return (
                   <div className="work-analytics-card-row">
                     <h4>Закрыто за последнюю неделю</h4>
@@ -355,7 +356,7 @@ const Home = () => {
                 const sumOfClosedConnections = Object.values(
                   closedConnectionsOfRegion || {}
                 ).reduce((acc, num) => acc + num, 0);
-                
+
                 return (
                   <div className="work-analytics-card-row">
                     <h4>Закрыто за последний месяц</h4>
@@ -373,6 +374,105 @@ const Home = () => {
           <h4 className="work-analytics-card-title">
             Подключения по квадратам
           </h4>
+          {regionNames.map((regionName) => (
+            <div style={{ marginTop: '15px' }}>
+              <h3 style={{ marginBottom: '4px' }}>{regionName}</h3>
+              {(() => {
+                return squares
+                  .filter((square) => square?.region === regionName)
+                  .map((square) => (
+                    <div
+                      style={{
+                        marginTop: '10px',
+                        paddingLeft: '20px',
+                      }}
+                    >
+                      <h3 style={{ marginBottom: '4px' }}>{square?.name}</h3>
+                      {(() => {
+                        const openConnectionsOfRegion =
+                          connectionsOpenToday?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Открыто за сегодня</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {openConnectionsOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedConnectionsOfRegion =
+                          connectionsClosedToday?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за сегодня</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedConnectionsOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedConnectionsOfRegion =
+                          connectionsClosedYesterday?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за вчера</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedConnectionsOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedConnectionsOfRegion =
+                          connectionsClosedLastWeek?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за последнюю неделю</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedConnectionsOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedConnectionsOfRegion =
+                          connectionsClosedLastMonth?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за последний месяц</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedConnectionsOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  ));
+              })()}
+            </div>
+          ))}
         </div>
         <div className="works-analytics-card">
           <h4 className="work-analytics-card-title">Техподы по квадратам</h4>
