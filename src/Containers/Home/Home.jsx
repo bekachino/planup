@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import useFetchWorksAnalytics from './hooks';
 import { ResponsivePie } from '@nivo/pie';
 import './home.css';
+import Button from '../../Components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const regionNames = [
   'Чуй',
@@ -13,6 +15,7 @@ const regionNames = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate();
   const {
     fetchWorksAnalytics,
     worksAnalyticsLoading,
@@ -35,6 +38,17 @@ const Home = () => {
 
   return (
     <div className="works-analytics-container">
+      <Button
+        style={{
+          fontSize: '20px',
+          marginBottom: '15px',
+          width: '100%',
+          padding: '10px 14px',
+        }}
+        onClick={() => navigate('/works')}
+      >
+        Перейти к нарядам
+      </Button>
       <div className="works-analytics">
         <div className="works-analytics-card">
           <h2>Подключения</h2>
@@ -42,7 +56,10 @@ const Home = () => {
         <div className="works-analytics-card">
           <h2>Техподы</h2>
         </div>
-        <div className="works-analytics-card">
+        <div
+          style={{ backgroundColor: '#fdfeff' }}
+          className="works-analytics-card"
+        >
           <h4 className="work-analytics-card-title">Всего подключений</h4>
           <div className="work-analytics-today">
             <ResponsivePie
@@ -71,7 +88,7 @@ const Home = () => {
               activeOuterRadiusOffset={8}
               arcLabelsTextColor="#FFFFFF"
               enableArcLinkLabels={
-                !!connectionsOpenToday?.count && !!connectionsClosedToday?.count
+                !!connectionsOpenToday?.count || !!connectionsClosedToday?.count
               }
               tooltip={() => <div></div>}
             />
@@ -98,7 +115,10 @@ const Home = () => {
             </h4>
           </div>
         </div>
-        <div className="works-analytics-card">
+        <div
+          style={{ backgroundColor: '#fdfeff' }}
+          className="works-analytics-card"
+        >
           <h4 className="work-analytics-card-title">Всего техподов</h4>
           <div className="work-analytics-today">
             <ResponsivePie
@@ -127,7 +147,7 @@ const Home = () => {
               activeOuterRadiusOffset={8}
               arcLabelsTextColor="#FFFFFF"
               enableArcLinkLabels={
-                !!tehOpenToday?.count && !!tehClosedToday?.count
+                !!tehOpenToday?.count || !!tehClosedToday?.count
               }
               tooltip={() => <div></div>}
             />
@@ -157,7 +177,10 @@ const Home = () => {
         <div className="works-analytics-card">
           <h4 className="work-analytics-card-title">Подключения по областям</h4>
           {regionNames.map((regionName) => (
-            <div style={{ marginTop: '15px' }}>
+            <div
+              style={{ marginTop: '15px' }}
+              className="work-analytics-region-data"
+            >
               <h3 style={{ marginBottom: '4px' }}>{regionName}</h3>
               {(() => {
                 const openConnectionsOfRegion =
@@ -200,7 +223,7 @@ const Home = () => {
                         activeOuterRadiusOffset={8}
                         arcLabelsTextColor="#FFFFFF"
                         enableArcLinkLabels={
-                          !!tehOpenToday?.count && !!tehClosedToday?.count
+                          !!tehOpenToday?.count || !!tehClosedToday?.count
                         }
                         tooltip={() => <div></div>}
                       />
@@ -265,7 +288,10 @@ const Home = () => {
         <div className="works-analytics-card">
           <h4 className="work-analytics-card-title">Техподы по областям</h4>
           {regionNames.map((regionName) => (
-            <div style={{ marginTop: '15px' }}>
+            <div
+              style={{ marginTop: '15px' }}
+              className="work-analytics-region-data"
+            >
               <h3 style={{ marginBottom: '4px' }}>{regionName}</h3>
               {(() => {
                 const openConnectionsOfRegion =
@@ -308,7 +334,7 @@ const Home = () => {
                         activeOuterRadiusOffset={8}
                         arcLabelsTextColor="#FFFFFF"
                         enableArcLinkLabels={
-                          !!tehOpenToday?.count && !!tehClosedToday?.count
+                          !!tehOpenToday?.count || !!tehClosedToday?.count
                         }
                         tooltip={() => <div></div>}
                       />
@@ -375,7 +401,10 @@ const Home = () => {
             Подключения по квадратам
           </h4>
           {regionNames.map((regionName) => (
-            <div style={{ marginTop: '15px' }}>
+            <div
+              style={{ marginTop: '15px' }}
+              className="work-analytics-region-data"
+            >
               <h3 style={{ marginBottom: '4px' }}>{regionName}</h3>
               {(() => {
                 return squares
@@ -476,6 +505,106 @@ const Home = () => {
         </div>
         <div className="works-analytics-card">
           <h4 className="work-analytics-card-title">Техподы по квадратам</h4>
+          {regionNames.map((regionName) => (
+            <div
+              style={{ marginTop: '15px' }}
+              className="work-analytics-region-data"
+            >
+              <h3 style={{ marginBottom: '4px' }}>{regionName}</h3>
+              {(() => {
+                return squares
+                  .filter((square) => square?.region === regionName)
+                  .map((square) => (
+                    <div
+                      style={{
+                        marginTop: '10px',
+                        paddingLeft: '20px',
+                      }}
+                    >
+                      <h3 style={{ marginBottom: '4px' }}>{square?.name}</h3>
+                      {(() => {
+                        const openTehOfRegion =
+                          tehOpenToday?.templates?.[regionName]?.[square?.name];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Открыто за сегодня</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {openTehOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedTehOfRegion =
+                          tehClosedToday?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за сегодня</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedTehOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedTehOfRegion =
+                          tehClosedYesterday?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за вчера</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedTehOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedTehOfRegion =
+                          tehClosedLastWeek?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за последнюю неделю</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedTehOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                      {(() => {
+                        const closedTehOfRegion =
+                          tehClosedLastMonth?.templates?.[regionName]?.[
+                            square?.name
+                          ];
+
+                        return (
+                          <div className="work-analytics-card-row">
+                            <span>Закрыто за последний месяц</span>
+                            <div className="work-analytics-card-row-gap"></div>
+                            <span className="work-analytics-card-row-value">
+                              {closedTehOfRegion || 0}
+                            </span>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                  ));
+              })()}
+            </div>
+          ))}
         </div>
       </div>
     </div>
