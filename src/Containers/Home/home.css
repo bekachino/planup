@@ -33,6 +33,13 @@
   color: var(--text-2);
 }
 
+.work-analytics-card-title {
+  background-color: var(--main-1-hover);
+  color: var(--white) !important;
+  padding: 12px 15px;
+  border-radius: 6px;
+}
+
 .work-analytics-region-data {
   border-radius: 12px;
   box-shadow: 0 0 10px -7px #000000;
@@ -47,6 +54,11 @@
 .work-analytics-card-row {
   display: flex;
   gap: 8px;
+  padding: 6px 6px 4px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #f6f6f6;
+  border-radius: 4px;
 }
 
 .work-analytics-card-row-gap {

@@ -94,25 +94,25 @@ const Home = () => {
             />
           </div>
           <div className="work-analytics-card-row">
-            <h4>Закрыто за вчера</h4>
+            <span>Закрыто за вчера</span>
             <div className="work-analytics-card-row-gap"></div>
-            <h4 className="work-analytics-card-row-value">
+            <span className="work-analytics-card-row-value">
               {connectionsClosedYesterday?.count || 0}
-            </h4>
+            </span>
           </div>
           <div className="work-analytics-card-row">
-            <h4>Закрыто за последнюю неделю</h4>
+            <span>Закрыто за последнюю неделю</span>
             <div className="work-analytics-card-row-gap"></div>
-            <h4 className="work-analytics-card-row-value">
+            <span className="work-analytics-card-row-value">
               {connectionsClosedLastWeek?.count || 0}
-            </h4>
+            </span>
           </div>
           <div className="work-analytics-card-row">
-            <h4>Закрыто за последний месяц</h4>
+            <span>Закрыто за последний месяц</span>
             <div className="work-analytics-card-row-gap"></div>
-            <h4 className="work-analytics-card-row-value">
+            <span className="work-analytics-card-row-value">
               {connectionsClosedLastMonth?.count || 0}
-            </h4>
+            </span>
           </div>
         </div>
         <div
@@ -153,25 +153,25 @@ const Home = () => {
             />
           </div>
           <div className="work-analytics-card-row">
-            <h4>Закрыто за вчера</h4>
+            <span>Закрыто за вчера</span>
             <div className="work-analytics-card-row-gap"></div>
-            <h4 className="work-analytics-card-row-value">
+            <span className="work-analytics-card-row-value">
               {tehClosedYesterday?.count || 0}
-            </h4>
+            </span>
           </div>
           <div className="work-analytics-card-row">
-            <h4>Закрыто за последнюю неделю</h4>
+            <span>Закрыто за последнюю неделю</span>
             <div className="work-analytics-card-row-gap"></div>
-            <h4 className="work-analytics-card-row-value">
+            <span className="work-analytics-card-row-value">
               {tehClosedLastWeek?.count || 0}
-            </h4>
+            </span>
           </div>
           <div className="work-analytics-card-row">
-            <h4>Закрыто за последний месяц</h4>
+            <span>Закрыто за последний месяц</span>
             <div className="work-analytics-card-row-gap"></div>
-            <h4 className="work-analytics-card-row-value">
+            <span className="work-analytics-card-row-value">
               {tehClosedLastMonth?.count || 0}
-            </h4>
+            </span>
           </div>
         </div>
         <div className="works-analytics-card">
@@ -240,11 +240,11 @@ const Home = () => {
 
                 return (
                   <div className="work-analytics-card-row">
-                    <h4>Закрыто за вчера</h4>
+                    <span>Закрыто за вчера</span>
                     <div className="work-analytics-card-row-gap"></div>
-                    <h4 className="work-analytics-card-row-value">
+                    <span className="work-analytics-card-row-value">
                       {sumOfClosedConnections || 0}
-                    </h4>
+                    </span>
                   </div>
                 );
               })()}
@@ -257,11 +257,11 @@ const Home = () => {
 
                 return (
                   <div className="work-analytics-card-row">
-                    <h4>Закрыто за последнюю неделю</h4>
+                    <span>Закрыто за последнюю неделю</span>
                     <div className="work-analytics-card-row-gap"></div>
-                    <h4 className="work-analytics-card-row-value">
+                    <span className="work-analytics-card-row-value">
                       {sumOfClosedConnections || 0}
-                    </h4>
+                    </span>
                   </div>
                 );
               })()}
@@ -274,11 +274,11 @@ const Home = () => {
 
                 return (
                   <div className="work-analytics-card-row">
-                    <h4>Закрыто за последний месяц</h4>
+                    <span>Закрыто за последний месяц</span>
                     <div className="work-analytics-card-row-gap"></div>
-                    <h4 className="work-analytics-card-row-value">
+                    <span className="work-analytics-card-row-value">
                       {sumOfClosedConnections || 0}
-                    </h4>
+                    </span>
                   </div>
                 );
               })()}
@@ -351,11 +351,11 @@ const Home = () => {
 
                 return (
                   <div className="work-analytics-card-row">
-                    <h4>Закрыто за вчера</h4>
+                    <span>Закрыто за вчера</span>
                     <div className="work-analytics-card-row-gap"></div>
-                    <h4 className="work-analytics-card-row-value">
+                    <span className="work-analytics-card-row-value">
                       {sumOfClosedConnections || 0}
-                    </h4>
+                    </span>
                   </div>
                 );
               })()}
@@ -368,11 +368,11 @@ const Home = () => {
 
                 return (
                   <div className="work-analytics-card-row">
-                    <h4>Закрыто за последнюю неделю</h4>
+                    <span>Закрыто за последнюю неделю</span>
                     <div className="work-analytics-card-row-gap"></div>
-                    <h4 className="work-analytics-card-row-value">
+                    <span className="work-analytics-card-row-value">
                       {sumOfClosedConnections || 0}
-                    </h4>
+                    </span>
                   </div>
                 );
               })()}
@@ -385,11 +385,11 @@ const Home = () => {
 
                 return (
                   <div className="work-analytics-card-row">
-                    <h4>Закрыто за последний месяц</h4>
+                    <span>Закрыто за последний месяц</span>
                     <div className="work-analytics-card-row-gap"></div>
-                    <h4 className="work-analytics-card-row-value">
+                    <span className="work-analytics-card-row-value">
                       {sumOfClosedConnections || 0}
-                    </h4>
+                    </span>
                   </div>
                 );
               })()}
@@ -412,7 +412,7 @@ const Home = () => {
                   .map((square) => (
                     <div
                       style={{
-                        marginTop: '10px',
+                        marginTop: '20px',
                         paddingLeft: '20px',
                       }}
                     >
@@ -517,7 +517,7 @@ const Home = () => {
                   .map((square) => (
                     <div
                       style={{
-                        marginTop: '10px',
+                        marginTop: '20px',
                         paddingLeft: '20px',
                       }}
                     >
@@ -607,6 +607,21 @@ const Home = () => {
           ))}
         </div>
       </div>
+      <Button
+        style={{
+          position: 'fixed',
+          left: '140px',
+          bottom: worksAnalyticsLoading ? '20px' : '-60px',
+          fontSize: '20px',
+          width: 'calc(100% - 280px)',
+          padding: '10px 14px',
+          color: '#FFFFFF',
+          transition: '.3s',
+        }}
+        disabled
+      >
+        Загрузка...
+      </Button>
     </div>
   );
 };
