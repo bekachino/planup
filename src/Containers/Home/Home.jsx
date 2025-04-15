@@ -50,10 +50,16 @@ const Home = () => {
         Перейти к нарядам
       </Button>
       <div className="works-analytics">
-        <div className="works-analytics-card">
+        <div
+          className="works-analytics-card"
+          style={{ backgroundColor: 'var(--white)' }}
+        >
           <h2>Подключения</h2>
         </div>
-        <div className="works-analytics-card">
+        <div
+          className="works-analytics-card"
+          style={{ backgroundColor: 'var(--white)' }}
+        >
           <h2>Техподы</h2>
         </div>
         <div
@@ -174,7 +180,7 @@ const Home = () => {
             </span>
           </div>
         </div>
-        <div className="works-analytics-card">
+        <div className="works-analytics-card" style={{ padding: '12px 0' }}>
           <h4 className="work-analytics-card-title">Подключения по областям</h4>
           {regionNames.map((regionName) => (
             <div
@@ -285,7 +291,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="works-analytics-card">
+        <div className="works-analytics-card" style={{ padding: '12px 0' }}>
           <h4 className="work-analytics-card-title">Техподы по областям</h4>
           {regionNames.map((regionName) => (
             <div
@@ -396,7 +402,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="works-analytics-card">
+        <div className="works-analytics-card" style={{ padding: '12px 0' }}>
           <h4 className="work-analytics-card-title">
             Подключения по квадратам
           </h4>
@@ -503,7 +509,7 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="works-analytics-card">
+        <div className="works-analytics-card" style={{ padding: '12px 0' }}>
           <h4 className="work-analytics-card-title">Техподы по квадратам</h4>
           {regionNames.map((regionName) => (
             <div
