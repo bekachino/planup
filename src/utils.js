@@ -28,7 +28,6 @@ export const uploadWorks = (works, shownFields = [], templateNames = []) => {
   });
 
   works.forEach((work) => {
-    console.log(work);
     rowIndex += 1;
 
     const filteredFields = [];
@@ -38,11 +37,27 @@ export const uploadWorks = (works, shownFields = [], templateNames = []) => {
     const filteredWorkNames = templateNames.map((name) =>
       workNames.includes(name) ? { field_value: name } : null
     );
-    
+
     shownFields.forEach((field) => {
       const foundWorkField = (work || []).find(
         (workField) => workField.name === field
       );
+
+      if (
+        foundWorkField?.name?.startsWith('Отчет') &&
+        foundWorkField?.data_type === 'int'
+      ) {
+        const sum = work
+          .filter((workCell) => workCell.name === field)
+          .map((workCell) =>
+            !!workCell?.field_value ? Number(workCell?.field_value) : 0
+          )
+          .reduce((acc, workCellValue) => acc + workCellValue, 0);
+        return filteredFields.push({
+          ...foundWorkField,
+          field_value: isNaN(sum) ? 0 : sum,
+        });
+      }
 
       if (foundWorkField) filteredFields.push(foundWorkField);
       else

@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
 import axiosApi from '../../axiosApi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { uploadWorks } from '../../utils';
 
 const useUploadWorks = () => {
@@ -77,6 +77,7 @@ const useUploadWorks = () => {
                 const workTypes = {
                   [work?.id]: [],
                 };
+
                 childTemplates.forEach((childTemplate) => {
                   childTemplate?.fields?.forEach((field) => {
                     if (

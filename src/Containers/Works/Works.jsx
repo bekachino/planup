@@ -158,11 +158,36 @@ const Works = () => {
                                 ).field_value
                               ]}
                             <span className="duty-item-cell-value-text">
-                              {getTableCellValue(
-                                work.find(
+                              {(() => {
+                                const value = work.find(
                                   (workCell) => workCell.name === workField
-                                )
-                              )}
+                                );
+
+                                if (
+                                  value?.name?.startsWith('Отчет') &&
+                                  value?.data_type === 'int'
+                                ) {
+                                  const sum = work
+                                    .filter(
+                                      (workCell) => workCell.name === workField
+                                    )
+                                    .map((workCell) =>
+                                      !!workCell?.field_value
+                                        ? Number(workCell?.field_value)
+                                        : 0
+                                    )
+                                    .reduce(
+                                      (acc, workCellValue) =>
+                                        acc + workCellValue
+                                    );
+                                  return getTableCellValue({
+                                    ...value,
+                                    field_value: sum,
+                                  });
+                                }
+
+                                return getTableCellValue(value);
+                              })()}
                             </span>
                           </span>
                         </td>
