@@ -81,7 +81,7 @@ const Home = () => {
                   value: connectionsClosedToday?.count || 0,
                 },
               ]}
-              colors={['#1DBF12', '#E31A1A']}
+              colors={['#E31A1A', '#1DBF12']}
               margin={{
                 top: 28,
                 right: 15,
@@ -140,7 +140,7 @@ const Home = () => {
                   value: tehClosedToday?.count || 0,
                 },
               ]}
-              colors={['#1DBF12', '#E31A1A']}
+              colors={['#E31A1A', '#1DBF12']}
               margin={{
                 top: 28,
                 right: 0,
@@ -216,7 +216,7 @@ const Home = () => {
                             value: sumOfClosedConnections || 0,
                           },
                         ]}
-                        colors={['#1DBF12', '#E31A1A']}
+                        colors={['#E31A1A', '#1DBF12']}
                         margin={{
                           top: 28,
                           right: 0,
@@ -327,7 +327,7 @@ const Home = () => {
                             value: sumOfClosedConnections || 0,
                           },
                         ]}
-                        colors={['#1DBF12', '#E31A1A']}
+                        colors={['#E31A1A', '#1DBF12']}
                         margin={{
                           top: 28,
                           right: 0,
