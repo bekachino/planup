@@ -146,6 +146,7 @@ export const REQUIRED_WORKS_LIST_FIELDS = [
 export const DATA_TYPES = {
   text: 'text',
   int: 'number',
+  float: 'number',
   datetime: 'datetime',
   file: 'file',
   url: 'file',

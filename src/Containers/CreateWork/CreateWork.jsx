@@ -298,7 +298,7 @@ const CreateWork = ({ isEdit }) => {
                 )
                 .map((field, i) => {
                   if (
-                    ['text', 'number', 'url', 'deal_type'].includes(
+                    ['text', 'number', 'float', 'url', 'deal_type'].includes(
                       DATA_TYPES[field.data_type]
                     )
                   ) {
