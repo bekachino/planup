@@ -4,11 +4,11 @@ import { ReactComponent as BurgerIcon } from '../../assets/burger-black.svg';
 import { ReactComponent as RemoveIcon } from '../../assets/remove-white.svg';
 import { ReactComponent as UserIcon } from '../../assets/user.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/logout.svg';
-import './adminHeader.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { handleSearchValueChange } from '../../features/data/dataSlice';
 import Alerts from '../Alerts/Alerts';
 import { logout } from '../../features/user/usersSlice';
+import './adminHeader.css';
 
 const AdminHeader = () => {
   const location = useLocation();

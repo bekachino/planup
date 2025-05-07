@@ -163,7 +163,7 @@ const Header = () => {
           <RemoveIcon />
         </button>
         <div className="create-template-paper-header">
-          <h2>Создание нового наряда</h2>
+          <h2>Новый наряд</h2>
         </div>
         <form onSubmit={onCreateWorkTemplateSubmit}>
           <Autocomplete
@@ -175,6 +175,7 @@ const Header = () => {
               (option) =>
                 !option?.name.includes('Подключение') &&
                 !option?.name.includes('Демонтаж') &&
+                !option?.name.includes('Расширение') &&
                 !option?.parent
             )}
             onChange={handleWorkTemplateChange}
