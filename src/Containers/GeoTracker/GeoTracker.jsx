@@ -37,30 +37,65 @@ const GeoTracker = () => {
 
     return () => mapRef.current?.remove();
   }, []);
-
+  
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !map.isStyleLoaded()) return;
-
+    
     if (map.markers) {
       map.markers.forEach((m) => m.remove());
     }
     map.markers = [];
-
+    
+    if (map.getLayer('route-line')) {
+      map.removeLayer('route-line');
+    }
+    if (map.getSource('route')) {
+      map.removeSource('route');
+    }
+    
     if (!geoTrackerData.length) return;
-
+    
     geoTrackerData.forEach((point) => {
       const el = document.createElement('div');
       el.className = 'geo-tracker-custom-marker';
-      el.innerText = moment(point.timestamp).format('HH:mm'); // Only
-
+      el.innerText = moment(point.timestamp).format('HH:mm');
+      
       const marker = new maplibregl.Marker({ element: el })
-        .setLngLat([point.lon, point.lat])
-        .addTo(map);
-
+      .setLngLat([point.lon, point.lat])
+      .addTo(map);
+      
       map.markers.push(marker);
     });
-
+    
+    const coordinates = geoTrackerData.map((p) => [p.lon, p.lat]);
+    
+    map.addSource('route', {
+      type: 'geojson',
+      data: {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'LineString',
+          coordinates,
+        },
+      },
+    });
+    
+    map.addLayer({
+      id: 'route-line',
+      type: 'line',
+      source: 'route',
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round',
+      },
+      paint: {
+        'line-color': '#0080ff',
+        'line-width': 3,
+      },
+    });
+    
     const bounds = geoTrackerData.reduce(
       (b, p) => b.extend([p.lon, p.lat]),
       new maplibregl.LngLatBounds(
@@ -68,7 +103,7 @@ const GeoTracker = () => {
         [geoTrackerData[0].lon, geoTrackerData[0].lat]
       )
     );
-    map.fitBounds(bounds, { padding: 40 });
+    map.fitBounds(bounds, { padding: 100 });
   }, [geoTrackerData]);
 
   const handleChange = (e) => {

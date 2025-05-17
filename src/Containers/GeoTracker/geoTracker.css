@@ -1,10 +1,11 @@
 .geo-tracker {
-  padding: 27px 55px;
+  padding: 0 55px;
 }
 
 .geo-tracker-header {
   display: flex;
   gap: 20px;
+  margin-bottom: 20px;
 }
 
 .geo-tracker-header .select-wrapper,
@@ -13,7 +14,7 @@
 }
 
 .geo-tracker-map {
-  height: 600px !important;
+  height: calc(100vh - 280px) !important;
 }
 
 .geo-tracker-custom-marker {
