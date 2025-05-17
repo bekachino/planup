@@ -1,6 +1,5 @@
 import moment from 'moment';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import Works from './Containers/Works/Works';
 import { lazy, Suspense, useEffect } from 'react';
 import AdminHeader from './Components/AdminHeader/AdminHeader';
 import Header from './Components/Header/Header';
@@ -13,6 +12,8 @@ import './App.css';
 const SignIn = lazy(() => import('./Containers/SignIn/SignIn'));
 const Home = lazy(() => import('./Containers/Home/Home'));
 const Work = lazy(() => import('./Containers/Work/Work'));
+const Works = lazy(() => import('./Containers/Works/Works'));
+const GeoTracker = lazy(() => import('./Containers/GeoTracker/GeoTracker'));
 const CreateWork = lazy(() => import('./Containers/CreateWork/CreateWork'));
 const Templates = lazy(() => import('./Containers/Templates/Templates'));
 const CreateTemplate = lazy(
@@ -76,6 +77,14 @@ const App = () => {
         element={
           <Suspense fallback={<></>}>
             <Works />
+          </Suspense>
+        }
+      />
+      <Route
+        path="geo-tracker"
+        element={
+          <Suspense fallback={<></>}>
+            <GeoTracker />
           </Suspense>
         }
       />

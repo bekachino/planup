@@ -49,6 +49,17 @@ const Home = () => {
       >
         Перейти к нарядам
       </Button>
+      <Button
+        style={{
+          fontSize: '20px',
+          marginBottom: '15px',
+          width: '100%',
+          padding: '10px 14px',
+        }}
+        onClick={() => navigate('/geo-tracker')}
+      >
+        Геотрекер
+      </Button>
       <div className="works-analytics">
         <div
           className="works-analytics-card"

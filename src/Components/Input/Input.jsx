@@ -52,6 +52,7 @@ const Input = ({
               style={inputStyle}
               onChange={(e) =>
                 onChange({
+                  ...e,
                   target: {
                     name: e.target.name || '',
                     value:

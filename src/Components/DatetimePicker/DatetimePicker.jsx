@@ -215,7 +215,18 @@ const DatetimePicker = ({
         value={value}
         placeholder={placeholder}
         onFocus={() => setShowCalendar(true)}
-        readOnly
+        onChange={(e) => {
+          if (e.nativeEvent.inputType === 'deleteContentBackward') {
+            onChange({
+              target: {
+                name,
+                value: '',
+              },
+            });
+          }
+        }}
+        autocomplete='off'
+        //readOnly
         {...rest}
       />
       <div className="date-time-picker-icon" />

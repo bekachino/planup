@@ -1,0 +1,34 @@
+.geo-tracker {
+  padding: 27px 55px;
+}
+
+.geo-tracker-header {
+  display: flex;
+  gap: 20px;
+}
+
+.geo-tracker-header .select-wrapper,
+.geo-tracker-header .date-time-picker {
+  flex-grow: 1;
+}
+
+.geo-tracker-map {
+  height: 600px !important;
+}
+
+.geo-tracker-custom-marker {
+  background-color: var(--white);
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+.geo-tracker-custom-marker::before {
+  content: '';
+  position: absolute;
+  top: calc(100% - 6px);
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 11px;
+  height: 11px;
+  background-color: var(--white);
+}
