@@ -225,7 +225,7 @@ const DatetimePicker = ({
             });
           }
         }}
-        autocomplete='off'
+        autocomplete="off"
         //readOnly
         {...rest}
       />
@@ -269,7 +269,9 @@ const DatetimePicker = ({
           {datepickerType === 'date' ? <CalendarDays /> : <></>}
         </div>
         <div className="date-time-calendar-footer">
-          <Button onClick={() => setShowCalendar(false)}>Готово</Button>
+          <Button type="button" onClick={() => setShowCalendar(false)}>
+            Готово
+          </Button>
         </div>
       </div>
     </div>

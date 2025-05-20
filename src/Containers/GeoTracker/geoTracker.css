@@ -19,17 +19,42 @@
 
 .geo-tracker-custom-marker {
   background-color: var(--white);
-  padding: 4px 6px;
+  padding: 1px 3px 2px;
   border-radius: 4px;
+  font-size: 10px;
+  line-height: 12px;
 }
 
-.geo-tracker-custom-marker::before {
-  content: '';
-  position: absolute;
-  top: calc(100% - 6px);
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 11px;
-  height: 11px;
+.geo-tracker-custom-marker-grouped {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.geo-tracker-map-container {
+  display: flex;
+  gap: 20px;
+}
+
+.geo-tracker-location-points {
   background-color: var(--white);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.geo-tracker-location-points-header button {
+  padding: 20px;
+  border-radius: 8px;
+  border: 0;
+  background-image: url("../../assets/arrow-pointer-right.svg");
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: center;
+  background-color: var(--white);
+  cursor: pointer;
+}
+
+.geo-tracker-location-points-header button:hover {
+  background-color: var(--white-grey);
 }
