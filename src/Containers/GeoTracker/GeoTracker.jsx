@@ -26,6 +26,10 @@ const GeoTracker = () => {
   const { geoTrackerData, geoTrackerLoading, fetchGeoTracker } =
     useGeoTracker();
   const [state, setState] = useState(null);
+  const [locationsGroup, setLocationsGroup] = useState([]);
+  const [showLocationsGroup, setShowLocationsGroup] = useState(false);
+  const [hoveredLocationsListPoint, setHoveredLocationsListPoint] =
+    useState(null);
 
   useEffect(() => {
     dispatch(getUserTypes());
@@ -38,6 +42,43 @@ const GeoTracker = () => {
     }
     renderLocations();
   }, [geoTrackerData]);
+
+  useEffect(() => {
+    if (!hoveredLocationsListPoint) return;
+    const map = mapRef.current;
+    const el = document.createElement('div');
+    el.className = 'geo-tracker-custom-marker';
+    el.innerText = moment(hoveredLocationsListPoint.timestamp).format('HH:mm');
+
+    const marker = new maplibregl.Marker({ element: el })
+      .setLngLat([hoveredLocationsListPoint.lon, hoveredLocationsListPoint.lat])
+      .addTo(map);
+
+    if (map.getLayer('route-line')) {
+      map.removeLayer('route-line');
+    }
+    if (map.getSource('route')) {
+      map.removeSource('route');
+    }
+    if (map.markers) {
+      map.markers.forEach((m) => m.remove());
+    }
+    map.markers = [];
+
+    map.markers.push(marker);
+
+    const bounds = [hoveredLocationsListPoint].reduce(
+      (b, p) => b.extend([p.lon, p.lat]),
+      new maplibregl.LngLatBounds(
+        [hoveredLocationsListPoint.lon, hoveredLocationsListPoint.lat],
+        [hoveredLocationsListPoint.lon, hoveredLocationsListPoint.lat]
+      )
+    );
+    map.fitBounds(bounds, {
+      padding: 100,
+      zoom: 18,
+    });
+  }, [hoveredLocationsListPoint]);
 
   const groupedLocations = useMemo(() => {
     const data = {};
@@ -97,8 +138,9 @@ const GeoTracker = () => {
           group.length > 1 && i === middleOfGroup
             ? group.length
             : moment(point.timestamp).format('HH:mm');
-        el.addEventListener('click', (e) => {
-          console.log(e);
+        el.addEventListener('click', () => {
+          setShowLocationsGroup(true);
+          setLocationsGroup(group);
         });
 
         const marker = new maplibregl.Marker({ element: el })
@@ -206,11 +248,36 @@ const GeoTracker = () => {
             height: '100vh',
           }}
         />
-        <div className="geo-tracker-location-points">
+        <div
+          className="geo-tracker-location-points"
+          style={{
+            maxWidth: showLocationsGroup ? '300px' : '60px',
+          }}
+        >
           <div className="geo-tracker-location-points-header">
-            <button type="button" />
+            <button
+              type="button"
+              onClick={() => {
+                setShowLocationsGroup(!showLocationsGroup);
+                setHoveredLocationsListPoint(null);
+                setTimeout(() => renderLocations(), 200);
+              }}
+              style={{
+                rotate: showLocationsGroup ? '180deg' : '0deg',
+              }}
+            />
           </div>
-          <div className="geo-tracker-location-points-list"></div>
+          <div className="geo-tracker-location-points-list">
+            {locationsGroup.map((point) => (
+              <div
+                onMouseEnter={() =>
+                  showLocationsGroup && setHoveredLocationsListPoint(point)
+                }
+              >
+                {moment(point?.timestamp).format('DD.MM.YYYY HH:mm')}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

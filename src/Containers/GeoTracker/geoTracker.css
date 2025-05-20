@@ -13,7 +13,8 @@
   flex-grow: 1;
 }
 
-.geo-tracker-map {
+.geo-tracker-map,
+.geo-tracker-location-points {
   height: calc(100vh - 280px) !important;
 }
 
@@ -21,15 +22,16 @@
   background-color: var(--white);
   padding: 1px 3px 2px;
   border-radius: 4px;
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 11px;
+  line-height: 13px;
 }
 
 .geo-tracker-custom-marker-grouped {
   font-size: 14px;
   font-weight: 600;
   padding: 8px;
-  border-radius: 12px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .geo-tracker-map-container {
@@ -41,9 +43,15 @@
   background-color: var(--white);
   border-radius: 12px;
   padding: 10px;
+  transition: max-width 0.2s;
+}
+
+.geo-tracker-location-points-header {
+  display: flex;
 }
 
 .geo-tracker-location-points-header button {
+  margin-left: auto;
   padding: 20px;
   border-radius: 8px;
   border: 0;
@@ -53,8 +61,30 @@
   background-position: center;
   background-color: var(--white);
   cursor: pointer;
+  transition: rotate 0.2s;
 }
 
 .geo-tracker-location-points-header button:hover {
+  background-color: var(--white-grey);
+}
+
+.geo-tracker-location-points-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  max-height: calc(100% - 40px);
+  overflow: auto;
+}
+
+.geo-tracker-location-points-list div {
+  padding: 2px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-wrap: nowrap;
+  min-width: 190px;
+}
+
+.geo-tracker-location-points-list div:hover {
   background-color: var(--white-grey);
 }
