@@ -86,21 +86,21 @@ const Header = () => {
               <LucidIcon />
               Создать наряд
             </NavLink>
-            {location.pathname === '/works' && (
-              <NavLink
-                className="not-hoverable-icon"
-                to="#"
-                disabled
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (!uploadLoading) void fetchAndUploadWorks();
-                }}
-              >
-                <ExcelIcon />
-                {uploadLoading ? 'Загрузка...' : 'Экспорт нярядов'}
-              </NavLink>
-            )}
           </>
+        )}
+        {location.pathname === '/works' && (
+          <NavLink
+            className="not-hoverable-icon"
+            to="#"
+            disabled
+            onClick={(e) => {
+              e.preventDefault();
+              if (!uploadLoading) void fetchAndUploadWorks();
+            }}
+          >
+            <ExcelIcon />
+            {uploadLoading ? 'Загрузка...' : 'Экспорт нярядов'}
+          </NavLink>
         )}
         <div className="nav-burger-btn-wrapper">
           <button
