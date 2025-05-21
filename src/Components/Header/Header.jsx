@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SearchFilters from '../SearchFilters/SearchFilters';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { ReactComponent as FileIcon } from '../../assets/file.svg';
-import { ReactComponent as InboxIcon } from '../../assets/inbox.svg';
 import { ReactComponent as LucidIcon } from '../../assets/lucide_edit.svg';
 import { ReactComponent as BurgerIcon } from '../../assets/burger-black.svg';
 import { ReactComponent as RemoveIcon } from '../../assets/remove-white.svg';
@@ -76,24 +74,8 @@ const Header = () => {
         <SearchFilters placeholder="Поиск" />
       )}
       <nav>
-        {['admin'].includes(user?.role) && (
-          <>
-            <NavLink to="/templates">
-              <FileIcon />
-              Шаблоны
-            </NavLink>
-            <NavLink to="/resolutions">
-              <InboxIcon />
-              Резолюции
-            </NavLink>
-          </>
-        )}
         {['chief', 'admin'].includes(user?.role) && (
           <>
-            <NavLink to="/admin/squares">
-              <InboxIcon />
-              Квадраты
-            </NavLink>
             <NavLink
               to="/works"
               onClick={(e) => {
@@ -104,6 +86,20 @@ const Header = () => {
               <LucidIcon />
               Создать наряд
             </NavLink>
+            {location.pathname === '/works' && (
+              <NavLink
+                className="not-hoverable-icon"
+                to="#"
+                disabled
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (!uploadLoading) void fetchAndUploadWorks();
+                }}
+              >
+                <ExcelIcon />
+                {uploadLoading ? 'Загрузка...' : 'Экспорт нярядов'}
+              </NavLink>
+            )}
           </>
         )}
         <div className="nav-burger-btn-wrapper">
@@ -119,14 +115,30 @@ const Header = () => {
             style={{ display: showBurgerTooltip ? 'flex' : 'none' }}
             onMouseDown={(e) => e.stopPropagation()}
           >
-            <button
-              className="nav-burger-tooltip-btn"
-              onClick={fetchAndUploadWorks}
-              disabled={uploadLoading}
-            >
-              <ExcelIcon />
-              Экспорт в Excel
-            </button>
+            {['admin'].includes(user?.role) && (
+              <>
+                <button
+                  className="nav-burger-tooltip-btn"
+                  onClick={() => navigate('/templates')}
+                >
+                  Шаблоны
+                </button>
+                <button
+                  className="nav-burger-tooltip-btn"
+                  onClick={() => navigate('/resolutions')}
+                >
+                  Резолюции
+                </button>
+              </>
+            )}
+            {['chief', 'admin'].includes(user?.role) && (
+              <button
+                className="nav-burger-tooltip-btn"
+                onClick={() => navigate('/admin/squares')}
+              >
+                Квадраты
+              </button>
+            )}
             <button className="nav-burger-tooltip-btn">
               <NewsIcon />
               Новости
@@ -138,7 +150,7 @@ const Header = () => {
               }}
             >
               <UserIcon />
-              Привет, {user?.fullName || ''}!
+              Привет, {user?.fullName || user?.name || ''}!
             </button>
             <button
               className="nav-burger-tooltip-btn"

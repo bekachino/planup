@@ -20,6 +20,7 @@
 
 nav {
   display: flex;
+  justify-content: flex-end;
   align-items: stretch;
   background-color: var(--white);
   border-radius: 12px;
@@ -27,7 +28,7 @@ nav {
 }
 
 nav:has(a) {
-  flex-grow: 1;
+  /*flex-grow: 1;*/
 }
 
 nav a {
@@ -41,7 +42,7 @@ nav a {
   font-weight: 600;
   line-height: 24px;
   text-decoration: none;
-  padding: 18px 18px;
+  padding: 18px 50px;
   text-wrap: nowrap;
   border-radius: 12px;
   transition: 0.2s;
@@ -55,7 +56,7 @@ nav a:hover {
   color: var(--nav-text-hover);
 }
 
-nav a:hover svg path {
+nav a:not(.not-hoverable-icon):hover svg path {
   stroke: var(--nav-text-hover);
 }
 
@@ -98,10 +99,11 @@ nav a:hover svg path {
   display: flex;
   flex-direction: column;
   text-wrap: nowrap;
-  padding: 17px 5px;
+  padding: 17px 10px;
   border-radius: 4px;
   background-color: var(--white);
   box-shadow: 0 4px 25px 0 #5763ff33;
+  min-width: 230px;
   z-index: 10;
 }
 
