@@ -132,12 +132,20 @@ const Header = () => {
               </>
             )}
             {['chief', 'admin'].includes(user?.role) && (
-              <button
-                className="nav-burger-tooltip-btn"
-                onClick={() => navigate('/admin/squares')}
-              >
-                Квадраты
-              </button>
+              <>
+                <button
+                  className="nav-burger-tooltip-btn"
+                  onClick={() => navigate('/admin/squares')}
+                >
+                  Квадраты
+                </button>
+                <button
+                  className="nav-burger-tooltip-btn"
+                  onClick={() => navigate('/geo-tracker')}
+                >
+                  Геотрекер
+                </button>
+              </>
             )}
             <button className="nav-burger-tooltip-btn">
               <NewsIcon />
